@@ -1,0 +1,78 @@
+"use client";
+
+import React from 'react';
+import { ShoppingCart } from "lucide-react";
+
+interface Medicine {
+  id: string;
+  name: string;
+  price: number | string;
+  manufacturer: string;
+  description?: string;
+  imageUrl?: string;
+  slug: string;
+  isFeatured?: boolean;
+}
+
+export function ProductCard({ medicine }: { medicine: Medicine }) {
+  const formattedPrice = typeof medicine.price === 'string' 
+    ? parseFloat(medicine.price).toFixed(2) 
+    : medicine.price.toFixed(2);
+
+  return (
+    <div className="group bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_60px_-15px_rgba(0,188,140,0.15)] transition-all duration-500 flex flex-col items-start gap-5 cursor-pointer h-full relative overflow-hidden">
+      
+      {/* Badges */}
+      <div className="absolute top-6 left-6 flex flex-col gap-2 z-10">
+        {medicine.isFeatured && (
+          <span className="bg-orange-500 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg shadow-orange-500/20 animate-pulse">
+            Hot
+          </span>
+        )}
+      </div>
+
+      {/* Image Container */}
+      <div className="w-full aspect-square relative rounded-[1.8rem] overflow-hidden bg-slate-50">
+         <img 
+            src={medicine.imageUrl || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600"} 
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+            alt={medicine.name}
+         />
+         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col flex-1 w-full gap-2 text-left">
+        <p className="text-[11px] font-black text-[#00bc8c] uppercase tracking-widest opacity-80 decoration-dotted underline underline-offset-4">
+          {medicine.manufacturer}
+        </p>
+        <h3 className="text-xl font-black text-slate-900 tracking-tight leading-tight group-hover:text-[#00bc8c] transition-colors">
+          {medicine.name}
+        </h3>
+        <p className="text-slate-400 text-sm font-medium line-clamp-2 leading-relaxed">
+          {medicine.description || "Effective relief for your healthcare needs with professional quality assurance."}
+        </p>
+      </div>
+
+      {/* Footer */}
+      <div className="w-full flex items-center justify-between gap-4 pt-2">
+        <div className="flex flex-col">
+          <p className="text-slate-400 text-[11px] font-black uppercase tracking-tighter">Price</p>
+          <p className="text-2xl font-black text-slate-900">
+            ${formattedPrice}
+          </p>
+        </div>
+        <button 
+           onClick={(e) => {
+             e.stopPropagation();
+             // Add to cart logic
+           }}
+           className="bg-[#00bc8c]/10 p-4 rounded-2xl text-[#00bc8c] hover:bg-[#00bc8c] hover:text-white hover:scale-110 active:scale-90 transition-all duration-300 shadow-sm"
+        >
+           <ShoppingCart className="w-6 h-6" strokeWidth={2.5} />
+        </button>
+      </div>
+
+    </div>
+  );
+}
