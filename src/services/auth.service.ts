@@ -21,4 +21,11 @@ export const authService = {
       method: "POST",
     });
   },
+
+  verifyEmail: async (data: { email: string; code: string }): Promise<AuthResponse> => {
+    return fetcher<AuthResponse>("/api/auth/verify-email", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  },
 };

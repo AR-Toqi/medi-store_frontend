@@ -15,10 +15,11 @@ export const loginAction = async (data: any) => {
   }
 
   try {
-    const result = await authService.login(validatedFields.data);
+    const result = await authService.login(validatedFields.data) as any;
     return {
       success: true,
       message: result.message || "Login successful",
+      data: result, // This will include the user role and token
     };
   } catch (error: any) {
     return {

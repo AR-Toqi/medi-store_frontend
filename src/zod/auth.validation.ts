@@ -16,5 +16,11 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
+export const verifyEmailSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  code: z.string().length(6, "Verification code must be 6 digits"),
+});
+
 export type SignupValues = z.infer<typeof signupSchema>;
 export type LoginValues = z.infer<typeof loginSchema>;
+export type VerifyEmailValues = z.infer<typeof verifyEmailSchema>;

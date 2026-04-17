@@ -11,3 +11,8 @@ export interface AuthResponse<T = any> {
   message: string;
   data?: T;
 }
+
+export interface VerifyEmailData {
+  email: string;
+  code: string;
+}

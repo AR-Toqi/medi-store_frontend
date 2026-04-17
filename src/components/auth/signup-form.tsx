@@ -44,7 +44,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
         if (result.success) {
           toast.success(result.message);
-          router.push("/login");
+          router.push(`/verify-email?email=${value.email}`);
         } else {
           toast.error(result.message);
         }
