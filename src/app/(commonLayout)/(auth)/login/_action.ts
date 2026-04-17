@@ -2,6 +2,7 @@
 
 import { authService } from "@/services/auth.service";
 import { loginSchema } from "@/zod/auth.validation";
+import { unstable_rethrow } from "next/navigation";
 
 export const loginAction = async (data: any) => {
   const validatedFields = loginSchema.safeParse(data);
@@ -22,6 +23,7 @@ export const loginAction = async (data: any) => {
       data: result, // This will include the user role and token
     };
   } catch (error: any) {
+    unstable_rethrow(error);
     return {
       success: false,
       message: error.message || "Something went wrong. Please try again.",

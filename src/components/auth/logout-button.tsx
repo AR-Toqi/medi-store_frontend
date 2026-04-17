@@ -1,0 +1,37 @@
+"use client";
+
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
+import { authService } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useUser } from "@/providers/user-provider";
+import { logoutAction } from "@/app/actions/user.actions";
+
+export function LogoutButton() {
+  const router = useRouter();
+  const { setUser } = useUser();
+
+  const handleLogout = async () => {
+    try {
+      // Immediately clear local state for instant UI feedback
+      setUser(null);
+      await logoutAction();
+    } catch (error: any) {
+      if (error.message?.includes("NEXT_REDIRECT")) return;
+      toast.error("Logout failed");
+    }
+  };
+
+  return (
+    <Button 
+      variant="outline" 
+      onClick={handleLogout}
+      className="w-full border-red-100 text-red-500 hover:bg-red-50 rounded-2xl h-14 font-bold flex items-center gap-2 transition-all active:scale-95"
+    >
+      <LogOut className="w-5 h-5" />
+      Logout
+    </Button>
+  );
+}

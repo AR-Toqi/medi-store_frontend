@@ -2,9 +2,10 @@
 
 import React from "react";
 import Link from "next/link";
-import { Search, ShoppingCart, BriefcaseMedical, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, BriefcaseMedical, Menu, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useUser } from "@/providers/user-provider";
 import {
   Sheet,
   SheetContent,
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/sheet";
 
 export function Navbar() {
+  const { user, loading } = useUser();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60 shadow-sm">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
@@ -49,16 +51,36 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link href="/login">
-              <Button className="bg-[#00bc8c] hover:bg-[#00a37b] rounded-xl px-7 h-11 font-bold text-white shadow-lg shadow-[#00bc8c]/20 transition-all active:scale-95">
-                Login
-              </Button>
-            </Link>
-            <Link href="/signup">
-              <Button variant="outline" className="border-[#00bc8c]/30 text-[#00bc8c] hover:bg-[#00bc8c]/5 rounded-xl px-7 h-11 font-bold transition-all active:scale-95">
-                Register
-              </Button>
-            </Link>
+            {loading ? (
+              <div className="w-24 h-10 bg-slate-100 animate-pulse rounded-xl"></div>
+            ) : user ? (
+              <Link href="/profile" className="flex items-center gap-3 p-1.5 pr-4 hover:bg-slate-50 rounded-2xl transition-all border border-transparent hover:border-slate-100 group">
+                <div className="w-10 h-10 rounded-xl overflow-hidden bg-[#00bc8c]/10 flex items-center justify-center border-2 border-white shadow-sm group-hover:shadow-md transition-all">
+                  {user.image ? (
+                    <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-[#00bc8c] font-black text-lg">{user.name.charAt(0)}</span>
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[14px] font-black text-slate-800 leading-none">{user.name}</span>
+                  <span className="text-[10px] font-bold text-[#00bc8c] uppercase tracking-wider">View Profile</span>
+                </div>
+              </Link>
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button className="bg-[#00bc8c] hover:bg-[#00a37b] rounded-xl px-7 h-11 font-bold text-white shadow-lg shadow-[#00bc8c]/20 transition-all active:scale-95">
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/signup">
+                  <Button variant="outline" className="border-[#00bc8c]/30 text-[#00bc8c] hover:bg-[#00bc8c]/5 rounded-xl px-7 h-11 font-bold transition-all active:scale-95">
+                    Register
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Cart Section */}

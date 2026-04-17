@@ -28,4 +28,21 @@ export const authService = {
       body: JSON.stringify(data),
     });
   },
+
+  getCurrentUser: async (headers?: HeadersInit): Promise<any> => {
+    return fetcher<any>("/api/me", {
+      method: "GET",
+      headers,
+      skipRedirect: true, // Don't redirect if session check fails
+    });
+  },
+
+  updateUser: async (data: FormData): Promise<any> => {
+    return fetcher<any>("/api/me", {
+      method: "PUT",
+      body: data,
+      // Content-Type should NOT be set manually for FormData to allow fetch to set the boundary
+      headers: {}, 
+    });
+  },
 };

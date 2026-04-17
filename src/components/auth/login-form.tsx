@@ -20,9 +20,11 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
 import React from "react";
+import { useUser } from "@/providers/user-provider";
 
 export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
+  const { setUser } = useUser();
 
   const form = useForm({
     defaultValues: {
@@ -38,6 +40,11 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
 
         if (result.success) {
           toast.success(result.message);
+          
+          // Immediately update global state
+          if (result.data?.user) {
+            setUser(result.data.user);
+          }
           
           const role = result.data?.user?.role || result.data?.role;
           

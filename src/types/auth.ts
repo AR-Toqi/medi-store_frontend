@@ -6,6 +6,18 @@ export interface SignUpData {
   password?: string;
 }
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
+  image?: string;
+  emailVerified: boolean;
+  isBanned: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface AuthResponse<T = any> {
   success: boolean;
   message: string;
