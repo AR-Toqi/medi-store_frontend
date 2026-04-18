@@ -2,13 +2,18 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Loader2 } from "lucide-react";
 import { Medicine } from "@/types/medicine";
+import { useCart } from "@/hooks/use-cart";
 
 export function ProductCard({ medicine }: { medicine: Medicine }) {
+  const { addItem, isAdding } = useCart();
+  
   const formattedPrice = typeof medicine.price === 'string' 
     ? parseFloat(medicine.price).toFixed(2) 
     : medicine.price.toFixed(2);
+
+  const isOutOfStock = medicine.stock === 0;
 
   return (
     <Link href={`/shop/${medicine.slug}`} className="block h-full">
@@ -26,7 +31,7 @@ export function ProductCard({ medicine }: { medicine: Medicine }) {
               Low Stock
             </span>
           )}
-          {medicine.stock === 0 && (
+          {isOutOfStock && (
             <span className="bg-red-500 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg shadow-red-500/20">
               Out of Stock
             </span>
@@ -68,11 +73,22 @@ export function ProductCard({ medicine }: { medicine: Medicine }) {
              onClick={(e) => {
                e.preventDefault();
                e.stopPropagation();
-               // Add to cart logic
+               if (!isOutOfStock) {
+                 addItem(medicine.id, 1);
+               }
              }}
-             className="bg-[#00bc8c]/10 p-4 rounded-2xl text-[#00bc8c] hover:bg-[#00bc8c] hover:text-white hover:scale-110 active:scale-90 transition-all duration-300 shadow-sm"
+             disabled={isOutOfStock || isAdding}
+             className={`p-4 rounded-2xl transition-all duration-300 shadow-sm flex items-center justify-center min-w-[56px] ${
+               isOutOfStock
+                 ? "bg-slate-100 text-slate-300 cursor-not-allowed"
+                 : "bg-[#00bc8c]/10 text-[#00bc8c] hover:bg-[#00bc8c] hover:text-white hover:scale-110 active:scale-90"
+             }`}
           >
-             <ShoppingCart className="w-6 h-6" strokeWidth={2.5} />
+             {isAdding ? (
+               <Loader2 className="w-6 h-6 animate-spin" strokeWidth={3} />
+             ) : (
+               <ShoppingCart className="w-6 h-6" strokeWidth={2.5} />
+             )}
           </button>
         </div>
 

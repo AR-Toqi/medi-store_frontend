@@ -2,7 +2,7 @@
 
 import React, { useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Search, SlidersHorizontal, X, ChevronDown } from "lucide-react";
+import { Search, SlidersHorizontal, X, ChevronDown, Star } from "lucide-react";
 import { Category } from "@/types/category";
 
 interface MedicineFiltersProps {
@@ -19,6 +19,7 @@ export function MedicineFilters({ categories, manufacturers }: MedicineFiltersPr
   const currentCategory = searchParams.get("category") || "";
   const currentManufacturer = searchParams.get("manufacturer") || "";
   const currentSort = searchParams.get("sort") || "";
+  const currentFeatured = searchParams.get("featured") === "true";
 
   const [searchValue, setSearchValue] = useState(currentSearch);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -62,7 +63,7 @@ export function MedicineFilters({ categories, manufacturers }: MedicineFiltersPr
     });
   }
 
-  const hasActiveFilters = currentCategory || currentManufacturer || currentSearch || currentSort;
+  const hasActiveFilters = currentCategory || currentManufacturer || currentSearch || currentSort || currentFeatured;
 
   return (
     <>
@@ -130,6 +131,24 @@ export function MedicineFilters({ categories, manufacturers }: MedicineFiltersPr
               </button>
             )}
           </form>
+
+          {/* Special Filters */}
+          <div className="pt-2">
+            <button
+              onClick={() => updateParams("featured", currentFeatured ? "" : "true")}
+              className={`w-full flex items-center justify-between px-5 py-3.5 rounded-2xl text-sm font-bold transition-all duration-300 border ${
+                currentFeatured
+                  ? "bg-[#00bc8c] text-white border-[#00bc8c] shadow-lg shadow-[#00bc8c]/20"
+                  : "bg-amber-50/50 text-amber-700 border-amber-100 hover:bg-amber-50"
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <Star className={`w-4 h-4 ${currentFeatured ? "fill-white" : "fill-amber-400 animate-pulse"}`} />
+                <span>Featured Only</span>
+              </div>
+              {currentFeatured && <X className="w-4 h-4 opacity-70" />}
+            </button>
+          </div>
 
           {/* Divider */}
           <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />

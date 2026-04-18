@@ -17,6 +17,7 @@ interface ShopPageProps {
     category?: string;
     manufacturer?: string;
     sort?: string;
+    featured?: string;
   }>;
 }
 
@@ -27,7 +28,8 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
        search: params.search,
        category: params.category,
        manufacturer: params.manufacturer,
-       sort: params.sort
+       sort: params.sort,
+       isFeatured: params.featured === "true"
     }),
     categoryService.getAllCategories(),
   ]);

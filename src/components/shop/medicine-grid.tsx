@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { medicineService } from "@/services/medicine.service";
 import { ProductCard } from "@/components/shared/product-card";
-import { PackageSearch, Loader2 } from "lucide-react";
+import { PackageSearch, Loader2, Star } from "lucide-react";
 import { Medicine } from "@/types/medicine";
 import { useDebounce } from "@/hooks/use-debounce";
 
@@ -20,19 +20,21 @@ export function MedicineGrid({ initialData }: MedicineGridProps) {
   const category = searchParams.get("category") || "";
   const manufacturer = searchParams.get("manufacturer") || "";
   const sort = searchParams.get("sort") || "";
+  const isFeatured = searchParams.get("featured") === "true";
 
   // Debounce search for the API call
   const debouncedSearch = useDebounce(search, 300);
 
   const { data: medicines, isLoading, isFetching } = useQuery({
-    queryKey: ["medicines", debouncedSearch, category, manufacturer, sort],
+    queryKey: ["medicines", debouncedSearch, category, manufacturer, sort, isFeatured],
     queryFn: () => medicineService.getAllMedicines({ 
       search: debouncedSearch, 
       category, 
       manufacturer, 
-      sort 
+      sort,
+      isFeatured
     }),
-    initialData: search || category || manufacturer || sort ? undefined : initialData,
+    initialData: search || category || manufacturer || sort || isFeatured ? undefined : initialData,
     staleTime: 60 * 1000,
   });
 
@@ -41,9 +43,15 @@ export function MedicineGrid({ initialData }: MedicineGridProps) {
   return (
     <div className="flex-1 min-w-0">
       {/* Active filter tags */}
-      {(search || category || manufacturer) && (
+      {(search || category || manufacturer || isFeatured) && (
         <div className="flex flex-wrap items-center gap-2 mb-6">
           <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Active:</span>
+          {isFeatured && (
+            <span className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 text-xs font-bold px-3 py-1.5 rounded-full border border-amber-100 shadow-sm">
+              <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
+              Featured Products
+            </span>
+          )}
           {search && (
             <span className="inline-flex items-center gap-1.5 bg-[#00bc8c]/10 text-[#00bc8c] text-xs font-bold px-3 py-1.5 rounded-full">
               Search: &ldquo;{search}&rdquo;

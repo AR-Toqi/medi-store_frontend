@@ -6,7 +6,7 @@ import { LogOut } from "lucide-react";
 import { authService } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useUser } from "@/providers/user-provider";
+import { useUser } from "@/hooks/use-user";
 import { logoutAction } from "@/app/actions/user.actions";
 
 export function LogoutButton() {

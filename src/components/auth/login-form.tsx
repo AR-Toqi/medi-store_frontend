@@ -16,15 +16,19 @@ import {
   Lock
 } from "lucide-react";
 import { loginAction } from "@/app/(commonLayout)/(auth)/login/_action";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
 import React from "react";
-import { useUser } from "@/providers/user-provider";
+import { useUser } from "@/hooks/use-user";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
   const { setUser } = useUser();
+  const callbackUrl = searchParams.get("callbackUrl");
 
   const form = useForm({
     defaultValues: {
@@ -45,11 +49,16 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
           if (result.data?.user) {
             setUser(result.data.user);
           }
+
+          // Force fresh fetch to ensure cookies are synchronized
+          await queryClient.invalidateQueries({ queryKey: ["user"] });
           
           const role = result.data?.user?.role || result.data?.role;
           
           if (role === "ADMIN") {
             router.push("/admin");
+          } else if (callbackUrl) {
+            router.push(callbackUrl);
           } else {
             router.push("/");
           }

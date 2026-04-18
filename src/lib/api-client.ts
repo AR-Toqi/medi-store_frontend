@@ -1,7 +1,9 @@
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+export const API_BASE_URL = typeof window !== "undefined" 
+  ? "" // Use local proxy in the browser for same-origin cookies
+  : (process.env.NEXT_PUBLIC_API_URL || "https://medi-store-backend-u9ux.onrender.com"); // Fallback for server-side/build
 
-if (!API_BASE_URL) {
-  throw new Error("NEXT_PUBLIC_API_URL is not defined");
+if (!API_BASE_URL && typeof window === "undefined") {
+  console.warn("NEXT_PUBLIC_API_URL is not defined, using fallback");
 }
 
 export type ApiResponse<T> = {
@@ -13,6 +15,8 @@ export type ApiResponse<T> = {
 interface ExtendedRequestInit extends RequestInit {
   isRetry?: boolean;
   skipRedirect?: boolean;
+  skipRefresh?: boolean;
+  returnFullResponse?: boolean;
 }
 
 /**
@@ -114,7 +118,7 @@ export async function fetcher<T>(
   await handleServerCookies(response);
 
   // Auto-refresh logic for 401 Unauthorized
-  if (response.status === 401 && !options?.isRetry && !endpoint.includes("/refresh-token")) {
+  if (response.status === 401 && !options?.isRetry && !options?.skipRefresh && !endpoint.includes("/refresh-token")) {
     try {
       // Attempt to refresh the token
       const refreshResponse = await fetch(`${API_BASE_URL}/api/auth/refresh-token`, {
@@ -158,5 +162,11 @@ export async function fetcher<T>(
   }
 
   const data = await response.json();
-  return data.data;
+  
+  if (options?.returnFullResponse) {
+    return data;
+  }
+  
+  // Return nested data property if it exists, otherwise return the whole object
+  return data.data !== undefined ? data.data : data;
 }

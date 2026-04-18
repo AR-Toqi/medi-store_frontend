@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { ShoppingCart, Minus, Plus, Check } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Check, Loader2 } from "lucide-react";
+import { useCart } from "@/hooks/use-cart";
 
 interface AddToCartButtonProps {
   medicineId: string;
@@ -9,14 +10,20 @@ interface AddToCartButtonProps {
 }
 
 export function AddToCartButton({ medicineId, disabled }: AddToCartButtonProps) {
+  const { addItem, isAdding } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
-  function handleAddToCart() {
-    if (disabled) return;
-    // TODO: integrate with cart logic
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+  async function handleAddToCart() {
+    if (disabled || isAdding) return;
+    
+    const success = addItem(medicineId, quantity);
+    
+    if (success) {
+      // Provide a short visual success state
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2000);
+    }
   }
 
   return (
@@ -45,16 +52,21 @@ export function AddToCartButton({ medicineId, disabled }: AddToCartButtonProps) 
       {/* Add to Cart */}
       <button
         onClick={handleAddToCart}
-        disabled={disabled}
+        disabled={disabled || isAdding}
         className={`flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-black transition-all duration-300 active:scale-95 shadow-lg ${
-          disabled
+          disabled || isAdding
             ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
             : added
               ? "bg-emerald-500 text-white shadow-emerald-500/25"
               : "bg-[#00bc8c] text-white hover:bg-[#00a37b] shadow-[#00bc8c]/25 hover:shadow-[#00bc8c]/40"
         }`}
       >
-        {added ? (
+        {isAdding ? (
+          <>
+            <Loader2 className="w-5 h-5 animate-spin" strokeWidth={3} />
+            Adding...
+          </>
+        ) : added ? (
           <>
             <Check className="w-5 h-5" strokeWidth={3} />
             Added to Cart

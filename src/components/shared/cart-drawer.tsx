@@ -1,0 +1,173 @@
+"use client";
+
+import React from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { ShoppingCart, X, Plus, Minus, Trash2, ArrowRight, ShoppingBag } from "lucide-react";
+import { useCart } from "@/hooks/use-cart";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
+interface CartDrawerProps {
+  children: React.ReactNode;
+}
+
+export function CartDrawer({ children }: CartDrawerProps) {
+  const { cart, isLoading, error, updateQuantity, removeItem, isUpdating, isRemoving } = useCart();
+  const [open, setOpen] = React.useState(false);
+
+  const items = cart?.items || [];
+  const summary = cart?.summary || { totalItems: 0, cartTotal: 0, hasUnavailableItems: false };
+
+  return (
+    <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[150] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 transition-all duration-300" />
+        <Dialog.Content className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white shadow-2xl z-[151] flex flex-col data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right duration-500">
+          
+          {/* Header */}
+          <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-white sticky top-0 z-10">
+            <div className="flex items-center gap-3">
+              <div className="bg-[#00bc8c]/10 p-2.5 rounded-2xl">
+                <ShoppingCart className="w-5 h-5 text-[#00bc8c]" />
+              </div>
+               <div>
+                <Dialog.Title className="text-xl font-black text-slate-800 tracking-tight">Your Cart</Dialog.Title>
+                <Dialog.Description className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                  Review your selected medications before checkout. {summary.totalItems} items selected.
+                </Dialog.Description>
+              </div>
+            </div>
+            <Dialog.Close asChild>
+              <button className="p-2 hover:bg-slate-50 rounded-xl text-slate-400 hover:text-slate-600 transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </Dialog.Close>
+          </div>
+
+          {/* Cart Items */}
+          <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+            {isLoading ? (
+              <div className="space-y-6">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="flex gap-4 animate-pulse">
+                    <div className="w-20 h-20 bg-slate-100 rounded-2xl" />
+                    <div className="flex-1 space-y-3 py-1">
+                      <div className="h-4 bg-slate-100 rounded-full w-3/4" />
+                      <div className="h-3 bg-slate-100 rounded-full w-1/2" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : error ? (
+              <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-20">
+                <div className="bg-red-50 p-8 rounded-[2.5rem] border border-red-100/50">
+                  <ShoppingCart className="w-16 h-16 text-red-200" strokeWidth={1} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-slate-800 tracking-tight">Session Expired</h3>
+                  <p className="text-sm font-medium text-slate-400 mt-1 max-w-[200px]">Please sign in again to view and manage your cart.</p>
+                </div>
+                <Link href="/login">
+                  <Button className="bg-[#00bc8c] hover:bg-[#00a37b] rounded-2xl h-11 px-8 font-bold mt-4 shadow-lg shadow-[#00bc8c]/20">
+                    Sign In
+                  </Button>
+                </Link>
+              </div>
+            ) : items.length > 0 ? (
+              items.map((item) => (
+                <div key={item.id} className="group relative flex gap-4 bg-white">
+                  <div className="w-24 h-24 rounded-2xl overflow-hidden bg-slate-50 border border-slate-100 shrink-0 group-hover:scale-105 transition-transform duration-300">
+                    <img 
+                      src={item.medicine.imageUrl || "https://placehold.co/100x100?text=+"} 
+                      alt={item.medicine.name} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
+                    <div>
+                      <h4 className="text-sm font-black text-slate-800 truncate group-hover:text-[#00bc8c] transition-colors">{item.medicine.name}</h4>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{item.medicine.manufacturer}</p>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center bg-slate-50 border border-slate-100 rounded-xl p-1">
+                        <button 
+                          onClick={() => updateQuantity(item.medicineId, Math.max(1, item.quantity - 1))}
+                          className="p-1.5 hover:bg-white hover:text-[#00bc8c] rounded-lg transition-all text-slate-400"
+                          disabled={isUpdating}
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+                        <span className="w-8 text-center text-xs font-black text-slate-700">{item.quantity}</span>
+                        <button 
+                          onClick={() => updateQuantity(item.medicineId, item.quantity + 1)}
+                          className="p-1.5 hover:bg-white hover:text-[#00bc8c] rounded-lg transition-all text-slate-400"
+                          disabled={isUpdating}
+                        >
+                          <Plus className="w-3 h-3" />
+                        </button>
+                      </div>
+                      <div className="text-right">
+                         <p className="text-sm font-black text-slate-900">${item.itemTotal.toFixed(2)}</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <button 
+                    onClick={() => removeItem(item.medicineId)}
+                    className="absolute -top-1 -right-1 p-1.5 bg-white border border-slate-100 rounded-lg text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all shadow-sm"
+                    disabled={isRemoving}
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-20">
+                <div className="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100">
+                  <ShoppingBag className="w-16 h-16 text-slate-200" strokeWidth={1} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-slate-800 tracking-tight">Your cart is empty</h3>
+                  <p className="text-sm font-medium text-slate-400 mt-1 max-w-[200px]">Looks like you haven&apos;t added any medicines yet.</p>
+                </div>
+                <Dialog.Close asChild>
+                  <Button className="bg-[#00bc8c] hover:bg-[#00a37b] rounded-2xl h-11 px-8 font-bold mt-4 shadow-lg shadow-[#00bc8c]/20">
+                    Browse Medicines
+                  </Button>
+                </Dialog.Close>
+              </div>
+            )
+}
+          </div>
+
+          {/* Footer */}
+          {items.length > 0 && (
+            <div className="p-6 border-t border-slate-100 bg-white space-y-4">
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="font-bold text-slate-400 uppercase tracking-widest text-[10px]">Subtotal</span>
+                  <span className="font-black text-slate-500">${summary.cartTotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-xl pt-2">
+                  <span className="font-black text-slate-800 tracking-tight">Total</span>
+                  <span className="font-black text-[#00bc8c] tracking-tight">${summary.cartTotal.toFixed(2)}</span>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-3 pt-2">
+                <Button className="w-full bg-[#00bc8c] hover:bg-[#00a37b] h-14 rounded-2xl text-base font-black shadow-xl shadow-[#00bc8c]/20 gap-2 group">
+                  Checkout Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                <p className="text-[10px] text-center font-bold text-slate-400 uppercase tracking-widest">
+                  Secure Medical Checkout Powered by MediStore
+                </p>
+              </div>
+            </div>
+          )}
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+}

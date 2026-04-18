@@ -2,11 +2,14 @@
 
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Search, ShoppingCart, BriefcaseMedical, Menu, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useUser } from "@/providers/user-provider";
+import { useUser } from "@/hooks/use-user";
 import { NavSearch } from "@/components/shared/nav-search";
+import { useCart } from "@/hooks/use-cart";
+import { CartDrawer } from "@/components/shared/cart-drawer";
 import {
   Sheet,
   SheetContent,
@@ -16,7 +19,12 @@ import {
 } from "@/components/ui/sheet";
 
 export function Navbar() {
-  const { user, loading } = useUser();
+  const { user, isLoading } = useUser();
+  const { cart } = useCart();
+  const router = useRouter();
+
+  const cartCount = cart?.summary?.totalItems || 0;
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60 shadow-sm">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
@@ -51,8 +59,14 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-3">
-            {loading ? (
-              <div className="w-24 h-10 bg-slate-100 animate-pulse rounded-xl"></div>
+            {isLoading ? (
+              <div className="flex items-center gap-3 p-1.5 pr-4 rounded-2xl border border-slate-100/50 animate-pulse">
+                <div className="w-10 h-10 rounded-xl bg-slate-100" />
+                <div className="flex flex-col gap-1.5">
+                  <div className="w-20 h-2.5 bg-slate-100 rounded" />
+                  <div className="w-12 h-2 bg-slate-50 rounded" />
+                </div>
+              </div>
             ) : user ? (
               <Link href="/profile" className="flex items-center gap-3 p-1.5 pr-4 hover:bg-slate-50 rounded-2xl transition-all border border-transparent hover:border-slate-100 group">
                 <div className="w-10 h-10 rounded-xl overflow-hidden bg-[#00bc8c]/10 flex items-center justify-center border-2 border-white shadow-sm group-hover:shadow-md transition-all">
@@ -84,12 +98,16 @@ export function Navbar() {
           </div>
 
           {/* Cart Section */}
-          <Link href="/cart" className="relative p-2.5 hover:bg-slate-50 rounded-2xl transition-all group active:scale-90">
-            <ShoppingCart className="w-7 h-7 text-slate-600 group-hover:text-[#00bc8c] transition-colors duration-300" strokeWidth={2} />
-            <span className="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
-              3
-            </span>
-          </Link>
+          <CartDrawer>
+            <button className="relative p-2.5 hover:bg-slate-50 rounded-2xl transition-all group active:scale-90">
+              <ShoppingCart className="w-7 h-7 text-slate-600 group-hover:text-[#00bc8c] transition-colors duration-300" strokeWidth={2} />
+              {cartCount > 0 && (
+                <span className="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-black min-w-5 h-5 px-1 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+          </CartDrawer>
         </div>
 
         {/* Mobile menu - simplified for now */}
