@@ -23,6 +23,7 @@ import { AuthNotifier } from "@/components/auth/auth-notifier";
 import { Suspense } from "react";
 
 import { UserProvider } from "@/providers/user-provider";
+import { QueryProvider } from "@/providers/query-provider";
 
 export default function RootLayout({
   children,
@@ -32,14 +33,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <Toaster position="top-center" richColors />
         <Suspense fallback={null}>
           <AuthNotifier />
         </Suspense>
         <UserProvider>
-          {children}
+          <QueryProvider>
+            {children}
+          </QueryProvider>
         </UserProvider>
       </body>
     </html>

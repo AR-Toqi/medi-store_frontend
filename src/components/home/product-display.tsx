@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { CategoryFilter } from "./category-filter";
-import { ProductCard } from "./product-card";
+import { ProductCard } from "@/components/shared/product-card";
 import { Medicine } from "@/types/medicine";
 import { Category } from "@/types/category";
 

@@ -6,6 +6,7 @@ import { Search, ShoppingCart, BriefcaseMedical, Menu, X, User } from "lucide-re
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@/providers/user-provider";
+import { NavSearch } from "@/components/shared/nav-search";
 import {
   Sheet,
   SheetContent,
@@ -31,17 +32,16 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Search Bar */}
-        <div className="hidden md:flex flex-1 max-w-xl mx-8">
-          <Input
-            icon={<Search />}
-            placeholder="Search medicines, health products..."
-            className="h-12 border-muted-foreground/10 bg-slate-50/50 focus-visible:bg-white rounded-2xl shadow-inner focus-visible:shadow-md transition-all duration-300"
-          />
+        <div className="hidden md:block flex-1 max-w-xl mx-8">
+          <NavSearch />
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center gap-8 shrink-0">
           <nav className="flex items-center gap-8 text-[13px] font-bold text-slate-600 uppercase tracking-wider">
+            <Link href="/shop" className="hover:text-[#00bc8c] transition-colors">
+              Shop
+            </Link>
             <Link href="/blogs" className="hover:text-[#00bc8c] transition-colors">
               Health Blogs
             </Link>
@@ -116,8 +116,9 @@ export function Navbar() {
                 </SheetTitle>
               </SheetHeader>
               <div className="flex flex-col gap-8 py-4">
-                 <Input icon={<Search />} placeholder="Search..." className="rounded-xl" />
+                 <NavSearch />
                  <nav className="flex flex-col gap-6 text-lg font-bold">
+                    <Link href="/shop" className="hover:text-[#00bc8c] transition-colors">Shop</Link>
                     <Link href="/blogs" className="hover:text-[#00bc8c] transition-colors">Health Blogs</Link>
                     <Link href="/locator" className="hover:text-[#00bc8c] transition-colors">Pharmacy Locator</Link>
                  </nav>

@@ -15,10 +15,10 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="bg-slate-50/30 pb-20 overflow-hidden min-h-screen">
+    <div className="relative bg-slate-50/30 pb-20 min-h-screen">
       {/* Background Decoration Blobs */}
-      <div className="absolute top-[20%] right-[-15%] w-[50%] h-[40%] bg-[#00bc8c]/5 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute top-[70%] left-[-15%] w-[50%] h-[40%] bg-[#00bc8c]/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-[20%] -right-[10%] w-[40%] h-[40%] bg-[#00bc8c]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[70%] -left-[10%] w-[40%] h-[40%] bg-[#00bc8c]/5 rounded-full blur-[120px] pointer-events-none" />
 
       <Hero />
       <ValueProps />
