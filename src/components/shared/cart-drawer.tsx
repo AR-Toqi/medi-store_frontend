@@ -39,7 +39,7 @@ export function CartDrawer({ children }: CartDrawerProps) {
               </div>
             </div>
             <Dialog.Close asChild>
-              <button className="p-2 hover:bg-slate-50 rounded-xl text-slate-400 hover:text-slate-600 transition-colors">
+              <button className="p-2 hover:bg-slate-50 rounded-xl text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </Dialog.Close>
@@ -94,7 +94,7 @@ export function CartDrawer({ children }: CartDrawerProps) {
                       <div className="flex items-center bg-slate-50 border border-slate-100 rounded-xl p-1">
                         <button 
                           onClick={() => updateQuantity(item.medicineId, Math.max(1, item.quantity - 1))}
-                          className="p-1.5 hover:bg-white hover:text-[#00bc8c] rounded-lg transition-all text-slate-400"
+                          className="p-1.5 hover:bg-white hover:text-[#00bc8c] rounded-lg transition-all text-slate-400 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                           disabled={isUpdating}
                         >
                           <Minus className="w-3 h-3" />
@@ -102,7 +102,7 @@ export function CartDrawer({ children }: CartDrawerProps) {
                         <span className="w-8 text-center text-xs font-black text-slate-700">{item.quantity}</span>
                         <button 
                           onClick={() => updateQuantity(item.medicineId, item.quantity + 1)}
-                          className="p-1.5 hover:bg-white hover:text-[#00bc8c] rounded-lg transition-all text-slate-400"
+                          className="p-1.5 hover:bg-white hover:text-[#00bc8c] rounded-lg transition-all text-slate-400 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                           disabled={isUpdating}
                         >
                           <Plus className="w-3 h-3" />
@@ -116,7 +116,7 @@ export function CartDrawer({ children }: CartDrawerProps) {
                   
                   <button 
                     onClick={() => removeItem(item.medicineId)}
-                    className="absolute -top-1 -right-1 p-1.5 bg-white border border-slate-100 rounded-lg text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all shadow-sm"
+                    className="absolute -top-1 -right-1 p-1.5 bg-white border border-slate-100 rounded-lg text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all shadow-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                     disabled={isRemoving}
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -133,9 +133,11 @@ export function CartDrawer({ children }: CartDrawerProps) {
                   <p className="text-sm font-medium text-slate-400 mt-1 max-w-[200px]">Looks like you haven&apos;t added any medicines yet.</p>
                 </div>
                 <Dialog.Close asChild>
-                  <Button className="bg-[#00bc8c] hover:bg-[#00a37b] rounded-2xl h-11 px-8 font-bold mt-4 shadow-lg shadow-[#00bc8c]/20">
-                    Browse Medicines
-                  </Button>
+                  <Link href="/shop">
+                    <Button className="bg-[#00bc8c] hover:bg-[#00a37b] rounded-2xl h-11 px-8 font-bold mt-4 shadow-lg shadow-[#00bc8c]/20">
+                      Browse Medicines
+                    </Button>
+                  </Link>
                 </Dialog.Close>
               </div>
             )
@@ -157,7 +159,7 @@ export function CartDrawer({ children }: CartDrawerProps) {
               </div>
               
               <div className="grid grid-cols-1 gap-3 pt-2">
-                <Button className="w-full bg-[#00bc8c] hover:bg-[#00a37b] h-14 rounded-2xl text-base font-black shadow-xl shadow-[#00bc8c]/20 gap-2 group">
+                <Button className="w-full bg-[#00bc8c] hover:bg-[#00a37b] h-14 rounded-2xl text-base font-black shadow-xl shadow-[#00bc8c]/20 gap-2 group cursor-pointer">
                   Checkout Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <p className="text-[10px] text-center font-bold text-slate-400 uppercase tracking-widest">

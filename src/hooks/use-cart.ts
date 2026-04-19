@@ -62,30 +62,101 @@ export function useCart() {
   const updateQuantityMutation = useMutation({
     mutationFn: ({ medicineId, quantity }: { medicineId: string, quantity: number }) => 
       cartService.updateQuantity(medicineId, quantity),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    onMutate: async ({ medicineId, quantity }) => {
+      await queryClient.cancelQueries({ queryKey: ["cart"] });
+      const previousCart = queryClient.getQueryData<any>(["cart"]);
+      
+      if (previousCart?.items) {
+        queryClient.setQueryData(["cart"], (old: any) => {
+          if (!old?.items) return old;
+          const newItems = old.items.map((item: any) => {
+            if (item.medicineId === medicineId) {
+              return { 
+                ...item, 
+                quantity: quantity,
+                itemTotal: Number(item.medicine.price) * quantity 
+              };
+            }
+            return item;
+          });
+          const cartTotal = newItems.reduce((acc: number, item: any) => acc + item.itemTotal, 0);
+          const totalItems = newItems.reduce((acc: number, item: any) => acc + item.quantity, 0);
+          
+          return {
+            ...old,
+            items: newItems,
+            summary: { ...old.summary, cartTotal, totalItems }
+          };
+        });
+      }
+      return { previousCart };
     },
-    onError: (error: Error) => {
+    onError: (error: Error, _, context) => {
+      if (context?.previousCart) {
+        queryClient.setQueryData(["cart"], context.previousCart);
+      }
       toast.error(error.message || "Failed to update quantity");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
     }
   });
 
   const removeMutation = useMutation({
     mutationFn: (medicineId: string) => cartService.removeItem(medicineId),
+    onMutate: async (medicineId) => {
+      await queryClient.cancelQueries({ queryKey: ["cart"] });
+      const previousCart = queryClient.getQueryData<any>(["cart"]);
+      
+      if (previousCart?.items) {
+        queryClient.setQueryData(["cart"], (old: any) => {
+          if (!old?.items) return old;
+          const newItems = old.items.filter((item: any) => item.medicineId !== medicineId);
+          const cartTotal = newItems.reduce((acc: number, item: any) => acc + item.itemTotal, 0);
+          const totalItems = newItems.reduce((acc: number, item: any) => acc + item.quantity, 0);
+          
+          return {
+            ...old,
+            items: newItems,
+            summary: { ...old.summary, cartTotal, totalItems }
+          };
+        });
+      }
+      return { previousCart };
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
       toast.success("Item removed from cart");
     },
-    onError: (error: Error) => {
+    onError: (error: Error, _, context) => {
+      if (context?.previousCart) {
+        queryClient.setQueryData(["cart"], context.previousCart);
+      }
       toast.error(error.message || "Failed to remove item");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
     }
   });
 
   const clearMutation = useMutation({
     mutationFn: cartService.clearCart,
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["cart"] });
+      const previousCart = queryClient.getQueryData<any>(["cart"]);
+      queryClient.setQueryData(["cart"], { items: [], summary: { totalItems: 0, cartTotal: 0, hasUnavailableItems: false } });
+      return { previousCart };
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
       toast.success("Cart cleared");
+    },
+    onError: (error: Error, _, context) => {
+      if (context?.previousCart) {
+        queryClient.setQueryData(["cart"], context.previousCart);
+      }
+      toast.error(error.message || "Failed to clear cart");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
     }
   });
 

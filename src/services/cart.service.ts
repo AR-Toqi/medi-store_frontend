@@ -28,10 +28,12 @@ export const cartService = {
   getCart: async () => {
     const response = await fetcher<any>("/api/cart", { returnFullResponse: true });
     
-    // Map backend 'data' to frontend 'items' and 'meta' to 'summary'
+    // The backend response format is: { success: true, data: { items: [], summary: {} } }
+    const cartData = response.data || {};
+    
     return {
-      items: response.data || [],
-      summary: response.meta || { totalItems: 0, cartTotal: 0, hasUnavailableItems: false }
+      items: cartData.items || [],
+      summary: cartData.summary || { totalItems: 0, cartTotal: 0, hasUnavailableItems: false }
     } as CartResponse;
   },
 

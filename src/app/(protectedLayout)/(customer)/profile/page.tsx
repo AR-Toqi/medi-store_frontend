@@ -31,7 +31,7 @@ export default async function ProfilePage() {
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <div className="flex flex-col md:flex-row gap-8 items-start animate-in fade-in slide-in-from-bottom-4 duration-700">
-        
+
         {/* Left Column - Avatar & Basic Info */}
         <Card className="w-full md:w-1/3 border-none shadow-xl shadow-slate-200/50 rounded-[2.5rem] overflow-hidden bg-gradient-to-b from-white to-slate-50/50">
           <CardContent className="pt-12 pb-8 flex flex-col items-center">
@@ -44,9 +44,8 @@ export default async function ProfilePage() {
                 )}
               </div>
             </div>
-            
+
             <h2 className="mt-8 text-2xl font-black text-slate-800">{user.name}</h2>
-            <p className="text-[#00bc8c] font-bold text-sm uppercase tracking-widest">{user.role}</p>
 
             <div className="w-full mt-10 space-y-3">
               <Link href="/profile/update" className="block w-full">
@@ -85,7 +84,7 @@ export default async function ProfilePage() {
               </div>
               {!user.emailVerified && (
                 <Link href={`/verify-email?email=${user.email}`}>
-                   <Button size="sm" className="bg-[#00bc8c] text-white rounded-xl font-bold">Verify Now</Button>
+                  <Button size="sm" className="bg-[#00bc8c] text-white rounded-xl font-bold">Verify Now</Button>
                 </Link>
               )}
             </CardContent>

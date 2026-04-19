@@ -78,9 +78,9 @@ export function ProductCard({ medicine }: { medicine: Medicine }) {
                }
              }}
              disabled={isOutOfStock || isAdding}
-             className={`p-4 rounded-2xl transition-all duration-300 shadow-sm flex items-center justify-center min-w-[56px] ${
+             className={`p-4 rounded-2xl transition-all duration-300 shadow-sm flex items-center justify-center min-w-[56px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${
                isOutOfStock
-                 ? "bg-slate-100 text-slate-300 cursor-not-allowed"
+                 ? "bg-slate-100 text-slate-300"
                  : "bg-[#00bc8c]/10 text-[#00bc8c] hover:bg-[#00bc8c] hover:text-white hover:scale-110 active:scale-90"
              }`}
           >
