@@ -159,9 +159,13 @@ export function CartDrawer({ children }: CartDrawerProps) {
               </div>
               
               <div className="grid grid-cols-1 gap-3 pt-2">
-                <Button className="w-full bg-[#00bc8c] hover:bg-[#00a37b] h-14 rounded-2xl text-base font-black shadow-xl shadow-[#00bc8c]/20 gap-2 group cursor-pointer">
-                  Checkout Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                <Dialog.Close asChild>
+                  <Link href="/checkout" className="w-full">
+                    <Button className="w-full bg-[#00bc8c] hover:bg-[#00a37b] h-14 rounded-2xl text-base font-black shadow-xl shadow-[#00bc8c]/20 gap-2 group cursor-pointer">
+                      Checkout Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                </Dialog.Close>
                 <p className="text-[10px] text-center font-bold text-slate-400 uppercase tracking-widest">
                   Secure Medical Checkout Powered by MediStore
                 </p>

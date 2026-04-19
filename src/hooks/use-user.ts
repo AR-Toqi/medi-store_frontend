@@ -26,7 +26,6 @@ export function useUser() {
     // If setting to null, we also invalidate to be safe
     if (newUser === null) {
       queryClient.setQueryData(["user"], null);
-      queryClient.invalidateQueries({ queryKey: ["user"] });
     } else {
       queryClient.setQueryData(["user"], newUser);
     }

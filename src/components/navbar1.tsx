@@ -50,11 +50,8 @@ export function Navbar() {
             <Link href="/shop" className="hover:text-[#00bc8c] transition-colors">
               Shop
             </Link>
-            <Link href="/blogs" className="hover:text-[#00bc8c] transition-colors">
-              Health Blogs
-            </Link>
-            <Link href="/locator" className="hover:text-[#00bc8c] transition-colors">
-              Pharmacy Locator
+            <Link href="/categories" className="hover:text-[#00bc8c] transition-colors">
+              All Categories
             </Link>
           </nav>
 
@@ -137,8 +134,7 @@ export function Navbar() {
                  <NavSearch />
                  <nav className="flex flex-col gap-6 text-lg font-bold">
                     <Link href="/shop" className="hover:text-[#00bc8c] transition-colors">Shop</Link>
-                    <Link href="/blogs" className="hover:text-[#00bc8c] transition-colors">Health Blogs</Link>
-                    <Link href="/locator" className="hover:text-[#00bc8c] transition-colors">Pharmacy Locator</Link>
+                    <Link href="/categories" className="hover:text-[#00bc8c] transition-colors">All Categories</Link>
                  </nav>
                  <div className="flex flex-col gap-3 pt-4 border-t border-slate-100">
                     <Button className="w-full bg-[#00bc8c] hover:bg-[#00bc8c]/90 rounded-xl h-12 font-bold">Login</Button>

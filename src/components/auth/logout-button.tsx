@@ -8,18 +8,23 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useUser } from "@/hooks/use-user";
 import { logoutAction } from "@/app/actions/user.actions";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function LogoutButton() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { setUser } = useUser();
 
   const handleLogout = async () => {
     try {
-      // Immediately clear local state for instant UI feedback
+      // Clear cache and local state for instant UI feedback without refetching
+      queryClient.clear();
       setUser(null);
       await logoutAction();
     } catch (error: any) {
-      if (error.message?.includes("NEXT_REDIRECT")) return;
+      if (error.message?.includes("NEXT_REDIRECT")) {
+        throw error;
+      }
       toast.error("Logout failed");
     }
   };

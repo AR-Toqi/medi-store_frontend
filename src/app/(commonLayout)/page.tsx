@@ -7,6 +7,8 @@ import { Newsletter } from "@/components/home/newsletter";
 import { medicineService } from "@/services/medicine.service";
 import { categoryService } from "@/services/category.service";
 
+export const revalidate = 3600; // ISR Revalidate every 1 hour (3600 seconds)
+
 export default async function Home() {
   // Server-side data fetching for better SEO and performance
   const [categories, medicines] = await Promise.all([
