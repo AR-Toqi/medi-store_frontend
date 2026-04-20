@@ -1,16 +1,11 @@
 "use client";
 
-import { signUpAction } from "@/app/(commonLayout)/(auth)/signup/_action";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card";
-import { FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { signupSchema } from "@/zod/auth.validation";
-import { useForm } from "@tanstack/react-form";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import Link from "next/link";
 import { 
   BriefcaseMedical, 
   Mail, 
@@ -18,41 +13,56 @@ import {
   User, 
   ShieldCheck, 
   BadgeCheck, 
-  CreditCard
+  CreditCard,
+  Loader2
 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import Link from "next/link";
-import React from "react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+import { signUpAction } from "@/app/(commonLayout)/(auth)/signup/_action";
+import { signupSchema, type SignupValues } from "@/zod/auth.validation";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm({
+  const form = useForm<SignupValues>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       name: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
-    validators: {
-      onChange: signupSchema,
-    },
-    onSubmit: async ({ value }) => {
-      try {
-        const result = await signUpAction(value);
-
-        if (result.success) {
-          toast.success(result.message);
-          router.push(`/verify-email?email=${value.email}`);
-        } else {
-          toast.error(result.message);
-        }
-      } catch (err: any) {
-        toast.error(err.message || "An unexpected error occurred. Please try again.");
-      }
-    },
   });
+
+  const onSubmit = async (value: SignupValues) => {
+    setIsSubmitting(true);
+    try {
+      const result = await signUpAction(value);
+
+      if (result.success) {
+        toast.success(result.message);
+        router.push(`/verify-email?email=${value.email}`);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (err: any) {
+      toast.error(err.message || "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center w-full max-w-xl mx-auto py-12 animate-in fade-in slide-in-from-bottom-5 duration-700">
@@ -81,118 +91,107 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
           </CardHeader>
 
           <CardContent className="p-0">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                form.handleSubmit();
-              }}
-              className="space-y-7"
-            >
-              <div className="space-y-5">
-                {/* Full Name */}
-                <form.Field
-                  name="name"
-                  children={(field) => (
-                    <div className="space-y-2">
-                      <FieldLabel className="text-sm font-bold text-foreground/80 ml-1">Full Name</FieldLabel>
-                      <Input
-                        icon={<User />}
-                        placeholder="John Doe"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                      <FieldError errors={field.state.meta.errors} className="ml-1" />
-                    </div>
-                  )}
-                />
-
-                {/* Email Address */}
-                <form.Field
-                  name="email"
-                  children={(field) => (
-                    <div className="space-y-2">
-                      <FieldLabel className="text-sm font-bold text-foreground/80 ml-1">Email Address</FieldLabel>
-                      <Input
-                        type="email"
-                        icon={<Mail />}
-                        placeholder="name@company.com"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                      <FieldError errors={field.state.meta.errors} className="ml-1" />
-                    </div>
-                  )}
-                />
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  {/* Password */}
-                  <form.Field
-                    name="password"
-                    children={(field) => (
-                      <div className="space-y-2">
-                        <FieldLabel className="text-sm font-bold text-foreground/80 ml-1">Password</FieldLabel>
-                        <Input
-                          type="password"
-                          icon={<Lock />}
-                          placeholder="••••••••"
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                        />
-                        <FieldError errors={field.state.meta.errors} className="ml-1" />
-                      </div>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
+                <div className="space-y-5">
+                  {/* Full Name */}
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-bold text-foreground/80 ml-1">Full Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            icon={<User />}
+                            placeholder="John Doe"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="ml-1" />
+                      </FormItem>
                     )}
                   />
 
-                  {/* Confirm Password */}
-                  <form.Field
-                    name="confirmPassword"
-                    children={(field) => (
-                      <div className="space-y-2">
-                        <FieldLabel className="text-sm font-bold text-foreground/80 ml-1">Confirm Password</FieldLabel>
-                        <Input
-                          type="password"
-                          icon={<ShieldCheck />}
-                          placeholder="••••••••"
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                        />
-                        <FieldError errors={field.state.meta.errors} className="ml-1" />
-                      </div>
+                  {/* Email Address */}
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-bold text-foreground/80 ml-1">Email Address</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="email"
+                            icon={<Mail />}
+                            placeholder="name@company.com"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="ml-1" />
+                      </FormItem>
                     )}
                   />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    {/* Password */}
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm font-bold text-foreground/80 ml-1">Password</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="password"
+                              icon={<Lock />}
+                              placeholder="••••••••"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage className="ml-1" />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Confirm Password */}
+                    <FormField
+                      control={form.control}
+                      name="confirmPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm font-bold text-foreground/80 ml-1">Confirm Password</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="password"
+                              icon={<ShieldCheck />}
+                              placeholder="••••••••"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage className="ml-1" />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
 
-
-              </div>
-
-              <form.Subscribe
-                selector={(state) => [state.canSubmit, state.isSubmitting]}
-                children={([canSubmit, isSubmitting]) => (
-                  <Button
-                    type="submit"
-                    disabled={!canSubmit || isSubmitting}
-                    className="w-full h-14 text-base font-bold transition-all shadow-xl shadow-[#00bc8c]/10 active:scale-[0.98] bg-[#00bc8c] hover:bg-[#00a37b] rounded-xl text-white mt-4 disabled:opacity-50 disabled:bg-[#00bc8c]/40"
-                  >
-                    {isSubmitting ? (
-                      <div className="flex items-center gap-2">
-                        <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        Creating Account...
-                      </div>
-                    ) : (
-                      "Create Account"
-                    )}
-                  </Button>
-                )}
-              />
-            </form>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full h-14 text-base font-bold transition-all shadow-xl shadow-[#00bc8c]/10 active:scale-[0.98] bg-[#00bc8c] hover:bg-[#00a37b] rounded-xl text-white mt-4 disabled:opacity-50 disabled:bg-[#00bc8c]/40"
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                       <Loader2 className="h-5 w-5 animate-spin" />
+                       Creating Account...
+                    </div>
+                  ) : (
+                    "Create Account"
+                  )}
+                </Button>
+              </form>
+            </Form>
 
             <div className="mt-10 text-center text-sm">
               <p className="text-muted-foreground font-medium">

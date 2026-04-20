@@ -18,10 +18,21 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+import dynamic from "next/dynamic";
+
+const SellerNavbar = dynamic(() => import("@/components/seller/seller-navbar").then(mod => mod.SellerNavbar), {
+  ssr: true, // We want it for SSR as well
+});
+
 export function Navbar() {
   const { user, isLoading } = useUser();
   const { cart } = useCart();
   const router = useRouter();
+
+  // If user is a seller, show the specialized seller navbar
+  if (user?.role === "SELLER") {
+    return <SellerNavbar />;
+  }
 
   const cartCount = cart?.summary?.totalItems || 0;
 

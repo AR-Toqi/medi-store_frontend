@@ -1,75 +1,85 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card";
-import { FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { loginSchema } from "@/zod/auth.validation";
-import { useForm } from "@tanstack/react-form";
+import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import Link from "next/link";
+import { useQueryClient } from "@tanstack/react-query";
 import { 
   BriefcaseMedical, 
   Mail, 
-  Lock
+  Lock,
+  Loader2
 } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
 import { loginAction } from "@/app/(commonLayout)/(auth)/login/_action";
-import { useRouter, useSearchParams } from "next/navigation";
-import { toast } from "sonner";
-import Link from "next/link";
-import React from "react";
+import { loginSchema, type LoginValues } from "@/zod/auth.validation";
 import { useUser } from "@/hooks/use-user";
-import { useQueryClient } from "@tanstack/react-query";
 
 export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
   const { setUser } = useUser();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const callbackUrl = searchParams.get("callbackUrl");
 
-  const form = useForm({
+  const form = useForm<LoginValues>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
-    validators: {
-      onChange: loginSchema,
-    },
-    onSubmit: async ({ value }) => {
-      try {
-        const result = await loginAction(value);
-
-        if (result.success) {
-          toast.success(result.message);
-          
-          // Immediately update global state
-          if (result.data?.user) {
-            setUser(result.data.user);
-          }
-
-          // Force fresh fetch to ensure cookies are synchronized
-          await queryClient.invalidateQueries({ queryKey: ["user"] });
-          
-          const role = result.data?.user?.role || result.data?.role;
-          
-          if (role === "ADMIN") {
-            router.push("/admin");
-          } else if (callbackUrl) {
-            router.push(callbackUrl);
-          } else {
-            router.push("/");
-          }
-        } else {
-          toast.error(result.message);
-        }
-      } catch (err: any) {
-        toast.error(err.message || "Login failed. Please check your credentials.");
-      }
-    },
   });
+
+  const onSubmit = async (value: LoginValues) => {
+    setIsSubmitting(true);
+    try {
+      const result = await loginAction(value);
+
+      if (result.success) {
+        toast.success(result.message);
+        
+        // Immediately update global state
+        if (result.data?.user) {
+          setUser(result.data.user);
+        }
+
+        // Force fresh fetch to ensure cookies are synchronized
+        await queryClient.invalidateQueries({ queryKey: ["user"] });
+        
+        const role = result.data?.user?.role || result.data?.role;
+        
+        if (role === "ADMIN") {
+          router.push("/admin");
+        } else if (callbackUrl) {
+          router.push(callbackUrl);
+        } else {
+          router.push("/");
+        }
+      } else {
+        toast.error(result.message);
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Login failed. Please check your credentials.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center w-full max-w-xl mx-auto py-12 animate-in fade-in slide-in-from-bottom-5 duration-700">
@@ -98,85 +108,74 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
           </CardHeader>
 
           <CardContent className="p-0">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                form.handleSubmit();
-              }}
-              className="space-y-7"
-            >
-              <div className="space-y-5">
-                {/* Email Address */}
-                <form.Field
-                  name="email"
-                  children={(field) => (
-                    <div className="space-y-2">
-                      <FieldLabel className="text-sm font-bold text-foreground/80 ml-1">Email Address</FieldLabel>
-                      <Input
-                        type="email"
-                        icon={<Mail />}
-                        placeholder="name@company.com"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                      <FieldError errors={field.state.meta.errors} className="ml-1" />
-                    </div>
-                  )}
-                />
-
-                {/* Password */}
-                <form.Field
-                  name="password"
-                  children={(field) => (
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-center ml-1">
-                        <FieldLabel className="text-sm font-bold text-foreground/80">Password</FieldLabel>
-                        <Link 
-                          href="/forgot-password" 
-                          className="text-xs font-bold text-[#00bc8c] hover:underline"
-                        >
-                          Forgot password?
-                        </Link>
-                      </div>
-                      <Input
-                        type="password"
-                        icon={<Lock />}
-                        placeholder="••••••••"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                      <FieldError errors={field.state.meta.errors} className="ml-1" />
-                    </div>
-                  )}
-                />
-              </div>
-
-              <form.Subscribe
-                selector={(state) => [state.canSubmit, state.isSubmitting]}
-                children={([canSubmit, isSubmitting]) => (
-                  <Button
-                    type="submit"
-                    disabled={!canSubmit || isSubmitting}
-                    className="w-full h-14 text-base font-bold transition-all shadow-xl shadow-[#00bc8c]/10 active:scale-[0.98] bg-[#00bc8c] hover:bg-[#00a37b] rounded-xl text-white mt-4 disabled:opacity-50 disabled:bg-[#00bc8c]/40"
-                  >
-                    {isSubmitting ? (
-                      <div className="flex items-center gap-2">
-                        <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        Logging in...
-                      </div>
-                    ) : (
-                      "Sign In"
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
+                <div className="space-y-5">
+                  {/* Email Address */}
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-bold text-foreground/80 ml-1">Email Address</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="email"
+                            icon={<Mail />}
+                            placeholder="name@company.com"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="ml-1" />
+                      </FormItem>
                     )}
-                  </Button>
-                )}
-              />
-            </form>
+                  />
+
+                  {/* Password */}
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex justify-between items-center ml-1">
+                          <FormLabel className="text-sm font-bold text-foreground/80">Password</FormLabel>
+                          <Link 
+                            href="/forgot-password" 
+                            className="text-xs font-bold text-[#00bc8c] hover:underline"
+                          >
+                            Forgot password?
+                          </Link>
+                        </div>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            icon={<Lock />}
+                            placeholder="••••••••"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="ml-1" />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full h-14 text-base font-bold transition-all shadow-xl shadow-[#00bc8c]/10 active:scale-[0.98] bg-[#00bc8c] hover:bg-[#00a37b] rounded-xl text-white mt-4 disabled:opacity-50 disabled:bg-[#00bc8c]/40"
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                       <Loader2 className="h-5 w-5 animate-spin" />
+                       Logging in...
+                    </div>
+                  ) : (
+                    "Sign In"
+                  )}
+                </Button>
+              </form>
+            </Form>
 
             <div className="mt-10 text-center text-sm">
               <p className="text-muted-foreground font-medium">

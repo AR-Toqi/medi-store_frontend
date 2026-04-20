@@ -1,4 +1,5 @@
 import { fetcher } from "@/lib/api-client";
+import { SellerStats } from "@/types/seller";
 
 export const sellerService = {
   /**
@@ -17,6 +18,6 @@ export const sellerService = {
    * Get seller dashboard statistics
    */
   getDashboardStats: async () => {
-    return await fetcher("/api/seller/stats");
+    return await fetcher<SellerStats>("/api/seller/stats");
   },
 };

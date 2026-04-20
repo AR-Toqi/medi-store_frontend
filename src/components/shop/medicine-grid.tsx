@@ -32,7 +32,7 @@ export function MedicineGrid({ initialData }: MedicineGridProps) {
       category, 
       manufacturer, 
       sort,
-      isFeatured
+      isFeatured: isFeatured || undefined
     }),
     initialData: search || category || manufacturer || sort || isFeatured ? undefined : initialData,
     staleTime: 60 * 1000,

@@ -1,55 +1,65 @@
 "use client";
 
-import { verifyEmailAction } from "@/app/(commonLayout)/(auth)/verify-email/_action";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card";
-import { FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { verifyEmailSchema } from "@/zod/auth.validation";
-import { useForm } from "@tanstack/react-form";
+import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import Link from "next/link";
 import { 
   BriefcaseMedical, 
   ShieldCheck, 
   Mail, 
-  ArrowLeft
+  ArrowLeft,
+  Loader2
 } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { toast } from "sonner";
-import Link from "next/link";
-import React, { useEffect } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+import { verifyEmailAction } from "@/app/(commonLayout)/(auth)/verify-email/_action";
+import { verifyEmailSchema, type VerifyEmailValues } from "@/zod/auth.validation";
 
 export function VerifyEmailForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "";
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm({
+  const form = useForm<VerifyEmailValues>({
+    resolver: zodResolver(verifyEmailSchema),
     defaultValues: {
       email: email,
       code: "",
     },
-    validators: {
-      onChange: verifyEmailSchema,
-    },
-    onSubmit: async ({ value }) => {
-      try {
-        const result = await verifyEmailAction(value);
-
-        if (result.success) {
-          toast.success(result.message);
-          router.push("/login");
-        } else {
-          toast.error(result.message);
-        }
-      } catch (err: any) {
-        toast.error(err.message || "Verification failed. Please try again.");
-      }
-    },
   });
+
+  const onSubmit = async (value: VerifyEmailValues) => {
+    setIsSubmitting(true);
+    try {
+      const result = await verifyEmailAction(value);
+
+      if (result.success) {
+        toast.success(result.message);
+        router.push("/login");
+      } else {
+        toast.error(result.message);
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Verification failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center w-full max-w-xl mx-auto py-12 animate-in fade-in slide-in-from-bottom-5 duration-700">
@@ -84,65 +94,54 @@ export function VerifyEmailForm({ ...props }: React.ComponentProps<typeof Card>)
           </CardHeader>
 
           <CardContent className="p-0">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                form.handleSubmit();
-              }}
-              className="space-y-7"
-            >
-              <div className="space-y-5">
-                {/* OTP Code */}
-                <form.Field
-                  name="code"
-                  children={(field) => (
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center ml-1">
-                        <FieldLabel className="text-sm font-bold text-foreground/80">Verification Code</FieldLabel>
-                        <span className="text-[10px] font-black tracking-widest text-[#00bc8c] uppercase">6 digits</span>
-                      </div>
-                      <Input
-                        icon={<ShieldCheck />}
-                        placeholder="000000"
-                        maxLength={6}
-                        className="text-center text-2xl tracking-[0.5em] font-mono h-16 py-0 flex items-center"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => {
-                          const val = e.target.value.replace(/[^0-9]/g, "");
-                          if (val.length <= 6) field.handleChange(val);
-                        }}
-                      />
-                      <FieldError errors={field.state.meta.errors} className="ml-1" />
-                    </div>
-                  )}
-                />
-              </div>
-
-              <form.Subscribe
-                selector={(state) => [state.canSubmit, state.isSubmitting]}
-                children={([canSubmit, isSubmitting]) => (
-                  <Button
-                    type="submit"
-                    disabled={!canSubmit || isSubmitting}
-                    className="w-full h-14 text-base font-bold transition-all shadow-xl shadow-[#00bc8c]/10 active:scale-[0.98] bg-[#00bc8c] hover:bg-[#00a37b] rounded-xl text-white mt-4 disabled:opacity-50 disabled:bg-[#00bc8c]/40"
-                  >
-                    {isSubmitting ? (
-                      <div className="flex items-center gap-2">
-                        <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        Verifying...
-                      </div>
-                    ) : (
-                      "Verify Account"
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
+                <div className="space-y-5">
+                  {/* OTP Code */}
+                  <FormField
+                    control={form.control}
+                    name="code"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex justify-between items-center ml-1">
+                          <FormLabel className="text-sm font-bold text-foreground/80">Verification Code</FormLabel>
+                          <span className="text-[10px] font-black tracking-widest text-[#00bc8c] uppercase">6 digits</span>
+                        </div>
+                        <FormControl>
+                          <Input
+                            icon={<ShieldCheck />}
+                            placeholder="000000"
+                            maxLength={6}
+                            className="text-center text-2xl tracking-[0.5em] font-mono h-16 py-0 flex items-center"
+                            {...field}
+                            onChange={(e) => {
+                              const val = e.target.value.replace(/[^0-9]/g, "");
+                              if (val.length <= 6) field.onChange(val);
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage className="ml-1" />
+                      </FormItem>
                     )}
-                  </Button>
-                )}
-              />
-            </form>
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full h-14 text-base font-bold transition-all shadow-xl shadow-[#00bc8c]/10 active:scale-[0.98] bg-[#00bc8c] hover:bg-[#00a37b] rounded-xl text-white mt-4 disabled:opacity-50 disabled:bg-[#00bc8c]/40"
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                       <Loader2 className="h-5 w-5 animate-spin" />
+                       Verifying...
+                    </div>
+                  ) : (
+                    "Verify Account"
+                  )}
+                </Button>
+              </form>
+            </Form>
 
             <div className="mt-10 flex flex-col items-center gap-4 text-sm">
               <p className="text-muted-foreground font-medium">

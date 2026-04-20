@@ -37,6 +37,12 @@ export function useUser() {
     } finally {
       setUser(null);
       queryClient.clear(); // Clear all cached data on logout for security
+      
+      // Force a hard redirect/refresh to purge any memory-leaked session state
+      // and redirect the user back to the login page.
+      if (typeof window !== "undefined") {
+        window.location.href = "/login?message=logged_out";
+      }
     }
   };
 

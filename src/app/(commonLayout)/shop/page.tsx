@@ -29,7 +29,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
        category: params.category,
        manufacturer: params.manufacturer,
        sort: params.sort,
-       isFeatured: params.featured === "true"
+       isFeatured: params.featured === "true" ? true : undefined
     }),
     categoryService.getAllCategories(),
   ]);

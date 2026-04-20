@@ -157,8 +157,15 @@ export async function fetcher<T>(
     if (response.status === 401 && !options?.skipRedirect) {
        await redirectToLogin();
     }
-    const errorData = await response.json().catch(() => ({}));
-    console.error("DEBUG API ERROR:", errorData);
+    
+    const rawBody = await response.text().catch(() => "unknown error");
+    let errorData: any = {};
+    try {
+      errorData = JSON.parse(rawBody);
+    } catch (e) {
+      errorData = { message: rawBody || `API error: ${response.status}` };
+    }
+
     throw new Error(errorData.message || `API error: ${response.status}`);
   }
 

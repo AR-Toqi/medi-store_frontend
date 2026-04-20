@@ -1,8 +1,11 @@
-export default async function SellerOrdersPage() {
-  return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Order Management</h1>
-      <p>View and fulfill incoming orders for your shop.</p>
-    </div>
-  );
+import { Metadata } from "next";
+import { SellerOrdersView } from "@/components/seller/seller-orders-view";
+
+export const metadata: Metadata = {
+  title: "Shop Orders | Seller Dashboard",
+  description: "Track and fulfill your pharmacy orders.",
+};
+
+export default function SellerOrdersPage() {
+  return <SellerOrdersView />;
 }

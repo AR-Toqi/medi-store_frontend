@@ -24,5 +24,22 @@ export const orderService = {
     return fetcher<Order>(`/api/orders/${id}/cancel`, {
       method: "PATCH",
     });
-  }
+  },
+
+  // --- Seller Operations ---
+
+  getSellerOrders: async (page = 1, limit = 10, status?: string) => {
+    const query = new URLSearchParams({ page: page.toString(), limit: limit.toString() });
+    if (status) query.set("status", status);
+    return fetcher<{ data: Order[]; meta: any }>(`/api/seller/orders?${query.toString()}`, {
+      returnFullResponse: true
+    });
+  },
+
+  updateOrderStatus: async (id: string, status: string) => {
+    return fetcher<Order>(`/api/seller/orders/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    });
+  },
 };
