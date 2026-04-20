@@ -2,9 +2,16 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { BadgeCheck } from "lucide-react";
+import { BadgeCheck, Store } from "lucide-react";
+import Link from "next/link";
+import { useUser } from "@/hooks/use-user";
 
 export function Hero() {
+  const { user } = useUser();
+
+  const isSeller = user?.role === "SELLER";
+  const isAdmin = user?.role === "ADMIN";
+
   return (
     <div className="px-4">
       <section className="relative w-full h-[550px] md:h-[650px] overflow-hidden rounded-[2.5rem] shadow-2xl">
@@ -36,12 +43,32 @@ export function Hero() {
             </p>
 
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button className="bg-[#00bc8c] hover:bg-[#00a37b] h-14 px-10 rounded-2xl text-base font-bold shadow-xl shadow-[#00bc8c]/30 transition-all active:scale-95">
-                Shop Now
-              </Button>
-              <Button variant="outline" className="bg-white/10 border-white/20 backdrop-blur-md hover:bg-white/20 text-white h-14 px-10 rounded-2xl text-base font-bold transition-all active:scale-95">
-                Health Tips
-              </Button>
+              <Link href="/shop">
+                <Button className="bg-[#00bc8c] hover:bg-[#00a37b] h-14 px-10 rounded-2xl text-base font-bold shadow-xl shadow-[#00bc8c]/30 transition-all active:scale-95">
+                  Shop Now
+                </Button>
+              </Link>
+              
+              {isSeller ? (
+                <Link href="/seller/dashboard">
+                  <Button variant="outline" className="bg-white/10 border-white/20 backdrop-blur-md hover:bg-white/20 text-white h-14 px-10 rounded-2xl text-base font-bold transition-all active:scale-95 flex items-center gap-2">
+                    <Store className="w-5 h-5" />
+                    Seller Dashboard
+                  </Button>
+                </Link>
+              ) : isAdmin ? (
+                <Link href="/admin">
+                  <Button variant="outline" className="bg-white/10 border-white/20 backdrop-blur-md hover:bg-white/20 text-white h-14 px-10 rounded-2xl text-base font-bold transition-all active:scale-95">
+                    Admin Panel
+                  </Button>
+                </Link>
+              ) : (
+                <Link href="/become-a-seller">
+                  <Button variant="outline" className="bg-white/10 border-white/20 backdrop-blur-md hover:bg-white/20 text-white h-14 px-10 rounded-2xl text-base font-bold transition-all active:scale-95">
+                    Become a Seller
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
 

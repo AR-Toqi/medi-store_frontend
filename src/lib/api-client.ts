@@ -158,6 +158,7 @@ export async function fetcher<T>(
        await redirectToLogin();
     }
     const errorData = await response.json().catch(() => ({}));
+    console.error("DEBUG API ERROR:", errorData);
     throw new Error(errorData.message || `API error: ${response.status}`);
   }
 
