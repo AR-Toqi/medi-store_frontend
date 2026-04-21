@@ -132,7 +132,7 @@ export function SellerNavbar() {
           </div>
 
           {/* Quick Action Button */}
-          <Link href="/seller/manage-medicines/add-medicine" className="hidden sm:block">
+          <Link href="/seller/manage-medicines/add" className="hidden sm:block">
             <Button className="bg-[#00bc8c] hover:bg-[#00a37b] text-white rounded-xl h-11 px-5 font-bold shadow-lg shadow-[#00bc8c]/20 gap-2">
               <Plus className="w-4 h-4" />
               Add Product

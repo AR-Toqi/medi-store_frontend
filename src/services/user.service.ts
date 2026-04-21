@@ -18,4 +18,27 @@ export const userService = {
       method: "POST",
     });
   },
+
+  getAllUsers: async () => {
+    return await fetcher<any>("/api/admin/users");
+  },
+
+  updateUserStatus: async (id: string, isBanned: boolean) => {
+    return await fetcher<any>(`/api/admin/users/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ isBanned }),
+      returnFullResponse: true,
+    });
+  },
+
+  deleteUser: async (id: string) => {
+    return await fetcher<any>(`/api/admin/users/${id}`, {
+      method: "DELETE",
+      returnFullResponse: true,
+    });
+  },
+
+  getAdminStats: async () => {
+    return await fetcher<any>("/api/admin/stats");
+  },
 };

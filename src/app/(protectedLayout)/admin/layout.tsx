@@ -1,6 +1,7 @@
 import { authService } from "@/services/auth.service";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { AdminSidebar } from "@/components/admin/admin-sidebar";
 
 export default async function AdminLayout({
   children,
@@ -20,5 +21,12 @@ export default async function AdminLayout({
     redirect("/login?message=unauthorized");
   }
 
-  return <>{children}</>;
+  return (
+    <div className="flex h-screen overflow-hidden bg-slate-50">
+      <AdminSidebar />
+      <main className="flex-1 overflow-y-auto relative scroll-smooth bg-slate-50">
+         {children}
+      </main>
+    </div>
+  );
 }

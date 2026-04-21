@@ -35,7 +35,7 @@ export function DashboardHeader({ userName }: DashboardHeaderProps) {
         </p>
       </div>
       <div className="flex items-center gap-3">
-        <Link href="/seller/manage-medicines/add-medicine">
+        <Link href="/seller/manage-medicines/add">
           <Button className="font-semibold shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all gap-2">
             <Plus className="h-4 w-4" />
             Add New Medicine

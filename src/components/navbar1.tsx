@@ -34,6 +34,11 @@ export function Navbar() {
     return <SellerNavbar />;
   }
 
+  // If user is an admin, don't show the global navbar
+  if (user?.role === "ADMIN") {
+    return null;
+  }
+
   const cartCount = cart?.summary?.totalItems || 0;
 
   return (

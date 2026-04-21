@@ -68,6 +68,7 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
   const { createMedicine, updateMedicine, isPending } = useMedicineMutation();
   const router = useRouter();
   const isEdit = !!initialData;
+  const imageUploadId = React.useId();
 
   // Using any to bypass complex generic type mismatches between Zod and React Hook Form version in this environment
   const form = useForm<any>({
@@ -174,10 +175,10 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
                         </button>
                       </>
                     ) : (
-                      <label className="flex h-full w-full cursor-pointer flex-col items-center justify-center">
+                      <label htmlFor={imageUploadId} className="flex h-full w-full cursor-pointer flex-col items-center justify-center">
                         <Upload className="mb-2 h-10 w-10 text-slate-300 transition-colors group-hover:text-[#00bc8c]" />
                         <span className="text-xs font-bold text-slate-400 group-hover:text-slate-600">Click to upload</span>
-                        <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
+                        <input id={imageUploadId} type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
                       </label>
                     )}
                   </div>

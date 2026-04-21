@@ -1,8 +1,16 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { BriefcaseMedical, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 
 export function Footer() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
   return (
     <footer className="bg-white border-t border-slate-100">
       <div className="container mx-auto px-6 py-16">

@@ -136,9 +136,10 @@ export function ProfileUpdateView() {
               </div>
 
               <div className="space-y-3 opacity-60">
-                <Label className="text-sm font-black text-slate-700 ml-1">Email Address (Locked)</Label>
+                <Label htmlFor="email" className="text-sm font-black text-slate-700 ml-1">Email Address (Locked)</Label>
                 <div className="relative">
                   <Input 
+                    id="email"
                     value={user.email}
                     disabled
                     className="h-14 bg-slate-100 border-none rounded-2xl font-bold cursor-not-allowed"

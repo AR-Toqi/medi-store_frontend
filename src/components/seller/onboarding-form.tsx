@@ -29,6 +29,7 @@ export function OnboardingForm() {
   const { user, refreshUser, isLoading: isUserLoading } = useUser();
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const logoUploadId = React.useId();
 
   // Redirect guests to login
   React.useEffect(() => {
@@ -176,14 +177,14 @@ export function OnboardingForm() {
                       </div>
                       <div className="space-y-2 flex-1">
                         <label 
-                          htmlFor="logo-upload" 
+                          htmlFor={logoUploadId} 
                           className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-100 rounded-lg text-sm font-bold text-slate-700 hover:bg-slate-50 cursor-pointer transition-all shadow-sm active:scale-95"
                         >
                           <Upload className="w-4 h-4" />
                           Choose Image
                         </label>
                         <input
-                          id="logo-upload"
+                          id={logoUploadId}
                           type="file"
                           accept="image/*"
                           className="hidden"

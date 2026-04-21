@@ -65,14 +65,7 @@ export const medicineService = {
   },
 
   getSellerMedicineById: async (id: string) => {
-    // The backend uses slug for details usually, but for internal management ID is safer.
-    // Let's check the backend controller for updateMedicine to see if it needs ID or slug.
-    // Backend: router.patch("/medicines/:id", ...)
-    // If there is no specific GET by ID, we might have to use slug or find it in the list.
-    // However, most APIs support GET by ID. Let's assume standard behavior or use slug.
-    return fetcher<Medicine>(`/api/seller/medicines/id/${id}`).catch(() => 
-      fetcher<Medicine>(`/api/seller/medicines/${id}`) // Fallback to direct ID if that's the route
-    );
+    return fetcher<Medicine>(`/api/seller/medicines/id/${id}`);
   },
 
   createMedicine: async (formData: FormData) => {
