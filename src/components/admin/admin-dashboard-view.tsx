@@ -31,12 +31,20 @@ interface AdminDashboardViewProps {
 }
 
 export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
     }).format(amount);
   };
+
+  if (!mounted) return null;
 
   return (
     <div className="p-4 md:p-8 space-y-10 max-w-[1600px] mx-auto pb-20">
@@ -150,7 +158,7 @@ export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
                       <td className="p-6">
                         <StatusBadge status={order.status} />
                       </td>
-                      <td className="p-6 text-xs font-bold text-slate-400 uppercase tracking-tighter">
+                      <td className="p-6 text-xs font-bold text-slate-400 uppercase tracking-tighter" suppressHydrationWarning>
                         {format(new Date(order.createdAt), "MMM d, h:mm a")}
                       </td>
                     </tr>

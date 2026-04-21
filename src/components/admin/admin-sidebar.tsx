@@ -9,7 +9,6 @@ import {
   ShoppingBag, 
   Package, 
   Layers, 
-  Settings, 
   LogOut, 
   ChevronLeft, 
   ChevronRight,
@@ -29,19 +28,25 @@ const navigation = [
   { name: "Order Management", href: "/admin/orders", icon: ShoppingBag },
   { name: "Medicine Inventory", href: "/admin/medicines", icon: Package },
   { name: "Categories", href: "/admin/categories", icon: Layers },
-  { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
 export function AdminSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const { user } = useUser();
   const router = useRouter();
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = async () => {
     await userService.logout();
     router.push("/login");
   };
+
+  if (!mounted) return null;
 
   return (
     <aside 
@@ -132,7 +137,7 @@ export function AdminSidebar() {
       {/* Bottom Actions */}
       <div className="p-4 mt-auto border-t border-slate-800/50 space-y-2">
         {!isCollapsed && (
-          <div className="bg-slate-800/40 p-4 rounded-2xl mb-4 text-xs font-medium space-y-3 border border-slate-800/30">
+          <Link href="/admin/alerts" className="block bg-slate-800/40 p-4 rounded-2xl mb-4 text-xs font-medium space-y-3 border border-slate-800/30 hover:border-[#00bc8c]/30 transition-colors">
             <p className="text-slate-500 px-1 font-black uppercase tracking-widest text-[9px]">Notifications</p>
             <div className="flex items-center justify-between text-slate-300 hover:text-white cursor-pointer group">
               <div className="flex items-center gap-2">
@@ -141,7 +146,7 @@ export function AdminSidebar() {
               </div>
               <span className="w-2 h-2 rounded-full bg-[#00bc8c] shadow-[0_0_8px_rgba(0,188,140,0.5)]" />
             </div>
-          </div>
+          </Link>
         )}
         <button 
           onClick={handleLogout}
