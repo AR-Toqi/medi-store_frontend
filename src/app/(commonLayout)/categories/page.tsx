@@ -11,7 +11,7 @@ const getCategoryIcon = (name: string) => {
   return <Pill className="w-8 h-8 text-[#00bc8c]" />;
 };
 
-export const revalidate = 86400; // ISR Revalidate every 24 hours
+export const dynamic = "force-dynamic";
 
 export default async function CategoriesPage() {
   const categories = await categoryService.getAllCategories();

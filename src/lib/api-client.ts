@@ -60,7 +60,7 @@ async function handleServerCookies(response: Response) {
         });
       }
     } catch (error) {
-      console.error("Error setting cookies on server:", error);
+      // Silently ignore — expected during static generation (cookies() is dynamic-only)
     }
   }
 }
@@ -104,7 +104,7 @@ export async function fetcher<T>(
         fetchHeaders.set("Cookie", cookieString);
       }
     } catch (error) {
-      console.warn("Could not attach cookies to server-side fetch:", error);
+      // Silently ignore — expected during static generation (cookies() is dynamic-only)
     }
   }
 
