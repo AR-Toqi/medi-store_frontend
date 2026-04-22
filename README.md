@@ -355,6 +355,3 @@ If you have any questions, suggestions, or would like to connect:
 
 ---
 
-## 📄 License
-
-This project is for educational/assignment purposes.
