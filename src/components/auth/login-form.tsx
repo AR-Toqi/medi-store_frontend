@@ -66,6 +66,8 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
         
         if (role === "ADMIN") {
           router.push("/admin");
+        } else if (role === "SELLER") {
+          router.push("/seller/dashboard");
         } else if (callbackUrl) {
           router.push(callbackUrl);
         } else {
