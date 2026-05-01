@@ -6,6 +6,8 @@ export const authService = {
     return fetcher<AuthResponse>("/api/auth/register", {
       method: "POST",
       body: JSON.stringify(data),
+      skipRedirect: true,
+      returnFullResponse: true,
     });
   },
 
@@ -13,6 +15,8 @@ export const authService = {
     return fetcher<AuthResponse>("/api/auth/login", {
       method: "POST",
       body: JSON.stringify(data),
+      skipRedirect: true,
+      skipRefresh: true,
     });
   },
 
@@ -26,6 +30,8 @@ export const authService = {
     return fetcher<AuthResponse>("/api/auth/verify-email", {
       method: "POST",
       body: JSON.stringify(data),
+      skipRedirect: true,
+      returnFullResponse: true,
     });
   },
 
@@ -43,6 +49,24 @@ export const authService = {
       body: data,
       // Content-Type should NOT be set manually for FormData to allow fetch to set the boundary
       headers: {}, 
+    });
+  },
+
+  forgotPassword: async (data: { email: string }): Promise<AuthResponse> => {
+    return fetcher<AuthResponse>("/api/auth/forgot-password", {
+      method: "POST",
+      body: JSON.stringify(data),
+      skipRedirect: true,
+      returnFullResponse: true,
+    });
+  },
+
+  resetPassword: async (data: any): Promise<AuthResponse> => {
+    return fetcher<AuthResponse>("/api/auth/reset-password", {
+      method: "POST",
+      body: JSON.stringify(data),
+      skipRedirect: true,
+      returnFullResponse: true,
     });
   },
 };

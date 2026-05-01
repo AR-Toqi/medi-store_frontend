@@ -12,23 +12,30 @@ export function AuthNotifier() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // If the user is already logged in, we don't need to show unauthorized messages
     if (user) return;
 
     const message = searchParams.get("message");
+    if (!message) return;
 
-    if (message === "unauthorized") {
-      toast.error("Unauthorized access! Please login to continue.", {
-        id: "unauthorized-toast", // Prevent duplicate toasts
-      });
-
-      // Clean up the URL parameter without refreshing the page
+    const clearMessage = () => {
       const params = new URLSearchParams(searchParams.toString());
       params.delete("message");
       const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
       router.replace(newUrl);
+    };
+
+    if (message === "unauthorized") {
+      toast.error("Unauthorized access! Please login to continue.", {
+        id: "unauthorized-toast",
+      });
+      clearMessage();
+    } else if (message === "password_reset_success") {
+      toast.success("Password reset successful! You can now login with your new password.", {
+        id: "password-reset-toast",
+      });
+      clearMessage();
     }
-  }, [searchParams, pathname, router]);
+  }, [searchParams, pathname, router, user]);
 
   return null;
 }

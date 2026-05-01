@@ -15,6 +15,7 @@ import {
   Pill,
   Tag,
 } from "lucide-react";
+import { ReviewSection } from "@/components/reviews/review-section";
 
 interface ProductDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -303,6 +304,11 @@ export default async function ProductDetailPage({
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section className="bg-white">
+        <ReviewSection medicineId={medicine.id} />
       </section>
 
       {/* Related Products */}
