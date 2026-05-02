@@ -49,7 +49,7 @@ export function Footer() {
           <div>
             <h4 className="text-slate-900 font-black text-[11px] uppercase tracking-[0.15em] mb-8">Shop by Category</h4>
             <ul className="space-y-4 text-slate-500 text-sm font-medium">
-              <li><Link href="#" className="hover:text-[#00bc8c] transition-colors">Medicines</Link></li>
+              <li><Link href="/shop" className="hover:text-[#00bc8c] transition-colors">Medicines</Link></li>
               <li><Link href="#" className="hover:text-[#00bc8c] transition-colors">Vitamins & Supplements</Link></li>
               <li><Link href="#" className="hover:text-[#00bc8c] transition-colors">Personal Care</Link></li>
               <li><Link href="#" className="hover:text-[#00bc8c] transition-colors">Health Devices</Link></li>
@@ -61,8 +61,8 @@ export function Footer() {
             <h4 className="text-slate-900 font-black text-[11px] uppercase tracking-[0.15em] mb-8">Customer Support</h4>
             <ul className="space-y-4 text-slate-500 text-sm font-medium">
               <li><Link href="#" className="hover:text-[#00bc8c] transition-colors">Track Order</Link></li>
-              <li><Link href="#" className="hover:text-[#00bc8c] transition-colors">Shipping Policy</Link></li>
-              <li><Link href="#" className="hover:text-[#00bc8c] transition-colors">Return & Refund</Link></li>
+              <li><Link href="/shipping-policy" className="hover:text-[#00bc8c] transition-colors">Shipping Policy</Link></li>
+              <li><Link href="/return-refund" className="hover:text-[#00bc8c] transition-colors">Return & Refund</Link></li>
               <li><Link href="#" className="hover:text-[#00bc8c] transition-colors">FAQ</Link></li>
             </ul>
           </div>
