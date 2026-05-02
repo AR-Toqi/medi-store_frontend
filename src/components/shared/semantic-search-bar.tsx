@@ -25,8 +25,7 @@ export function SemanticSearchBar() {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setIsOpen(false);
-        setIsExpanded(false);
-        setQuery(""); 
+        if (!query) setIsExpanded(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -79,8 +78,8 @@ export function SemanticSearchBar() {
           onClick={() => setIsExpanded(!isExpanded)}
           className={cn(
             "w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 shrink-0 shadow-[0_10px_30px_rgba(0,188,140,0.3)] border-4 border-white z-20 hover:scale-110 active:scale-95",
-            isExpanded 
-              ? "bg-white text-[#00bc8c] -mr-16" 
+            isExpanded
+              ? "bg-white text-[#00bc8c] -mr-16"
               : "bg-[#00bc8c] text-white"
           )}
         >
@@ -93,13 +92,13 @@ export function SemanticSearchBar() {
           isExpanded ? "w-full opacity-100 translate-x-4" : "w-0 opacity-0 translate-x-0 pointer-events-none"
         )}>
           <div className="absolute left-5 text-[#00bc8c] z-10">
-            <Search className="w-5 h-5" />
+            <Sparkles className="w-6 h-6 animate-pulse" />
           </div>
-          
+
           <Input
             ref={inputRef}
             type="text"
-            placeholder="Describe what you need..."
+            placeholder="Search with AI... (e.g. 'flu symptoms')"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => query.length >= 3 && setIsOpen(true)}
@@ -107,7 +106,7 @@ export function SemanticSearchBar() {
           />
 
           {query && (
-            <button 
+            <button
               onClick={clearSearch}
               className="absolute right-4 p-1.5 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-600 transition-colors"
             >
@@ -133,15 +132,15 @@ export function SemanticSearchBar() {
           <div className="max-h-[400px] overflow-y-auto p-2 space-y-1">
             {results.length > 0 ? (
               results.map((medicine) => (
-                <Link 
-                  key={medicine.id} 
+                <Link
+                  key={medicine.id}
                   href={`/shop/${medicine.slug}`}
                   className="flex items-center gap-4 p-3 rounded-2xl hover:bg-[#00bc8c]/5 transition-colors group/item"
                 >
                   <div className="relative w-14 h-14 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0">
                     {medicine.imageUrl ? (
-                      <Image 
-                        src={medicine.imageUrl} 
+                      <Image
+                        src={medicine.imageUrl}
                         alt={medicine.name}
                         fill
                         className="object-cover"
@@ -152,7 +151,7 @@ export function SemanticSearchBar() {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-slate-800 truncate group-hover/item:text-[#00bc8c] transition-colors">
                       {medicine.name}
@@ -179,7 +178,7 @@ export function SemanticSearchBar() {
               </div>
             )}
           </div>
-          
+
           {results.length > 0 && (
             <div className="p-4 bg-slate-50 border-t border-slate-100 text-center">
               <button className="text-xs font-bold text-slate-500 hover:text-[#00bc8c] transition-colors">
