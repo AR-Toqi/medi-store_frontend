@@ -16,9 +16,9 @@ export function Hero() {
     <div className="px-4">
       <section className="relative w-full h-[550px] md:h-[650px] overflow-hidden rounded-[2.5rem] shadow-2xl">
         {/* Background Image Overlay */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
-          style={{ 
+          style={{
             backgroundImage: `url('/hero-bg.png')`,
           }}
         >
@@ -27,11 +27,6 @@ export function Hero() {
 
         <div className="relative h-full flex items-center container mx-auto px-8 md:px-16">
           <div className="max-w-2xl space-y-7 animate-in fade-in slide-in-from-left-10 duration-1000">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00bc8c]/15 border border-[#00bc8c]/20 backdrop-blur-md">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#00bc8c]">
-                Pharmacy Redefined
-              </span>
-            </div>
 
             <h1 className="text-5xl md:text-7xl font-black tracking-tight text-white leading-[1.05]">
               Reliable Healthcare, <br />
@@ -42,13 +37,15 @@ export function Hero() {
               Get up to 25% off on chronic medication and wellness supplements. Experience professional care with same-day delivery on essential items.
             </p>
 
+
+
             <div className="flex flex-wrap gap-4 pt-4">
               <Link href="/shop">
                 <Button className="bg-[#00bc8c] hover:bg-[#00a37b] h-14 px-10 rounded-2xl text-base font-bold shadow-xl shadow-[#00bc8c]/30 transition-all active:scale-95">
                   Shop Now
                 </Button>
               </Link>
-              
+
               {isSeller ? (
                 <Link href="/seller/dashboard">
                   <Button variant="outline" className="bg-white/10 border-white/20 backdrop-blur-md hover:bg-white/20 text-white h-14 px-10 rounded-2xl text-base font-bold transition-all active:scale-95 flex items-center gap-2">
@@ -78,8 +75,8 @@ export function Hero() {
               <BadgeCheck className="w-6 h-6 text-white" />
             </div>
             <div>
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Verified Pharmacists</p>
-                <p className="text-slate-700 font-bold">Available for consultation</p>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Verified Pharmacists</p>
+              <p className="text-slate-700 font-bold">Available for consultation</p>
             </div>
           </div>
         </div>

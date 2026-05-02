@@ -4,6 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar1";
 import { Footer } from "@/components/footer";
 import { Toaster } from 'sonner';
+import { AIChatBot } from "@/components/shared/ai-chat-bot";
+import { SemanticSearchBar } from "@/components/shared/semantic-search-bar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +47,10 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <div className="fixed bottom-6 left-6 z-[9999]">
+              <SemanticSearchBar />
+            </div>
+            <AIChatBot />
           </div>
         </QueryProvider>
       </body>
