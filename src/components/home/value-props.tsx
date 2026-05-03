@@ -26,14 +26,14 @@ export function ValueProps() {
         {props.map((prop, i) => (
           <div 
             key={i} 
-            className="flex items-center gap-6 p-10 bg-white rounded-[2.5rem] border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_-10px_rgba(0,188,140,0.1)] hover:-translate-y-1.5 transition-all duration-500 group cursor-default"
+            className="flex items-center gap-6 p-10 bg-white dark:bg-slate-800/60 rounded-[2.5rem] border border-slate-100 dark:border-slate-700/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-none hover:shadow-[0_20px_50px_-10px_rgba(0,188,140,0.1)] hover:-translate-y-1.5 transition-all duration-500 group cursor-default"
           >
-            <div className="bg-slate-50 text-[#00bc8c] p-5 rounded-[1.5rem] group-hover:bg-[#00bc8c] group-hover:text-white transition-all duration-500 shadow-inner">
+            <div className="bg-slate-50 dark:bg-slate-700/50 text-[#00bc8c] p-5 rounded-[1.5rem] group-hover:bg-[#00bc8c] group-hover:text-white transition-all duration-500 shadow-inner dark:shadow-none">
               {prop.icon}
             </div>
             <div>
-              <h3 className="text-xl font-black text-slate-900 tracking-tight mb-1">{prop.title}</h3>
-              <p className="text-slate-400 text-sm font-bold uppercase tracking-wider leading-tight">{prop.description}</p>
+              <h3 className="text-xl font-black text-slate-900 dark:text-slate-100 tracking-tight mb-1">{prop.title}</h3>
+              <p className="text-slate-400 dark:text-slate-500 text-sm font-bold uppercase tracking-wider leading-tight">{prop.description}</p>
             </div>
           </div>
         ))}

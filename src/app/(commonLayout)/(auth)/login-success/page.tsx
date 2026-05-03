@@ -56,7 +56,7 @@ export default function LoginSuccessPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] p-6 text-center animate-in fade-in duration-700">
-      <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-10 space-y-6">
+      <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl shadow-xl dark:shadow-none border border-transparent dark:border-slate-800 p-10 space-y-6">
         {status === "authenticating" && (
           <>
             <div className="bg-[#00bc8c10] p-5 rounded-full w-20 h-20 flex items-center justify-center mx-auto">

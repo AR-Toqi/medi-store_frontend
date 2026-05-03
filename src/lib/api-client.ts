@@ -94,6 +94,11 @@ export async function fetcher<T>(
     fetchHeaders.set("Content-Type", "application/json");
   }
 
+  // Workaround for Next.js proxy ECONNRESET with Render/Cloudflare
+  if (typeof window !== "undefined") {
+    fetchHeaders.set("Connection", "close");
+  }
+
   // Automatically attach cookies if on server
   if (typeof window === "undefined" && !fetchHeaders.get("Cookie")) {
     try {

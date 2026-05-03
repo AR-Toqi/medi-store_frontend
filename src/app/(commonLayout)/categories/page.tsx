@@ -24,20 +24,20 @@ export default async function CategoriesPage() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
         <div>
-          <h1 className="text-4xl md:text-5xl font-black text-slate-800 tracking-tight leading-tight">
+          <h1 className="text-4xl md:text-5xl font-black text-slate-800 dark:text-slate-100 tracking-tight leading-tight">
             Shop by <span className="text-[#00bc8c]">Category</span>
           </h1>
-          <p className="text-slate-400 font-medium mt-3 text-lg max-w-2xl">
+          <p className="text-slate-400 dark:text-slate-500 font-medium mt-3 text-lg max-w-2xl">
             Browse our comprehensive selection of medical supplies, pharmaceuticals, and health products neatly organized into distinct categories.
           </p>
         </div>
       </div>
 
       {activeCategories.length === 0 ? (
-        <div className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-[3rem] p-16 text-center flex flex-col items-center justify-center">
-          <Pill className="w-16 h-16 text-slate-300 mb-6" />
-          <h2 className="text-2xl font-black text-slate-800">No categories found</h2>
-          <p className="text-slate-400 mt-2">Check back later or browse all medicines in the shop.</p>
+        <div className="bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-[3rem] p-16 text-center flex flex-col items-center justify-center">
+          <Pill className="w-16 h-16 text-slate-300 dark:text-slate-600 mb-6" />
+          <h2 className="text-2xl font-black text-slate-800 dark:text-slate-200">No categories found</h2>
+          <p className="text-slate-400 dark:text-slate-500 mt-2">Check back later or browse all medicines in the shop.</p>
           <Link href="/shop" className="mt-8 bg-[#00bc8c] text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-[#00bc8c]/20 hover:bg-[#00a37b] transition-colors">
             Go to Shop
           </Link>
@@ -48,10 +48,10 @@ export default async function CategoriesPage() {
             <Link 
               key={category.id} 
               href={`/shop?category=${category.id}`}
-              className="group block bg-white border border-slate-100 rounded-[2.5rem] p-8 shadow-sm hover:shadow-[0_20px_50px_-15px_rgba(0,188,140,0.15)] hover:border-[#00bc8c]/30 transition-all duration-500 cursor-pointer"
+              className="group block bg-white dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/50 rounded-[2.5rem] p-8 shadow-sm dark:shadow-none hover:shadow-[0_20px_50px_-15px_rgba(0,188,140,0.15)] dark:hover:shadow-[0_20px_50px_-15px_rgba(0,188,140,0.15)] hover:border-[#00bc8c]/30 transition-all duration-500 cursor-pointer"
             >
-              <div className="flex flex-col h-full bg-white relative">
-                <div className="bg-slate-50 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#00bc8c]/10 transition-colors duration-300">
+              <div className="flex flex-col h-full bg-white dark:bg-transparent relative">
+                <div className="bg-slate-50 dark:bg-slate-700/50 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#00bc8c]/10 transition-colors duration-300">
                    {/* Optional: Add custom images if available from the backend Model, else fallback icon */}
                    {category.image ? (
                      <img src={category.image} alt={category.name} className="w-10 h-10 object-contain" />
@@ -60,11 +60,11 @@ export default async function CategoriesPage() {
                    )}
                 </div>
                 
-                <h3 className="text-xl font-black text-slate-800 mb-2 group-hover:text-[#00bc8c] transition-colors duration-300">
+                <h3 className="text-xl font-black text-slate-800 dark:text-slate-100 mb-2 group-hover:text-[#00bc8c] transition-colors duration-300">
                   {category.name}
                 </h3>
                 
-                <p className="text-sm font-medium text-slate-400 line-clamp-2 leading-relaxed mb-6">
+                <p className="text-sm font-medium text-slate-400 dark:text-slate-500 line-clamp-2 leading-relaxed mb-6">
                   {category.description || `Browse quality medical products and treatments in our ${category.name} category.`}
                 </p>
                 

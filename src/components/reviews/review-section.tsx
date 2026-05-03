@@ -43,23 +43,23 @@ export function ReviewSection({ medicineId }: ReviewSectionProps) {
     <div className="container mx-auto px-4 py-16 md:py-24">
       <div className="max-w-5xl mx-auto space-y-16">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-100 pb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-100 dark:border-slate-800 pb-8">
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-[#00bc8c] font-black uppercase tracking-widest text-xs">
               <MessageSquare className="w-4 h-4" />
               Customer Feedback
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
               Patient Reviews
             </h2>
           </div>
-          <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full border border-slate-100">
+          <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800/50 px-4 py-2 rounded-full border border-slate-100 dark:border-slate-700/50">
             <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-            <span className="text-sm font-black text-slate-700">
+            <span className="text-sm font-black text-slate-700 dark:text-slate-300">
               {stats?.averageRating || 0} Average
             </span>
-            <span className="text-slate-300 mx-1">|</span>
-            <span className="text-sm font-bold text-slate-500">
+            <span className="text-slate-300 dark:text-slate-600 mx-1">|</span>
+            <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
               {stats?.totalReviews || 0} Reviews
             </span>
           </div>
@@ -69,15 +69,15 @@ export function ReviewSection({ medicineId }: ReviewSectionProps) {
           {/* Left Column: Stats & Reviews */}
           <div className="lg:col-span-7 space-y-12">
             {isStatsLoading ? (
-              <div className="h-64 bg-slate-50 animate-pulse rounded-[2.5rem]" />
+              <div className="h-64 bg-slate-50 dark:bg-slate-800 animate-pulse rounded-[2.5rem]" />
             ) : (
               stats && <ReviewStatsComponent stats={stats} />
             )}
 
             <div className="space-y-8">
-              <h3 className="text-xl font-black text-slate-900 flex items-center gap-2">
+              <h3 className="text-xl font-black text-slate-900 dark:text-slate-100 flex items-center gap-2">
                 All Reviews
-                <span className="bg-slate-100 text-slate-500 text-xs px-2.5 py-1 rounded-lg">
+                <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-xs px-2.5 py-1 rounded-lg">
                   {stats?.totalReviews || 0}
                 </span>
               </h3>
@@ -86,7 +86,7 @@ export function ReviewSection({ medicineId }: ReviewSectionProps) {
                   {[1, 2].map((i) => (
                     <div
                       key={i}
-                      className="h-32 bg-slate-50 animate-pulse rounded-[2rem]"
+                      className="h-32 bg-slate-50 dark:bg-slate-800 animate-pulse rounded-[2rem]"
                     />
                   ))}
                 </div>
@@ -105,9 +105,9 @@ export function ReviewSection({ medicineId }: ReviewSectionProps) {
                     medicineId={medicineId}
                     onSuccess={handleReviewSuccess}
                   />
-                  <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 flex gap-3">
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/30 rounded-2xl p-4 flex gap-3">
                     <Info className="w-5 h-5 text-blue-500 shrink-0" />
-                    <p className="text-xs text-blue-700 font-medium leading-relaxed">
+                    <p className="text-xs text-blue-700 dark:text-blue-300 font-medium leading-relaxed">
                       Only customers who have purchased this medicine can leave a
                       review. Your review will be public and linked to your name.
                     </p>

@@ -25,9 +25,9 @@ export default function LoginErrorPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] p-6 text-center animate-in fade-in duration-700">
-      <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-10 space-y-6">
-        <div className="bg-red-50 p-5 rounded-full w-20 h-20 flex items-center justify-center mx-auto">
-          <AlertCircle className="w-10 h-10 text-red-500" />
+      <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl shadow-xl dark:shadow-none border border-transparent dark:border-slate-800 p-10 space-y-6">
+        <div className="bg-red-50 dark:bg-red-900/20 p-5 rounded-full w-20 h-20 flex items-center justify-center mx-auto">
+          <AlertCircle className="w-10 h-10 text-red-500 dark:text-red-400" />
         </div>
         
         <h1 className="text-2xl font-bold text-foreground">Login Failed</h1>

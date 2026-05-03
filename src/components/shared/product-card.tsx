@@ -17,7 +17,7 @@ export function ProductCard({ medicine }: { medicine: Medicine }) {
 
   return (
     <Link href={`/shop/${medicine.slug}`} className="block h-full">
-      <div className="group bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_60px_-15px_rgba(0,188,140,0.15)] transition-all duration-500 flex flex-col items-start gap-5 cursor-pointer h-full relative overflow-hidden">
+      <div className="group bg-white dark:bg-slate-800/60 rounded-[2.5rem] p-6 border border-slate-100 dark:border-slate-700/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-none hover:shadow-[0_25px_60px_-15px_rgba(0,188,140,0.15)] transition-all duration-500 flex flex-col items-start gap-5 cursor-pointer h-full relative overflow-hidden">
         
         {/* Badges */}
         <div className="absolute top-6 left-6 flex flex-col gap-2 z-10">
@@ -39,7 +39,7 @@ export function ProductCard({ medicine }: { medicine: Medicine }) {
         </div>
 
         {/* Image Container */}
-        <div className="w-full aspect-square relative rounded-[1.8rem] overflow-hidden bg-slate-50">
+        <div className="w-full aspect-square relative rounded-[1.8rem] overflow-hidden bg-slate-50 dark:bg-slate-700/50">
            <img 
               src={medicine.imageUrl || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600"} 
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
@@ -53,10 +53,10 @@ export function ProductCard({ medicine }: { medicine: Medicine }) {
           <p className="text-[11px] font-black text-[#00bc8c] uppercase tracking-widest opacity-80 decoration-dotted underline underline-offset-4">
             {medicine.manufacturer}
           </p>
-          <h3 className="text-xl font-black text-slate-900 tracking-tight leading-tight group-hover:text-[#00bc8c] transition-colors">
+          <h3 className="text-xl font-black text-slate-900 dark:text-slate-100 tracking-tight leading-tight group-hover:text-[#00bc8c] transition-colors">
             {medicine.name}
           </h3>
-          <p className="text-slate-400 text-sm font-medium line-clamp-2 leading-relaxed">
+          <p className="text-slate-400 dark:text-slate-500 text-sm font-medium line-clamp-2 leading-relaxed">
             {medicine.description || "Effective relief for your healthcare needs with professional quality assurance."}
           </p>
         </div>
@@ -64,8 +64,8 @@ export function ProductCard({ medicine }: { medicine: Medicine }) {
         {/* Footer */}
         <div className="w-full flex items-center justify-between gap-4 pt-2">
           <div className="flex flex-col">
-            <p className="text-slate-400 text-[11px] font-black uppercase tracking-tighter">Price</p>
-            <p className="text-2xl font-black text-slate-900">
+            <p className="text-slate-400 dark:text-slate-500 text-[11px] font-black uppercase tracking-tighter">Price</p>
+            <p className="text-2xl font-black text-slate-900 dark:text-slate-100">
               ${formattedPrice}
             </p>
           </div>
@@ -78,9 +78,9 @@ export function ProductCard({ medicine }: { medicine: Medicine }) {
                }
              }}
              disabled={isOutOfStock || isAdding}
-             className={`p-4 rounded-2xl transition-all duration-300 shadow-sm flex items-center justify-center min-w-[56px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${
+             className={`p-4 rounded-2xl transition-all duration-300 shadow-sm dark:shadow-none flex items-center justify-center min-w-[56px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${
                isOutOfStock
-                 ? "bg-slate-100 text-slate-300"
+                 ? "bg-slate-100 dark:bg-slate-700 text-slate-300 dark:text-slate-600"
                  : "bg-[#00bc8c]/10 text-[#00bc8c] hover:bg-[#00bc8c] hover:text-white hover:scale-110 active:scale-90"
              }`}
           >

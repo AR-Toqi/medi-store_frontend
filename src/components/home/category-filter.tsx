@@ -37,7 +37,7 @@ export function CategoryFilter({ categories, activeCategory, onCategoryChange }:
   return (
     <section className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-10 px-2">
-        <h2 className="text-3xl font-black text-slate-900 tracking-tight">Popular Categories</h2>
+        <h2 className="text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight">Popular Categories</h2>
         <button className="text-[13px] font-black uppercase tracking-widest text-[#00bc8c] hover:opacity-80 transition-all flex items-center gap-2 group">
           View All <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
         </button>
@@ -50,7 +50,7 @@ export function CategoryFilter({ categories, activeCategory, onCategoryChange }:
             "flex items-center gap-3 px-8 py-4 rounded-2xl whitespace-nowrap font-bold text-sm transition-all duration-300 border h-14",
             activeCategory === "all" 
               ? "bg-[#00bc8c] text-white border-[#00bc8c] shadow-[0_10px_25px_-5px_rgba(0,188,140,0.4)] scale-105" 
-              : "bg-white text-slate-500 border-slate-100 hover:border-[#00bc8c]/30 hover:bg-slate-50 shadow-sm"
+              : "bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-100 dark:border-slate-700 hover:border-[#00bc8c]/30 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm dark:shadow-none"
           )}
         >
           <LayoutGrid className="w-5 h-5" />
@@ -65,7 +65,7 @@ export function CategoryFilter({ categories, activeCategory, onCategoryChange }:
               "flex items-center gap-3 px-8 py-4 rounded-2xl whitespace-nowrap font-bold text-sm transition-all duration-300 border h-14",
               activeCategory === cat.id 
                 ? "bg-[#00bc8c] text-white border-[#00bc8c] shadow-[0_10px_25px_-5px_rgba(0,188,140,0.4)] scale-105" 
-                : "bg-white text-slate-500 border-slate-100 hover:border-[#00bc8c]/30 hover:bg-slate-50 shadow-sm"
+                : "bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-100 dark:border-slate-700 hover:border-[#00bc8c]/30 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm dark:shadow-none"
             )}
           >
             <div className={activeCategory === cat.id ? "text-white" : "text-[#00bc8c]"}>

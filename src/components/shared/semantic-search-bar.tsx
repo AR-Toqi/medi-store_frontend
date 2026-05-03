@@ -77,9 +77,9 @@ export function SemanticSearchBar() {
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className={cn(
-            "w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 shrink-0 shadow-[0_10px_30px_rgba(0,188,140,0.3)] border-4 border-white z-20 hover:scale-110 active:scale-95",
+            "w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 shrink-0 shadow-[0_10px_30px_rgba(0,188,140,0.3)] border-4 border-white dark:border-slate-900 z-20 hover:scale-110 active:scale-95",
             isExpanded
-              ? "bg-white text-[#00bc8c] -mr-16"
+              ? "bg-white dark:bg-slate-800 text-[#00bc8c] -mr-16"
               : "bg-[#00bc8c] text-white"
           )}
         >
@@ -88,7 +88,7 @@ export function SemanticSearchBar() {
 
         {/* Expanding Search Bar - Slides out to the right */}
         <div className={cn(
-          "relative flex items-center p-1 bg-white/90 backdrop-blur-xl rounded-full border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.2)] transition-all duration-500 ease-in-out",
+          "relative flex items-center p-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-full border border-slate-100 dark:border-slate-700 shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 ease-in-out",
           isExpanded ? "w-full opacity-100 translate-x-4" : "w-0 opacity-0 translate-x-0 pointer-events-none"
         )}>
           <div className="absolute left-5 text-[#00bc8c] z-10">
@@ -102,13 +102,13 @@ export function SemanticSearchBar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => query.length >= 3 && setIsOpen(true)}
-            className="h-14 pl-12 pr-12 rounded-full bg-white border-transparent text-slate-900 placeholder:text-slate-400 focus:ring-0 focus:border-transparent transition-all duration-300"
+            className="h-14 pl-12 pr-12 rounded-full bg-white dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-0 focus:border-transparent transition-all duration-300"
           />
 
           {query && (
             <button
               onClick={clearSearch}
-              className="absolute right-4 p-1.5 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-600 transition-colors"
+              className="absolute right-4 p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -118,7 +118,7 @@ export function SemanticSearchBar() {
 
       {/* Results Dropdown - Pops UP */}
       {isOpen && isExpanded && (
-        <div className="absolute bottom-full left-0 w-[400px] max-w-[calc(100vw-48px)] mb-6 bg-white rounded-[2.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.2)] border border-slate-100 overflow-hidden z-50 animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <div className="absolute bottom-full left-0 w-[400px] max-w-[calc(100vw-48px)] mb-6 bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.2)] dark:shadow-[0_-20px_60px_rgba(0,0,0,0.5)] border border-slate-100 dark:border-slate-800 overflow-hidden z-50 animate-in fade-in slide-in-from-bottom-4 duration-300">
           <div className="p-5 bg-gradient-to-r from-[#00bc8c] to-[#00d4a1] text-white flex items-center justify-between shadow-lg">
             <div className="flex items-center gap-3">
               <Sparkles className="w-5 h-5 animate-pulse" />
@@ -135,9 +135,9 @@ export function SemanticSearchBar() {
                 <Link
                   key={medicine.id}
                   href={`/shop/${medicine.slug}`}
-                  className="flex items-center gap-4 p-3 rounded-2xl hover:bg-[#00bc8c]/5 transition-colors group/item"
+                  className="flex items-center gap-4 p-3 rounded-2xl hover:bg-[#00bc8c]/5 dark:hover:bg-[#00bc8c]/10 transition-colors group/item"
                 >
-                  <div className="relative w-14 h-14 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0">
+                  <div className="relative w-14 h-14 rounded-xl bg-slate-100 dark:bg-slate-800 overflow-hidden flex-shrink-0">
                     {medicine.imageUrl ? (
                       <Image
                         src={medicine.imageUrl}
@@ -147,21 +147,21 @@ export function SemanticSearchBar() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <ShoppingCart className="w-6 h-6 text-slate-300" />
+                        <ShoppingCart className="w-6 h-6 text-slate-300 dark:text-slate-600" />
                       </div>
                     )}
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-slate-800 truncate group-hover/item:text-[#00bc8c] transition-colors">
+                    <h4 className="font-bold text-slate-800 dark:text-slate-200 truncate group-hover/item:text-[#00bc8c] transition-colors">
                       {medicine.name}
                     </h4>
-                    <p className="text-xs text-slate-500 truncate">{medicine.manufacturer}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{medicine.manufacturer}</p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-sm font-black text-[#00bc8c]">৳{medicine.price}</span>
                       <span className={cn(
                         "text-[10px] px-2 py-0.5 rounded-full font-bold",
-                        medicine.stock > 0 ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"
+                        medicine.stock > 0 ? "bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400" : "bg-rose-100 dark:bg-rose-950/50 text-rose-700 dark:text-rose-400"
                       )}>
                         {medicine.stock > 0 ? "In Stock" : "Out of Stock"}
                       </span>
@@ -171,17 +171,17 @@ export function SemanticSearchBar() {
               ))
             ) : (
               <div className="py-12 text-center">
-                <div className="bg-slate-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Search className="w-6 h-6 text-slate-400" />
+                <div className="bg-slate-100 dark:bg-slate-800 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Search className="w-6 h-6 text-slate-400 dark:text-slate-500" />
                 </div>
-                <p className="text-slate-500 font-medium">No matches found. Try describing your symptoms!</p>
+                <p className="text-slate-500 dark:text-slate-400 font-medium">No matches found. Try describing your symptoms!</p>
               </div>
             )}
           </div>
 
           {results.length > 0 && (
-            <div className="p-4 bg-slate-50 border-t border-slate-100 text-center">
-              <button className="text-xs font-bold text-slate-500 hover:text-[#00bc8c] transition-colors">
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 text-center">
+              <button className="text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-[#00bc8c] transition-colors">
                 View all search results
               </button>
             </div>

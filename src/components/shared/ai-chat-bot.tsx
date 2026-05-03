@@ -77,7 +77,7 @@ export function AIChatBot() {
       {isOpen && (
         <div 
           className={cn(
-            "bg-white rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.2)] border border-slate-100 flex flex-col transition-all duration-500 ease-in-out mb-4 overflow-hidden",
+            "bg-white dark:bg-slate-900 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] border border-slate-100 dark:border-slate-800 flex flex-col transition-all duration-500 ease-in-out mb-4 overflow-hidden",
             isMinimized ? "h-[70px] w-[300px]" : "h-[600px] w-[400px] max-w-[calc(100vw-48px)]"
           )}
         >
@@ -117,7 +117,7 @@ export function AIChatBot() {
               {/* Messages Area */}
               <div 
                 ref={scrollRef}
-                className="flex-1 overflow-y-auto p-5 space-y-6 bg-slate-50/50 scroll-smooth"
+                className="flex-1 overflow-y-auto p-5 space-y-6 bg-slate-50/50 dark:bg-slate-950/50 scroll-smooth"
               >
                 {messages.map((msg, i) => (
                   <div 
@@ -129,16 +129,16 @@ export function AIChatBot() {
                   >
                     <div className={cn(
                       "w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm",
-                      msg.role === "user" ? "bg-slate-200" : "bg-[#00bc8c] text-white"
+                      msg.role === "user" ? "bg-slate-200 dark:bg-slate-700" : "bg-[#00bc8c] text-white"
                     )}>
-                      {msg.role === "user" ? <User className="w-4 h-4 text-slate-500" /> : <Bot className="w-4 h-4" />}
+                      {msg.role === "user" ? <User className="w-4 h-4 text-slate-500 dark:text-slate-300" /> : <Bot className="w-4 h-4" />}
                     </div>
                     
                     <div className={cn(
                       "max-w-[80%] p-4 rounded-2xl text-sm leading-relaxed",
                       msg.role === "user" 
-                        ? "bg-white text-slate-800 rounded-tr-none shadow-sm border border-slate-100" 
-                        : "bg-white text-slate-800 rounded-tl-none shadow-sm border border-slate-100"
+                        ? "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tr-none shadow-sm border border-slate-100 dark:border-slate-700" 
+                        : "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-none shadow-sm border border-slate-100 dark:border-slate-700"
                     )}>
                       <div className="prose prose-sm prose-slate dark:prose-invert break-words max-w-none">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -153,7 +153,7 @@ export function AIChatBot() {
                     <div className="w-8 h-8 rounded-xl bg-[#00bc8c]/20 flex items-center justify-center">
                       <Bot className="w-4 h-4 text-[#00bc8c]" />
                     </div>
-                    <div className="bg-[#00bc8c]/5 p-4 rounded-2xl rounded-tl-none border border-[#00bc8c]/10">
+                    <div className="bg-[#00bc8c]/5 dark:bg-[#00bc8c]/10 p-4 rounded-2xl rounded-tl-none border border-[#00bc8c]/10 dark:border-[#00bc8c]/20">
                       <Loader2 className="w-4 h-4 text-[#00bc8c] animate-spin" />
                     </div>
                   </div>
@@ -161,7 +161,7 @@ export function AIChatBot() {
               </div>
 
               {/* Input Area */}
-              <div className="p-4 bg-white border-t border-slate-100">
+              <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
                 <form 
                   onSubmit={handleSend}
                   className="relative flex items-center"
@@ -170,7 +170,7 @@ export function AIChatBot() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type your message..."
-                    className="h-12 pl-4 pr-12 rounded-xl border-slate-200 focus:ring-[#00bc8c]/20"
+                    className="h-12 pl-4 pr-12 rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder:text-slate-500 focus:ring-[#00bc8c]/20"
                     disabled={isLoading}
                   />
                   <button 
@@ -182,13 +182,13 @@ export function AIChatBot() {
                   </button>
                 </form>
                 <div className="flex items-center justify-between mt-3 px-1">
-                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                     <Sparkles className="w-3 h-3 text-[#00bc8c]" />
                     AI Powered Assistance
                   </div>
                   <button 
                     onClick={clearChat}
-                    className="text-[10px] font-bold text-slate-400 hover:text-rose-500 uppercase tracking-widest flex items-center gap-1 transition-colors"
+                    className="text-[10px] font-bold text-slate-400 dark:text-slate-500 hover:text-rose-500 uppercase tracking-widest flex items-center gap-1 transition-colors"
                   >
                     <Trash2 className="w-3 h-3" />
                     Clear Chat
@@ -211,7 +211,7 @@ export function AIChatBot() {
         }}
         className={cn(
           "w-16 h-16 rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(0,188,140,0.4)] transition-all duration-300 hover:scale-110 active:scale-90",
-          isOpen ? "bg-white text-[#00bc8c]" : "bg-[#00bc8c] text-white"
+          isOpen ? "bg-white dark:bg-slate-800 text-[#00bc8c]" : "bg-[#00bc8c] text-white"
         )}
       >
         {isOpen ? <X className="w-8 h-8" /> : <MessageCircle className="w-8 h-8" />}

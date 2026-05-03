@@ -42,9 +42,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const activeCategory = categories.find((c) => c.id === params.category);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50/80 via-white to-slate-50/50">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50/80 dark:from-slate-900 via-white dark:via-slate-900 to-slate-50/50 dark:to-slate-900">
       {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#00bc8c]/5 via-emerald-50/50 to-teal-50/30 border-b border-slate-100">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#00bc8c]/5 via-emerald-50/50 dark:via-slate-900 to-teal-50/30 dark:to-slate-900 border-b border-slate-100 dark:border-slate-800">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#00bc8c]/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-emerald-100/30 rounded-full blur-3xl" />
@@ -55,10 +55,10 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
               <div className="w-8 h-px bg-[#00bc8c]" />
               Shop All Medicines
             </div>
-            <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-[1.1]">
+            <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-slate-100 tracking-tight leading-[1.1]">
               {activeCategory ? activeCategory.name : "Explore Our Collection"}
             </h1>
-            <p className="text-slate-500 text-lg font-medium max-w-lg leading-relaxed">
+            <p className="text-slate-500 dark:text-slate-400 text-lg font-medium max-w-lg leading-relaxed">
               {activeCategory
                 ? `Browse through our ${activeCategory.name.toLowerCase()} category for quality healthcare products.`
                 : "Browse through our wide range of quality OTC medicines. Find what you need with filters made for easy navigation."}
@@ -71,7 +71,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       <section className="container mx-auto px-4 py-10">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
-          <Suspense fallback={<div className="w-72 h-96 bg-slate-100 animate-pulse rounded-[2rem]" />}>
+          <Suspense fallback={<div className="w-72 h-96 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-[2rem]" />}>
             <MedicineFilters categories={categories} manufacturers={manufacturers} />
           </Suspense>
 

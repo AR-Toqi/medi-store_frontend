@@ -68,14 +68,14 @@ export function NavSearch() {
           }}
           onFocus={() => setIsOpen(true)}
           placeholder="Search medicines..."
-          className="w-full h-11 md:h-12 pl-12 pr-10 bg-slate-50/80 border border-slate-100 rounded-2xl text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-[#00bc8c]/10 focus:border-[#00bc8c]/30 focus:bg-white transition-all duration-300 shadow-inner group-hover:shadow-md"
+          className="w-full h-11 md:h-12 pl-12 pr-10 bg-slate-50/80 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700 rounded-2xl text-sm font-medium text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-4 focus:ring-[#00bc8c]/10 focus:border-[#00bc8c]/30 focus:bg-white dark:focus:bg-slate-800 transition-all duration-300 shadow-inner dark:shadow-none group-hover:shadow-md"
         />
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-[#00bc8c] transition-colors" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-500 group-focus-within:text-[#00bc8c] transition-colors" />
         {searchValue && (
           <button
             type="button"
             onClick={() => setSearchValue("")}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -84,22 +84,22 @@ export function NavSearch() {
 
       {/* Dropdown Results */}
       {showDropdown && (
-        <div className="absolute top-full left-0 right-0 mt-3 bg-white border border-slate-100 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] overflow-hidden z-[100] animate-in fade-in slide-in-from-top-2 duration-300">
-          <div className="p-4 border-b border-slate-50 bg-slate-50/50">
-             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2">Live Search Results</p>
+        <div className="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden z-[100] animate-in fade-in slide-in-from-top-2 duration-300">
+          <div className="p-4 border-b border-slate-50 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+             <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] px-2">Live Search Results</p>
           </div>
 
           <div className="max-h-[min(480px,70vh)] overflow-y-auto custom-scrollbar">
             {isLoadingMedicines && (
-              <div className="flex flex-col items-center justify-center py-12 text-slate-400">
+              <div className="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-500">
                 <Loader2 className="w-6 h-6 animate-spin mb-2" />
                 <p className="text-xs font-bold">Searching the pharmacy...</p>
               </div>
             )}
 
             {!isLoadingMedicines && !hasResults && (
-              <div className="flex flex-col items-center justify-center py-12 text-slate-400">
-                <p className="text-sm font-bold">No matches found for "{debouncedSearch}"</p>
+              <div className="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-500">
+                <p className="text-sm font-bold">No matches found for &quot;{debouncedSearch}&quot;</p>
                 <p className="text-[10px] uppercase tracking-wider mt-1 opacity-60">Try different keywords</p>
               </div>
             )}
@@ -118,9 +118,9 @@ export function NavSearch() {
                           key={item.id}
                           href={`/shop/${item.slug}`}
                           onClick={() => setIsOpen(false)}
-                          className="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 group"
+                          className="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all border border-transparent hover:border-slate-100 dark:hover:border-slate-700 group"
                         >
-                          <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-100 shrink-0 border border-slate-100 group-hover:scale-105 transition-transform">
+                          <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-700 shrink-0 border border-slate-100 dark:border-slate-600 group-hover:scale-105 transition-transform">
                             <img 
                               src={item.imageUrl || "https://placehold.co/100x100?text=+"} 
                               alt={item.name} 
@@ -128,11 +128,11 @@ export function NavSearch() {
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-black text-slate-800 truncate group-hover:text-[#00bc8c] transition-colors">{item.name}</p>
-                            <p className="text-[10px] font-bold text-slate-400 truncate uppercase mt-0.5">{item.manufacturer}</p>
+                            <p className="text-sm font-black text-slate-800 dark:text-slate-200 truncate group-hover:text-[#00bc8c] transition-colors">{item.name}</p>
+                            <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 truncate uppercase mt-0.5">{item.manufacturer}</p>
                           </div>
                           <div className="text-right">
-                             <p className="text-sm font-black text-slate-900">${typeof item.price === 'number' ? item.price.toFixed(2) : parseFloat(item.price as string).toFixed(2)}</p>
+                             <p className="text-sm font-black text-slate-900 dark:text-slate-100">${typeof item.price === 'number' ? item.price.toFixed(2) : parseFloat(item.price as string).toFixed(2)}</p>
                           </div>
                         </Link>
                       ))}
@@ -143,7 +143,7 @@ export function NavSearch() {
                 {/* Categories Section */}
                 {filteredCategories.length > 0 && (
                   <div>
-                    <h4 className="text-[10px] font-black text-blue-500 uppercase tracking-widest px-3 mb-2 flex items-center gap-2 border-t border-slate-50 pt-4">
+                    <h4 className="text-[10px] font-black text-blue-500 dark:text-blue-400 uppercase tracking-widest px-3 mb-2 flex items-center gap-2 border-t border-slate-50 dark:border-slate-800 pt-4">
                        <Tag className="w-3 h-3" /> Categories
                     </h4>
                     <div className="grid grid-cols-1 gap-1 px-1">
@@ -152,10 +152,10 @@ export function NavSearch() {
                           key={cat.id}
                           href={`/shop?category=${cat.id}`}
                           onClick={() => setIsOpen(false)}
-                          className="flex items-center justify-between p-3 rounded-xl hover:bg-blue-50 transition-all group"
+                          className="flex items-center justify-between p-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all group"
                         >
-                          <span className="text-sm font-bold text-slate-700 group-hover:text-blue-600">{cat.name}</span>
-                          <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
+                          <span className="text-sm font-bold text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">{cat.name}</span>
+                          <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
                         </Link>
                       ))}
                     </div>
@@ -165,10 +165,10 @@ export function NavSearch() {
             )}
           </div>
 
-          <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-center">
+          <div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center">
             <button 
               onClick={() => handleSearch()}
-              className="text-[11px] font-black text-slate-500 uppercase tracking-widest hover:text-[#00bc8c] transition-colors flex items-center gap-2"
+              className="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest hover:text-[#00bc8c] transition-colors flex items-center gap-2"
             >
               See all results for &ldquo;{debouncedSearch}&rdquo; <ChevronRight className="w-3 h-3" />
             </button>

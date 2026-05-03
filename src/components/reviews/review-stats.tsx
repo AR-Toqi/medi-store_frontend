@@ -17,7 +17,7 @@ export function ReviewStatsComponent({ stats }: ReviewStatsProps) {
   ];
 
   return (
-    <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
+    <div className="bg-white dark:bg-slate-800/60 rounded-[2.5rem] p-8 border border-slate-100 dark:border-slate-700/50 shadow-sm dark:shadow-none">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* Average Rating */}
         <div className="flex flex-col items-center justify-center text-center space-y-4">
@@ -25,7 +25,7 @@ export function ReviewStatsComponent({ stats }: ReviewStatsProps) {
             Average Rating
           </p>
           <div className="relative">
-            <span className="text-7xl font-black text-slate-900 leading-none">
+            <span className="text-7xl font-black text-slate-900 dark:text-slate-100 leading-none">
               {averageRating}
             </span>
             <div className="flex items-center justify-center gap-1 mt-2">
@@ -35,13 +35,13 @@ export function ReviewStatsComponent({ stats }: ReviewStatsProps) {
                   className={`w-5 h-5 ${
                     star <= Math.round(averageRating)
                       ? "text-amber-400 fill-amber-400"
-                      : "text-slate-200"
+                      : "text-slate-200 dark:text-slate-600"
                   }`}
                 />
               ))}
             </div>
           </div>
-          <p className="text-slate-500 font-bold text-sm">
+          <p className="text-slate-500 dark:text-slate-400 font-bold text-sm">
             Based on {totalReviews} {totalReviews === 1 ? "review" : "reviews"}
           </p>
         </div>
@@ -53,10 +53,10 @@ export function ReviewStatsComponent({ stats }: ReviewStatsProps) {
             return (
               <div key={rating} className="flex items-center gap-4">
                 <div className="flex items-center gap-1 w-8">
-                  <span className="text-sm font-black text-slate-700">{rating}</span>
+                  <span className="text-sm font-black text-slate-700 dark:text-slate-300">{rating}</span>
                   <Star className="w-3 h-3 text-slate-400 fill-slate-400" />
                 </div>
-                <div className="flex-1 h-3 bg-slate-50 rounded-full overflow-hidden border border-slate-100">
+                <div className="flex-1 h-3 bg-slate-50 dark:bg-slate-700/50 rounded-full overflow-hidden border border-slate-100 dark:border-slate-600">
                   <div
                     className="h-full bg-amber-400 rounded-full transition-all duration-1000 ease-out"
                     style={{ width: `${percentage}%` }}

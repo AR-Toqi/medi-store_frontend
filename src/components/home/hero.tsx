@@ -70,13 +70,13 @@ export function Hero() {
           </div>
 
           {/* Floating Badge */}
-          <div className="hidden lg:flex absolute bottom-12 right-12 bg-white/90 backdrop-blur-xl p-5 rounded-3xl items-center gap-4 shadow-2xl animate-in zoom-in duration-1000 delay-300 fill-mode-both">
+          <div className="hidden lg:flex absolute bottom-12 right-12 bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl p-5 rounded-3xl items-center gap-4 shadow-2xl animate-in zoom-in duration-1000 delay-300 fill-mode-both">
             <div className="bg-[#00bc8c] p-2 rounded-xl">
               <BadgeCheck className="w-6 h-6 text-white" />
             </div>
             <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Verified Pharmacists</p>
-              <p className="text-slate-700 font-bold">Available for consultation</p>
+              <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Verified Pharmacists</p>
+              <p className="text-slate-700 dark:text-slate-200 font-bold">Available for consultation</p>
             </div>
           </div>
         </div>

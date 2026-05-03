@@ -23,8 +23,8 @@ const StatusBadge = ({ status }: { status: string }) => {
     PROCESSING: { color: "bg-blue-100 text-blue-800 border-blue-200", icon: Package },
     SHIPPED: { color: "bg-purple-100 text-purple-800 border-purple-200", icon: Truck },
     DELIVERED: { color: "bg-[#00bc8c]/20 text-[#00bc8c] border-[#00bc8c]/30", icon: CheckCircle2 },
-    CANCELLED: { color: "bg-red-100 text-red-800 border-red-200", icon: XCircle },
-  }[status] || { color: "bg-slate-100 text-slate-800 border-slate-200", icon: Package };
+    CANCELLED: { color: "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 border-red-200 dark:border-red-800/30", icon: XCircle },
+  }[status] || { color: "bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-200 dark:border-slate-700", icon: Package };
 
   const Icon = settings.icon;
 
@@ -64,8 +64,8 @@ export function OrderDetailsView({ params }: OrderDetailsViewProps) {
   if (isError || !order) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-2xl font-black text-slate-800 mb-2">Order Not Found</h2>
-        <p className="text-slate-500 mb-8">We couldn&apos;t find the order you&apos;re looking for.</p>
+        <h2 className="text-2xl font-black text-slate-800 dark:text-slate-200 mb-2">Order Not Found</h2>
+        <p className="text-slate-500 dark:text-slate-400 mb-8">We couldn&apos;t find the order you&apos;re looking for.</p>
         <Link href="/orders">
           <Button className="bg-[#00bc8c] hover:bg-[#00a37b] h-12 px-8 rounded-2xl font-black cursor-pointer">
             Back to Orders
@@ -83,12 +83,12 @@ export function OrderDetailsView({ params }: OrderDetailsViewProps) {
 
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-3xl font-black text-slate-800 tracking-tight flex items-center gap-3">
-            Invoice Details <Receipt className="w-8 h-8 text-slate-300" />
+          <h1 className="text-3xl font-black text-slate-800 dark:text-slate-100 tracking-tight flex items-center gap-3">
+            Invoice Details <Receipt className="w-8 h-8 text-slate-300 dark:text-slate-600" />
           </h1>
           <div className="flex items-center gap-2 mt-2">
-            <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">Order ID</span>
-            <span className="text-slate-800 font-mono font-bold text-sm bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+            <span className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Order ID</span>
+            <span className="text-slate-800 dark:text-slate-200 font-mono font-bold text-sm bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
               {order.id}
             </span>
           </div>
@@ -110,56 +110,56 @@ export function OrderDetailsView({ params }: OrderDetailsViewProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Info Cards */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm col-span-1 md:col-span-1">
+        <div className="bg-white dark:bg-slate-800/60 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-sm dark:shadow-none col-span-1 md:col-span-1">
            <div className="flex items-center gap-2 mb-3">
-             <Clock className="w-5 h-5 text-slate-400" />
-             <h3 className="font-black text-slate-800">Date Placed</h3>
+             <Clock className="w-5 h-5 text-slate-400 dark:text-slate-500" />
+             <h3 className="font-black text-slate-800 dark:text-slate-100">Date Placed</h3>
            </div>
-           <p className="text-slate-600 font-medium" suppressHydrationWarning>{new Intl.DateTimeFormat('en-US', { month: 'long', day: '2-digit', year: 'numeric' }).format(new Date(order.createdAt))}</p>
-           <p className="text-slate-400 text-sm mt-1" suppressHydrationWarning>{new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date(order.createdAt))}</p>
+           <p className="text-slate-600 dark:text-slate-300 font-medium" suppressHydrationWarning>{new Intl.DateTimeFormat('en-US', { month: 'long', day: '2-digit', year: 'numeric' }).format(new Date(order.createdAt))}</p>
+           <p className="text-slate-400 dark:text-slate-500 text-sm mt-1" suppressHydrationWarning>{new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date(order.createdAt))}</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm col-span-1 md:col-span-2 flex flex-col md:flex-row gap-6">
+        <div className="bg-white dark:bg-slate-800/60 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-sm dark:shadow-none col-span-1 md:col-span-2 flex flex-col md:flex-row gap-6">
            <div className="flex-1">
              <div className="flex items-center gap-2 mb-3">
                <MapPin className="w-5 h-5 text-[#00bc8c]" />
-               <h3 className="font-black text-slate-800">Shipping Address</h3>
+               <h3 className="font-black text-slate-800 dark:text-slate-100">Shipping Address</h3>
              </div>
-             <p className="text-slate-600 font-medium text-sm leading-relaxed">{order.shippingAddress}</p>
+             <p className="text-slate-600 dark:text-slate-300 font-medium text-sm leading-relaxed">{order.shippingAddress}</p>
            </div>
-           <div className="hidden md:block w-px bg-slate-100 self-stretch" />
+           <div className="hidden md:block w-px bg-slate-100 dark:bg-slate-700 self-stretch" />
            <div className="flex-1">
              <div className="flex items-center gap-2 mb-3">
                <Truck className="w-5 h-5 text-[#00bc8c]" />
-               <h3 className="font-black text-slate-800">Payment Option</h3>
+               <h3 className="font-black text-slate-800 dark:text-slate-100">Payment Option</h3>
              </div>
-             <p className="text-slate-600 font-medium">{order.paymentMethod}</p>
+             <p className="text-slate-600 dark:text-slate-300 font-medium">{order.paymentMethod}</p>
            </div>
         </div>
       </div>
 
       {/* Items List */}
-      <h2 className="text-xl font-black text-slate-800 mb-4">Purchased Items</h2>
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-8">
-        <div className="flex flex-col divide-y divide-slate-100">
+      <h2 className="text-xl font-black text-slate-800 dark:text-slate-100 mb-4">Purchased Items</h2>
+      <div className="bg-white dark:bg-slate-800/60 rounded-3xl border border-slate-100 dark:border-slate-700/50 shadow-sm dark:shadow-none overflow-hidden mb-8">
+        <div className="flex flex-col divide-y divide-slate-100 dark:divide-slate-700/50">
           {order.items?.map((item: any) => (
             <Link 
               href={`/shop/${item.medicineId}`} 
               key={item.id} 
-              className="flex items-center gap-4 p-5 hover:bg-slate-50 transition-colors cursor-pointer group"
+              className="flex items-center gap-4 p-5 hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors cursor-pointer group"
             >
-               <div className="w-16 h-16 rounded-xl bg-slate-50 border border-slate-200 overflow-hidden shrink-0">
+               <div className="w-16 h-16 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 overflow-hidden shrink-0">
                  <img src={item.medicine?.imageUrl || "https://placehold.co/100"} alt="med" className="w-full h-full object-cover" />
                </div>
                <div className="flex-1 min-w-0">
-                  <h4 className="font-black text-slate-800 truncate group-hover:text-[#00bc8c] transition-colors">{item.medicine?.name || "Unknown Item"}</h4>
-                  <p className="text-xs font-bold text-slate-400 mt-0.5 uppercase tracking-widest">{item.medicine?.seller?.shopName || "MediStore"}</p>
+                  <h4 className="font-black text-slate-800 dark:text-slate-200 truncate group-hover:text-[#00bc8c] transition-colors">{item.medicine?.name || "Unknown Item"}</h4>
+                  <p className="text-xs font-bold text-slate-400 dark:text-slate-500 mt-0.5 uppercase tracking-widest">{item.medicine?.seller?.shopName || "MediStore"}</p>
                </div>
                <div className="text-right flex items-center gap-6">
-                  <div className="text-sm font-medium text-slate-500 hidden sm:block">
+                  <div className="text-sm font-medium text-slate-500 dark:text-slate-400 hidden sm:block">
                      Qty: {item.quantity} × ${(typeof item.price === "string" ? parseFloat(item.price) : item.price).toFixed(2)}
                   </div>
-                  <div className="font-black text-lg text-slate-800 w-20 text-right">
+                  <div className="font-black text-lg text-slate-800 dark:text-slate-100 w-20 text-right">
                     ${(item.quantity * (typeof item.price === "string" ? parseFloat(item.price) : item.price)).toFixed(2)}
                   </div>
                </div>
@@ -168,18 +168,18 @@ export function OrderDetailsView({ params }: OrderDetailsViewProps) {
         </div>
         
         {/* Footer Totals */}
-        <div className="bg-slate-50 p-6 flex flex-col items-end border-t border-slate-200">
+        <div className="bg-slate-50 dark:bg-slate-900/50 p-6 flex flex-col items-end border-t border-slate-200 dark:border-slate-700/50">
            <div className="w-full max-w-sm space-y-3">
-              <div className="flex justify-between text-slate-500 font-medium">
+              <div className="flex justify-between text-slate-500 dark:text-slate-400 font-medium">
                  <span>Subtotal</span>
                  <span>${order.totalAmount.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-slate-500 font-medium">
+              <div className="flex justify-between text-slate-500 dark:text-slate-400 font-medium">
                  <span>Shipping</span>
                  <span className="uppercase text-[#00bc8c] font-black">Free</span>
               </div>
-              <div className="flex justify-between items-center pt-4 border-t border-slate-200 mt-2">
-                 <span className="text-lg font-black text-slate-800">Grand Total</span>
+              <div className="flex justify-between items-center pt-4 border-t border-slate-200 dark:border-slate-700/50 mt-2">
+                 <span className="text-lg font-black text-slate-800 dark:text-slate-100">Grand Total</span>
                  <span className="text-3xl font-black text-[#00bc8c]">${order.totalAmount.toFixed(2)}</span>
               </div>
            </div>
@@ -188,19 +188,19 @@ export function OrderDetailsView({ params }: OrderDetailsViewProps) {
 
       {showConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in">
-           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl animate-in zoom-in-95 duration-200">
-              <div className="w-14 h-14 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-5">
+           <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl animate-in zoom-in-95 duration-200">
+              <div className="w-14 h-14 bg-red-50 dark:bg-red-900/30 text-red-500 rounded-full flex items-center justify-center mx-auto mb-5">
                  <Ban className="w-7 h-7" />
               </div>
-              <h3 className="text-2xl font-black text-center text-slate-800 mb-2">Cancel Order?</h3>
-              <p className="text-center text-slate-500 text-sm mb-8 leading-relaxed">
+              <h3 className="text-2xl font-black text-center text-slate-800 dark:text-slate-100 mb-2">Cancel Order?</h3>
+              <p className="text-center text-slate-500 dark:text-slate-400 text-sm mb-8 leading-relaxed">
                 Are you sure you want to completely cancel this order? This action cannot be reversed and your items will be released.
               </p>
               
               <div className="flex flex-col-reverse sm:flex-row gap-3">
                  <Button 
                    variant="outline" 
-                   className="flex-1 rounded-xl h-12 font-bold hover:bg-slate-50 cursor-pointer" 
+                   className="flex-1 rounded-xl h-12 font-bold hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer dark:bg-transparent dark:text-slate-300 dark:border-slate-600" 
                    onClick={() => setShowConfirm(false)}
                  >
                    Nevermind

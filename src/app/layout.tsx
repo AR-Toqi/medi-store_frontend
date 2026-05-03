@@ -25,6 +25,7 @@ export const metadata: Metadata = {
 import { AuthNotifier } from "@/components/auth/auth-notifier";
 import { Suspense } from "react";
 import { QueryProvider } from "@/providers/query-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 export default function RootLayout({
   children,
@@ -32,27 +33,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-        <Toaster position="top-center" richColors />
-        <QueryProvider>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <Suspense fallback={null}>
-              <AuthNotifier />
-            </Suspense>
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-            <div className="fixed bottom-6 left-6 z-[9999]">
-              <SemanticSearchBar />
+        <ThemeProvider>
+          <Toaster position="top-center" richColors />
+          <QueryProvider>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <Suspense fallback={null}>
+                <AuthNotifier />
+              </Suspense>
+              <main className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+              <div className="fixed bottom-6 left-6 z-[9999]">
+                <SemanticSearchBar />
+              </div>
+              <AIChatBot />
             </div>
-            <AIChatBot />
-          </div>
-        </QueryProvider>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

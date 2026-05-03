@@ -77,9 +77,9 @@ export function ProfileUpdateView() {
         Back to Profile
       </Link>
 
-      <Card className="border-none shadow-2xl shadow-slate-200/50 rounded-[3rem] overflow-hidden bg-white">
+      <Card className="border-none shadow-2xl shadow-slate-200/50 dark:shadow-none rounded-[3rem] overflow-hidden bg-white dark:bg-slate-800">
         <CardHeader className="pt-12 px-10 text-center">
-          <CardTitle className="text-3xl font-black text-slate-800">Update Profile</CardTitle>
+          <CardTitle className="text-3xl font-black text-slate-800 dark:text-slate-100">Update Profile</CardTitle>
           <CardDescription className="text-base font-medium">Personalize your MediStore identity</CardDescription>
         </CardHeader>
         
@@ -97,7 +97,7 @@ export function ProfileUpdateView() {
                   )}
                   
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                    <div className="bg-white p-3 rounded-2xl shadow-lg">
+                    <div className="bg-white dark:bg-slate-900 p-3 rounded-2xl shadow-lg">
                       <Camera className="w-6 h-6 text-[#00bc8c]" />
                     </div>
                   </div>
@@ -111,7 +111,7 @@ export function ProfileUpdateView() {
                   onChange={handleImageChange}
                 />
                 
-                <div className="absolute -bottom-2 -right-2 bg-white p-3 rounded-2xl shadow-xl border border-slate-100">
+                <div className="absolute -bottom-2 -right-2 bg-white dark:bg-slate-900 p-3 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700">
                   <Camera className="w-5 h-5 text-[#00bc8c]" />
                 </div>
               </div>
@@ -121,28 +121,28 @@ export function ProfileUpdateView() {
             {/* Form Fields */}
             <div className="space-y-6">
               <div className="space-y-3">
-                <Label htmlFor="name" className="text-sm font-black text-slate-700 ml-1">Display Name</Label>
+                <Label htmlFor="name" className="text-sm font-black text-slate-700 dark:text-slate-300 ml-1">Display Name</Label>
                 <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-500" />
                   <Input 
                     id="name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter your full name"
-                    className="h-14 pl-12 bg-slate-50 border-none rounded-2xl font-bold focus-visible:ring-2 focus-visible:ring-[#00bc8c]/20 focus-visible:bg-white transition-all shadow-inner"
+                    className="h-14 pl-12 bg-slate-50 dark:bg-slate-900 border-none rounded-2xl font-bold focus-visible:ring-2 focus-visible:ring-[#00bc8c]/20 focus-visible:bg-white dark:focus-visible:bg-slate-900 transition-all shadow-inner"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-3 opacity-60">
-                <Label htmlFor="email" className="text-sm font-black text-slate-700 ml-1">Email Address (Locked)</Label>
+                <Label htmlFor="email" className="text-sm font-black text-slate-700 dark:text-slate-300 ml-1">Email Address (Locked)</Label>
                 <div className="relative">
                   <Input 
                     id="email"
                     value={user.email}
                     disabled
-                    className="h-14 bg-slate-100 border-none rounded-2xl font-bold cursor-not-allowed"
+                    className="h-14 bg-slate-100 dark:bg-slate-700 border-none rounded-2xl font-bold cursor-not-allowed"
                   />
                 </div>
               </div>
