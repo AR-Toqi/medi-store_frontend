@@ -1,23 +1,38 @@
-import { authService } from "@/services/auth.service";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function SellerLayout({
+import { useUser } from "@/hooks/use-user";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { Loader2 } from "lucide-react";
+
+export default function SellerLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const headerList = await headers();
-  
-  try {
-    const user = await authService.getCurrentUser(headerList);
-    const role = user?.role;
+  const { user, isLoading } = useUser();
+  const router = useRouter();
 
-    if (role !== "SELLER") {
-      redirect("/?message=unauthorized");
+  useEffect(() => {
+    if (!isLoading) {
+      if (!user) {
+        router.push("/login?message=unauthorized");
+      } else if (user.role !== "SELLER") {
+        router.push("/?message=unauthorized");
+      }
     }
-  } catch (error) {
-    redirect("/login?message=unauthorized");
+  }, [user, isLoading, router]);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[60vh] w-full items-center justify-center">
+        <Loader2 className="h-10 w-10 animate-spin text-[#00bc8c]" />
+      </div>
+    );
+  }
+
+  if (!user || user.role !== "SELLER") {
+    return null;
   }
 
   return <>{children}</>;

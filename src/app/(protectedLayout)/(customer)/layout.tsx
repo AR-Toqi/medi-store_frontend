@@ -1,28 +1,30 @@
-import { authService } from "@/services/auth.service";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function CustomerLayout({
+import { useUser } from "@/hooks/use-user";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { Loader2 } from "lucide-react";
+
+export default function CustomerLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const headerList = await headers();
-  
-  try {
-    const user = await authService.getCurrentUser(headerList);
-    const role = user?.role;
+  const { user, isLoading } = useUser();
+  const router = useRouter();
 
-    // Usually, admins and sellers can also access customer routes (like profile/cart)
-    // but here we ensure they are at least authenticated (base layout handles this).
-    // If you want strict customer role check:
-    /*
-    if (role !== "CUSTOMER") {
-      redirect("/?message=unauthorized");
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push("/login?message=unauthorized");
     }
-    */
-  } catch (error) {
-    redirect("/login?message=unauthorized");
+  }, [user, isLoading, router]);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[60vh] w-full items-center justify-center">
+        <Loader2 className="h-10 w-10 animate-spin text-[#00bc8c]" />
+      </div>
+    );
   }
 
   return <>{children}</>;
