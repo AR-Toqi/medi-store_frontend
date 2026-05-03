@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
@@ -47,7 +49,7 @@ export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
   if (!mounted) return null;
 
   return (
-    <div className="p-4 md:p-8 space-y-10 max-w-[1600px] mx-auto pb-20">
+    <div className="p-4 md:p-8 space-y-10 max-w-400 mx-auto pb-20">
       {/* Welcome Section */}
       <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 p-8 md:p-12 text-white shadow-2xl shadow-slate-200">
         <div className="relative z-10 space-y-4 max-w-2xl">
@@ -62,7 +64,7 @@ export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
           </p>
           <div className="flex flex-wrap gap-3 pt-4">
             <Link href="/admin/users">
-              <Button size="lg" className="rounded-2xl bg-white text-slate-900 hover:bg-slate-100 font-black h-14 px-8 shadow-xl shadow-black/20 gap-2 border-none">
+              <Button size="lg" className="rounded-2xl bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-600 font-black h-14 px-8 shadow-xl shadow-black/20 dark:shadow-white/10 gap-2 border-none">
                 <Users className="w-5 h-5" />
                 Manage Community
               </Button>
@@ -112,15 +114,15 @@ export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Recent Orders Table */}
-        <Card className="lg:col-span-2 border-none shadow-xl shadow-slate-200/60 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-sm">
+        <Card className="lg:col-span-2 border-none shadow-xl shadow-slate-200/60 dark:shadow-slate-900/60 rounded-[2rem] overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
           <CardHeader className="p-8 pb-4">
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                <CardTitle className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-2">
                   <Clock className="w-6 h-6 text-[#00bc8c]" />
                   Recent Orders
                 </CardTitle>
-                <CardDescription className="font-medium text-slate-500">The last 5 transactions on the platform</CardDescription>
+                <CardDescription className="font-medium text-slate-500 dark:text-slate-400">The last 5 transactions on the platform</CardDescription>
               </div>
               <Link href="/admin/orders">
                 <Button variant="ghost" className="rounded-xl font-bold text-[#00bc8c] hover:bg-[#00bc8c]/10 gap-2 cursor-pointer">
@@ -133,7 +135,7 @@ export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50/50">
+                  <tr className="bg-slate-50/50 dark:bg-slate-800/50">
                     <th className="p-6 text-[11px] font-black uppercase tracking-widest text-slate-400">Customer</th>
                     <th className="p-6 text-[11px] font-black uppercase tracking-widest text-slate-400">Total</th>
                     <th className="p-6 text-[11px] font-black uppercase tracking-widest text-slate-400">Status</th>
@@ -142,19 +144,19 @@ export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
                 </thead>
                 <tbody className="divide-y divide-slate-50">
                   {stats?.recentOrders.map((order: any) => (
-                    <tr key={order.id} className="group hover:bg-slate-50/50 transition-colors">
+                    <tr key={order.id} className="group hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                       <td className="p-6">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center font-black text-slate-500 text-sm">
+                          <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-black text-slate-500 dark:text-slate-300 text-sm">
                             {order.customer.name.charAt(0).toUpperCase()}
                           </div>
                           <div>
-                            <p className="font-black text-slate-900 leading-none mb-1">{order.customer.name}</p>
-                            <p className="text-xs font-bold text-slate-400 truncate max-w-[120px]">{order.customer.email}</p>
+                            <p className="font-black text-slate-900 dark:text-slate-100 leading-none mb-1">{order.customer.name}</p>
+                            <p className="text-xs font-bold text-slate-400 dark:text-slate-500 truncate max-w-30">{order.customer.email}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="p-6 font-black text-slate-700">{formatCurrency(order.totalAmount)}</td>
+                      <td className="p-6 font-black text-slate-700 dark:text-slate-100">{formatCurrency(order.totalAmount)}</td>
                       <td className="p-6">
                         <StatusBadge status={order.status} />
                       </td>
@@ -171,7 +173,7 @@ export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
 
         {/* Quick Actions & Recent Users */}
         <div className="space-y-8">
-          <Card className="border-none shadow-xl shadow-slate-200/60 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-sm p-6">
+          <Card className="border-none shadow-xl shadow-slate-200/60 dark:shadow-slate-900/60 rounded-[2rem] overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-6">
              <CardTitle className="text-xl font-black mb-6 px-2 flex items-center gap-2">
                <PlusCircle className="w-5 h-5 text-[#00bc8c]" />
                Quick Actions
@@ -184,9 +186,9 @@ export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
              </div>
           </Card>
 
-          <Card className="border-none shadow-xl shadow-slate-200/60 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-sm">
+          <Card className="border-none shadow-xl shadow-slate-200/60 dark:shadow-slate-900/60 rounded-[2rem] overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
             <CardHeader className="p-8 pb-4">
-              <CardTitle className="text-xl font-black text-slate-900 flex items-center gap-2">
+              <CardTitle className="text-xl font-black text-slate-900 dark:text-slate-100 flex items-center gap-2">
                 <UserPlus className="w-5 h-5 text-[#00bc8c]" />
                 Latest Registrations
               </CardTitle>
@@ -197,7 +199,7 @@ export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
                     <div key={newUser.id} className="py-4 flex items-center justify-between group">
                       <div className="flex items-center gap-4">
                         <div className="relative">
-                          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#00bc8c]/20 to-blue-500/20 flex items-center justify-center font-black text-[#00bc8c] border border-white shadow-sm overflow-hidden">
+                          <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-[#00bc8c]/20 to-blue-500/20 flex items-center justify-center font-black text-[#00bc8c] border border-white shadow-sm overflow-hidden">
                             {newUser.image ? (
                               <img src={newUser.image} alt="" className="w-full h-full object-cover" />
                             ) : (
@@ -209,8 +211,8 @@ export function AdminDashboardView({ stats, user }: AdminDashboardViewProps) {
                           )}
                         </div>
                         <div>
-                          <p className="font-black text-slate-900 text-sm leading-none mb-1">{newUser.name}</p>
-                          <Badge variant="outline" className="text-[9px] font-black h-4 px-1.5 rounded-md border-slate-100 uppercase text-slate-400 tracking-widest">
+                          <p className="font-black text-slate-900 dark:text-slate-100 text-sm leading-none mb-1">{newUser.name}</p>
+                          <Badge variant="outline" className="text-[9px] font-black h-4 px-1.5 rounded-md border-slate-100 dark:border-slate-700 uppercase text-slate-400 dark:text-slate-500 tracking-widest">
                             {newUser.role}
                           </Badge>
                         </div>
@@ -245,8 +247,8 @@ function StatCard({ title, value, icon, trend, description, color }: { title: st
         </div>
         <div className="space-y-1">
           <p className="text-slate-400 font-bold text-sm uppercase tracking-widest">{title}</p>
-          <p className="text-3xl font-black text-slate-900 tracking-tight">{value}</p>
-          <p className="text-slate-400 text-xs font-medium pt-1">{description}</p>
+          <p className="text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight">{value}</p>
+          <p className="text-slate-400 dark:text-slate-500 text-xs font-medium pt-1">{description}</p>
         </div>
       </CardContent>
     </Card>
@@ -257,10 +259,10 @@ function QuickActionButton({ icon, label, href }: { icon: React.ReactNode; label
   return (
     <Link href={href} className="w-full">
       <Button variant="outline" className="w-full h-24 rounded-3xl flex flex-col gap-2 font-black border-slate-100 hover:border-[#00bc8c]/20 hover:bg-[#00bc8c]/5 hover:text-[#00bc8c] transition-all group cursor-pointer shadow-sm">
-        <div className="p-2 rounded-xl bg-slate-50 group-hover:bg-white transition-colors shadow-sm">
+        <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 group-hover:bg-white dark:group-hover:bg-slate-700 transition-colors shadow-sm">
           {icon}
         </div>
-        <span className="text-[11px] uppercase tracking-widest">{label}</span>
+        <span className="text-[11px] uppercase tracking-widest dark:text-slate-100">{label}</span>
       </Button>
     </Link>
   );

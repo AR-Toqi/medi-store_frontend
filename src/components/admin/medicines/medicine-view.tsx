@@ -1,14 +1,12 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
 import { 
   Search, 
-  Plus, 
-  Filter, 
-  MoreVertical, 
+   
   Eye, 
-  Trash2, 
-  Pencil,
   ChevronLeft,
   ChevronRight,
   Beaker,
@@ -16,7 +14,7 @@ import {
   Store,
   Star,
   PackageSearch,
-  LayoutGrid
+ 
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -52,16 +50,16 @@ export function AdminMedicinesView() {
   };
 
   return (
-    <div className="space-y-6 max-w-[1600px] mx-auto pb-20">
+    <div className="space-y-6 max-w-400 mx-auto pb-20">
       {/* Dynamic Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
         <div className="flex items-center gap-4">
            <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-[#00bc8c]">
               <PackageSearch className="w-8 h-8" />
            </div>
            <div>
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-1">Global Inventory</h1>
-              <p className="text-slate-500 font-medium tracking-tight">Monitor and manage all medicine listings across the platform</p>
+              <h1 className="text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight mb-1">Global Inventory</h1>
+              <p className="text-slate-500 dark:text-slate-400 font-medium tracking-tight">Monitor and manage all medicine listings across the platform</p>
            </div>
         </div>
         
@@ -70,7 +68,7 @@ export function AdminMedicinesView() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
               placeholder="Search by medicine name, desc, or category..." 
-              className="pl-11 h-14 rounded-2xl border-slate-100 bg-slate-50/50 focus:bg-white transition-all font-medium text-slate-900"
+              className="pl-11 h-14 rounded-2xl border-slate-100 dark:border-slate-600 bg-slate-50/50 dark:bg-slate-700/50 focus:bg-white dark:focus:bg-slate-600 transition-all font-medium text-slate-900 dark:text-slate-100"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -82,11 +80,11 @@ export function AdminMedicinesView() {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
         {isLoading ? (
           Array(8).fill(0).map((_, i) => (
-             <Skeleton key={i} className="h-[400px] rounded-[2rem]" />
+             <Skeleton key={i} className="h-100 rounded-[2rem]" />
           ))
         ) : data?.data?.length > 0 ? (
           data.data.map((medicine: any) => (
-            <Card key={medicine.id} className="group border-none shadow-lg shadow-slate-200/60 rounded-[2rem] overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+            <Card key={medicine.id} className="group border-none shadow-lg shadow-slate-200/60 dark:shadow-slate-900/60 rounded-[2rem] overflow-hidden bg-white dark:bg-slate-800 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                <div className="relative h-56 w-full overflow-hidden bg-slate-100">
                   <img 
                     src={medicine.imageUrl} 
@@ -95,7 +93,7 @@ export function AdminMedicinesView() {
                     onError={(e) => { e.currentTarget.style.display = "none"; }}
                   />
                   <div className="absolute top-4 left-4 flex gap-2">
-                     <Badge className="bg-white/90 backdrop-blur-sm text-slate-900 border-none font-black uppercase text-[9px] tracking-widest px-3 py-1 rounded-full shadow-sm">
+                     <Badge className="bg-white/90 dark:bg-slate-700/90 backdrop-blur-sm text-slate-900 dark:text-slate-100 border-none font-black uppercase text-[9px] tracking-widest px-3 py-1 rounded-full shadow-sm">
                         {medicine.category.name}
                      </Badge>
                      {medicine.isFeatured && (
@@ -112,25 +110,25 @@ export function AdminMedicinesView() {
                         <h3 className="text-xl font-black text-slate-900 leading-tight mb-1 group-hover:text-[#00bc8c] transition-colors line-clamp-1">{medicine.name}</h3>
                         <div className="flex items-center gap-1.5 text-slate-400">
                            <Store className="w-3.5 h-3.5" />
-                           <span className="text-xs font-bold uppercase tracking-widest truncate max-w-[120px]">{medicine.seller?.shopName || "Platform Seller"}</span>
+                           <span className="text-xs font-bold uppercase tracking-widest truncate max-w-30">{medicine.seller?.shopName || "Platform Seller"}</span>
                         </div>
                      </div>
                      <p className="text-xl font-black text-[#00bc8c]">{formatCurrency(medicine.price)}</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 mb-6">
-                     <div className="bg-slate-50 p-3 rounded-2xl">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Stock</p>
+                     <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-2xl">
+                        <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-0.5">Stock</p>
                         <div className="flex items-center gap-2">
                            <Layers className={`w-3 h-3 ${medicine.stock < 10 ? 'text-red-500' : 'text-slate-400'}`} />
-                           <span className={`text-sm font-black ${medicine.stock < 10 ? 'text-red-500' : 'text-slate-700'}`}>{medicine.stock} units</span>
+                           <span className={`text-sm font-black ${medicine.stock < 10 ? 'text-red-500' : 'text-slate-700 dark:text-slate-100'}`}>{medicine.stock} units</span>
                         </div>
                      </div>
-                     <div className="bg-slate-50 p-3 rounded-2xl">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Form</p>
+                     <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-2xl">
+                        <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-0.5">Form</p>
                         <div className="flex items-center gap-2">
                            <Beaker className="w-3 h-3 text-slate-400" />
-                           <span className="text-sm font-black text-slate-700 truncate">{medicine.dosageForm || "N/A"}</span>
+                           <span className="text-sm font-black text-slate-700 dark:text-slate-100 truncate">{medicine.dosageForm || "N/A"}</span>
                         </div>
                      </div>
                   </div>
@@ -148,14 +146,14 @@ export function AdminMedicinesView() {
             </Card>
           ))
         ) : (
-          <div className="col-span-full py-32 text-center bg-white rounded-[2.5rem] border border-dashed border-slate-200">
+          <div className="col-span-full py-32 text-center bg-white dark:bg-slate-800 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-600">
              <div className="flex flex-col items-center gap-4">
-                <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-slate-200">
+                <div className="w-20 h-20 bg-slate-50 dark:bg-slate-700 rounded-full flex items-center justify-center text-slate-200 dark:text-slate-500">
                    <PackageSearch className="w-10 h-10" />
                 </div>
                 <div>
-                   <p className="text-2xl font-black text-slate-900 tracking-tight">No medicines found</p>
-                   <p className="text-slate-400 font-medium">Try adjusting your search criteria</p>
+                   <p className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">No medicines found</p>
+                   <p className="text-slate-400 dark:text-slate-500 font-medium">Try adjusting your search criteria</p>
                 </div>
              </div>
           </div>

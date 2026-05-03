@@ -45,11 +45,11 @@ export default function RootLayout({
               <Suspense fallback={null}>
                 <AuthNotifier />
               </Suspense>
-              <main className="flex-grow">
+              <main className="grow">
                 {children}
               </main>
               <Footer />
-              <div className="fixed bottom-6 left-6 z-[9999]">
+              <div className="fixed bottom-6 left-6 z-9999">
                 <SemanticSearchBar />
               </div>
               <AIChatBot />

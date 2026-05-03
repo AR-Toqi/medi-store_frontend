@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState } from "react";
@@ -9,7 +10,6 @@ import {
   Trash2, 
   Star, 
   AlertTriangle,
-  Loader2,
   ChevronLeft,
   ChevronRight,
   MoreVertical
@@ -68,7 +68,7 @@ export function MedicinesView() {
     <div className="container mx-auto p-4 md:p-8 max-w-7xl">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-black tracking-tight text-slate-900 border-l-4 border-[#00bc8c] pl-4">
+          <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-slate-100 border-l-4 border-[#00bc8c] pl-4">
             Medicine <span className="text-[#00bc8c]">Inventory</span>
           </h1>
           <p className="text-muted-foreground mt-1 font-medium">
@@ -83,13 +83,13 @@ export function MedicinesView() {
         </Link>
       </div>
 
-      <Card className="border-none shadow-xl shadow-slate-200/50 overflow-hidden bg-white/80 backdrop-blur-sm">
-        <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row gap-4 items-center justify-between">
+      <Card className="border-none shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50 overflow-hidden bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm">
+        <div className="p-6 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex flex-col sm:flex-row gap-4 items-center justify-between">
           <div className="relative w-full sm:max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <Input 
               placeholder="Search by name..." 
-              className="pl-10 h-11 bg-white border-slate-200 rounded-xl focus:ring-2 focus:ring-[#00bc8c]/20"
+              className="pl-10 h-11 bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-[#00bc8c]/20"
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
@@ -97,7 +97,7 @@ export function MedicinesView() {
               }}
             />
           </div>
-          <div className="flex items-center gap-2 text-sm font-bold text-slate-400 bg-white px-4 py-2 rounded-xl border border-slate-100">
+          <div className="flex items-center gap-2 text-sm font-bold text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-800 px-4 py-2 rounded-xl border border-slate-100 dark:border-slate-700">
             Total Results: <span className="text-[#00bc8c]">{meta?.total || 0}</span>
           </div>
         </div>
@@ -113,7 +113,7 @@ export function MedicinesView() {
           ) : (
             <Table>
               <TableHeader>
-                <TableRow className="bg-slate-50/50 hover:bg-slate-50/50">
+                <TableRow className="bg-slate-50/50 dark:bg-slate-800/50 hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
                   <TableHead className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-400">Medicine Info</TableHead>
                   <TableHead className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-400">Category</TableHead>
                   <TableHead className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-400">Price</TableHead>
@@ -134,10 +134,10 @@ export function MedicinesView() {
                   </TableRow>
                 ) : (
                   medicines.map((item) => (
-                    <TableRow key={item.id} className="group border-slate-50">
+                    <TableRow key={item.id} className="group border-slate-50 dark:border-slate-700 hover:bg-slate-50/30 dark:hover:bg-slate-800/30 transition-colors">
                       <TableCell className="px-6 py-4">
                         <div className="flex items-center gap-4">
-                          <div className="h-14 w-14 rounded-2xl bg-slate-100 border border-slate-100 overflow-hidden flex-shrink-0 group-hover:border-[#00bc8c]/30 transition-colors">
+                          <div className="h-14 w-14 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 overflow-hidden shrink-0 group-hover:border-[#00bc8c]/30 transition-colors">
                             {item.imageUrl ? (
                               <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
                             ) : (
@@ -147,8 +147,8 @@ export function MedicinesView() {
                             )}
                           </div>
                           <div className="min-w-0">
-                            <p className="font-black text-slate-900 group-hover:text-[#00bc8c] transition-colors truncate">{item.name}</p>
-                            <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter truncate">{item.manufacturer}</p>
+                            <p className="font-black text-slate-900 dark:text-slate-100 group-hover:text-[#00bc8c] transition-colors truncate">{item.name}</p>
+                            <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter truncate">{item.manufacturer}</p>
                           </div>
                         </div>
                       </TableCell>
@@ -157,12 +157,12 @@ export function MedicinesView() {
                           {item.categoryId?.slice(0, 8)}...
                         </Badge>
                       </TableCell>
-                      <TableCell className="px-6 py-4 font-black text-slate-800">
+                      <TableCell className="px-6 py-4 font-black text-slate-800 dark:text-slate-100">
                         ${typeof item.price === 'string' ? parseFloat(item.price).toFixed(2) : item.price.toFixed(2)}
                       </TableCell>
                       <TableCell className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                           <span className={`font-bold ${item.stock < 10 ? "text-red-500" : "text-slate-700"}`}>
+                           <span className={`font-bold ${item.stock < 10 ? "text-red-500" : "text-slate-700 dark:text-slate-100"}`}>
                              {item.stock}
                            </span>
                            {item.stock < 10 && (
@@ -177,7 +177,7 @@ export function MedicinesView() {
                              size="sm" 
                              onClick={() => toggleFeatured.mutate(item.id)}
                              disabled={toggleFeatured.isPending}
-                             className={`h-8 px-2 rounded-lg gap-1.5 font-bold text-[10px] uppercase cursor-pointer ${item.isFeatured ? "bg-amber-50 text-amber-600 hover:bg-amber-100" : "bg-slate-100 text-slate-400 opacity-50 hover:bg-slate-200"}`}
+                             className={`h-8 px-2 rounded-lg gap-1.5 font-bold text-[10px] uppercase cursor-pointer ${item.isFeatured ? "bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900" : "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-400 opacity-50 hover:bg-slate-200 dark:hover:bg-slate-700"}`}
                            >
                              <Star className={`h-3 w-3 ${item.isFeatured ? "fill-amber-600" : ""}`} />
                              {item.isFeatured ? "Featured" : "Standard"}
@@ -191,15 +191,15 @@ export function MedicinesView() {
                               <MoreVertical className="h-5 w-5" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="w-40 rounded-xl p-1 border-slate-100 shadow-2xl">
-                            <DropdownMenuItem asChild className="rounded-lg font-bold text-slate-600 focus:bg-[#00bc8c]/10 focus:text-[#00bc8c] cursor-pointer">
+                          <DropdownMenuContent align="end" className="w-40 rounded-xl p-1 border-slate-100 dark:border-slate-700 dark:bg-slate-900 shadow-2xl">
+                            <DropdownMenuItem asChild className="rounded-lg font-bold text-slate-600 dark:text-slate-200 focus:bg-[#00bc8c]/10 focus:text-[#00bc8c] cursor-pointer">
                               <Link href={`/seller/manage-medicines/edit/${item.id}`} className="flex items-center gap-2">
                                 <Edit2 className="h-4 w-4" /> Edit Medicine
                               </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-slate-50" />
+                            <DropdownMenuSeparator className="bg-slate-50 dark:bg-slate-700" />
                             <DropdownMenuItem 
-                              className="rounded-lg font-bold text-red-500 focus:bg-red-50 focus:text-red-600 cursor-pointer"
+                              className="rounded-lg font-bold text-red-500 focus:bg-red-50 dark:focus:bg-red-900 focus:text-red-600 cursor-pointer"
                               onClick={() => setDeleteId(item.id)}
                             >
                               <div className="flex items-center gap-2">
@@ -218,12 +218,12 @@ export function MedicinesView() {
         </CardContent>
 
         {meta && meta.totalPages > 1 && (
-          <div className="p-6 border-t border-slate-100 bg-slate-50/30 flex items-center justify-center gap-4">
+          <div className="p-6 border-t border-slate-100 dark:border-slate-700 bg-slate-50/30 dark:bg-slate-950/50 flex items-center justify-center gap-4">
             <Button 
               variant="outline" 
               disabled={page === 1} 
               onClick={() => setPage(p => p - 1)}
-              className="rounded-xl font-bold h-10 px-4 border-slate-200 cursor-pointer"
+              className="rounded-xl font-bold h-10 px-4 border-slate-200 dark:border-slate-700 cursor-pointer"
             >
               <ChevronLeft className="h-4 w-4 mr-1" /> Previous
             </Button>
@@ -243,15 +243,15 @@ export function MedicinesView() {
       </Card>
 
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <AlertDialogContent className="rounded-3xl border-none shadow-2xl">
+        <AlertDialogContent className="rounded-3xl border-none shadow-2xl bg-white dark:bg-slate-900">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-2xl font-black text-slate-900">Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription className="text-slate-500 font-medium">
+            <AlertDialogTitle className="text-2xl font-black text-slate-900 dark:text-slate-100">Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription className="text-slate-500 dark:text-slate-400 font-medium">
               This action cannot be undone. This will permanently delete the medicine and remove it from the public shop.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-3">
-            <AlertDialogCancel className="rounded-xl font-bold border-slate-100 hover:bg-slate-50 cursor-pointer">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="rounded-xl font-bold border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">Cancel</AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleDelete}
               className="rounded-xl font-bold bg-red-500 hover:bg-red-600 shadow-lg shadow-red-500/20 cursor-pointer"

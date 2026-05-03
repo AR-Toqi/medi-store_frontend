@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -9,7 +10,6 @@ import {
   Shield,
   Truck,
   RotateCcw,
-  BadgeCheck,
   Package,
   Factory,
   Pill,
@@ -72,11 +72,11 @@ export default async function ProductDetailPage({
     .slice(0, 4);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50/80 via-white to-slate-50/50">
+    <div className="min-h-screen bg-linear-to-b from-slate-50/80 via-white to-slate-50/50 dark:from-slate-950/60 dark:via-slate-950 dark:to-slate-950">
       {/* Breadcrumbs */}
-      <div className="border-b border-slate-100 bg-white/60 backdrop-blur-sm">
+      <div className="border-b border-slate-100 bg-white/60 backdrop-blur-sm dark:border-slate-800 dark:bg-slate-950/70">
         <div className="container mx-auto px-4 py-4">
-          <nav className="flex items-center gap-2 text-sm font-medium text-slate-500">
+          <nav className="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400">
             <Link
               href="/"
               className="hover:text-[#00bc8c] transition-colors"
@@ -102,7 +102,7 @@ export default async function ProductDetailPage({
               </>
             )}
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-slate-900 font-bold truncate max-w-[200px]">
+            <span className="text-slate-900 font-bold truncate max-w-50 dark:text-slate-100">
               {medicine.name}
             </span>
           </nav>
@@ -114,7 +114,7 @@ export default async function ProductDetailPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-16">
           {/* Image */}
           <div className="relative group">
-            <div className="aspect-square rounded-[2.5rem] overflow-hidden bg-slate-50 border border-slate-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)]">
+            <div className="aspect-square rounded-[2.5rem] overflow-hidden bg-slate-50 border border-slate-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] dark:bg-slate-900 dark:border-slate-800 dark:shadow-none">
               <img
                 src={
                   medicine.imageUrl ||
@@ -123,7 +123,7 @@ export default async function ProductDetailPage({
                 alt={medicine.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2.5rem]" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2.5rem]" />
             </div>
             {/* Badges */}
             <div className="absolute top-6 left-6 flex flex-col gap-2">
@@ -155,10 +155,10 @@ export default async function ProductDetailPage({
 
             {/* Title */}
             <div className="space-y-2">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight dark:text-slate-100">
                 {medicine.name}
               </h1>
-              <p className="text-slate-500 text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+              <p className="text-slate-500 text-sm font-bold uppercase tracking-wider flex items-center gap-2 dark:text-slate-400">
                 <Factory className="w-4 h-4" />
                 {medicine.manufacturer}
               </p>
@@ -167,10 +167,10 @@ export default async function ProductDetailPage({
             {/* Price & Stock */}
             <div className="flex items-end gap-6 pb-2">
               <div>
-                <p className="text-slate-400 text-[11px] font-black uppercase tracking-tighter mb-1">
+                <p className="text-slate-400 text-[11px] font-black uppercase tracking-tighter mb-1 dark:text-slate-400">
                   Price
                 </p>
-                <p className="text-4xl md:text-5xl font-black text-slate-900">
+                <p className="text-4xl md:text-5xl font-black text-slate-900 dark:text-slate-100">
                   ${formattedPrice}
                 </p>
               </div>
@@ -197,15 +197,15 @@ export default async function ProductDetailPage({
             </div>
 
             {/* Divider */}
-            <div className="h-px bg-gradient-to-r from-slate-200 via-slate-200 to-transparent" />
+            <div className="h-px bg-linear-to-r from-slate-200 via-slate-200 to-transparent dark:from-slate-700 dark:via-slate-700" />
 
             {/* Description */}
             {medicine.description && (
               <div className="space-y-2">
-                <h3 className="text-sm font-black text-slate-700 uppercase tracking-wider">
+                <h3 className="text-sm font-black text-slate-700 uppercase tracking-wider dark:text-slate-100">
                   Description
                 </h3>
-                <p className="text-slate-500 leading-relaxed font-medium">
+                <p className="text-slate-500 leading-relaxed font-medium dark:text-slate-400">
                   {medicine.description}
                 </p>
               </div>
@@ -214,50 +214,50 @@ export default async function ProductDetailPage({
             {/* Specs */}
             <div className="grid grid-cols-2 gap-4">
               {medicine.dosageForm && (
-                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
                   <div className="flex items-center gap-2 mb-1.5">
                     <Pill className="w-4 h-4 text-[#00bc8c]" />
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest dark:text-slate-400">
                       Dosage Form
                     </p>
                   </div>
-                  <p className="text-sm font-bold text-slate-800">
+                  <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
                     {medicine.dosageForm}
                   </p>
                 </div>
               )}
-              <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+              <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
                 <div className="flex items-center gap-2 mb-1.5">
                   <Package className="w-4 h-4 text-[#00bc8c]" />
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest dark:text-slate-400">
                     Stock
                   </p>
                 </div>
-                <p className="text-sm font-bold text-slate-800">
+                <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
                   {medicine.stock} units
                 </p>
               </div>
               {category && (
-                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
                   <div className="flex items-center gap-2 mb-1.5">
                     <Tag className="w-4 h-4 text-[#00bc8c]" />
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest dark:text-slate-400">
                       Category
                     </p>
                   </div>
-                  <p className="text-sm font-bold text-slate-800">
+                  <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
                     {category.name}
                   </p>
                 </div>
               )}
-              <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+              <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
                 <div className="flex items-center gap-2 mb-1.5">
                   <Factory className="w-4 h-4 text-[#00bc8c]" />
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest dark:text-slate-400">
                     Manufacturer
                   </p>
                 </div>
-                <p className="text-sm font-bold text-slate-800">
+                <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
                   {medicine.manufacturer}
                 </p>
               </div>
@@ -275,7 +275,7 @@ export default async function ProductDetailPage({
                 <div className="bg-[#00bc8c]/10 p-2.5 rounded-xl">
                   <Shield className="w-5 h-5 text-[#00bc8c]" />
                 </div>
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider leading-tight">
+                <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider leading-tight">
                   Verified
                   <br />
                   Authentic
@@ -285,7 +285,7 @@ export default async function ProductDetailPage({
                 <div className="bg-[#00bc8c]/10 p-2.5 rounded-xl">
                   <Truck className="w-5 h-5 text-[#00bc8c]" />
                 </div>
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider leading-tight">
+                <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider leading-tight">
                   Fast
                   <br />
                   Delivery
@@ -295,7 +295,7 @@ export default async function ProductDetailPage({
                 <div className="bg-[#00bc8c]/10 p-2.5 rounded-xl">
                   <RotateCcw className="w-5 h-5 text-[#00bc8c]" />
                 </div>
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider leading-tight">
+                <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider leading-tight">
                   Easy
                   <br />
                   Returns
@@ -307,20 +307,20 @@ export default async function ProductDetailPage({
       </section>
 
       {/* Reviews Section */}
-      <section className="bg-white">
+      <section className="bg-white dark:bg-slate-950">
         <ReviewSection medicineId={medicine.id} />
       </section>
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
-        <section className="border-t border-slate-100 bg-slate-50/50">
+        <section className="border-t border-slate-100 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-950/80">
           <div className="container mx-auto px-4 py-16">
             <div className="flex items-center justify-between mb-10">
               <div className="space-y-1.5">
-                <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
+                <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight dark:text-slate-100">
                   Related Products
                 </h2>
-                <p className="text-slate-400 font-bold text-sm">
+                <p className="text-slate-400 font-bold text-sm dark:text-slate-400">
                   More from{" "}
                   {category ? category.name : "this category"}
                 </p>
@@ -339,8 +339,8 @@ export default async function ProductDetailPage({
                   href={`/shop/${m.slug}`}
                   className="group block"
                 >
-                  <div className="bg-white rounded-[2rem] p-5 border border-slate-100 shadow-sm hover:shadow-[0_15px_40px_-10px_rgba(0,188,140,0.12)] transition-all duration-500 h-full">
-                    <div className="aspect-square rounded-[1.5rem] overflow-hidden bg-slate-50 mb-4">
+                  <div className="bg-white rounded-[2rem] p-5 border border-slate-100 shadow-sm hover:shadow-[0_15px_40px_-10px_rgba(0,188,140,0.12)] transition-all duration-500 h-full dark:bg-slate-900 dark:border-slate-800 dark:hover:shadow-none">
+                    <div className="aspect-square rounded-[1.5rem] overflow-hidden bg-slate-50 mb-4 dark:bg-slate-950">
                       <img
                         src={
                           m.imageUrl ||
@@ -353,10 +353,10 @@ export default async function ProductDetailPage({
                     <p className="text-[10px] font-black text-[#00bc8c] uppercase tracking-widest mb-1">
                       {m.manufacturer}
                     </p>
-                    <h4 className="text-base font-black text-slate-900 tracking-tight group-hover:text-[#00bc8c] transition-colors line-clamp-1">
+                    <h4 className="text-base font-black text-slate-900 tracking-tight group-hover:text-[#00bc8c] transition-colors line-clamp-1 dark:text-slate-100">
                       {m.name}
                     </h4>
-                    <p className="text-lg font-black text-slate-800 mt-2">
+                    <p className="text-lg font-black text-slate-800 mt-2 dark:text-slate-100">
                       $
                       {typeof m.price === "string"
                         ? parseFloat(m.price).toFixed(2)

@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import React, { useState } from "react";
@@ -100,7 +102,7 @@ export function AdminSidebar() {
       </div>
 
       {/* Main Navigation */}
-      <nav className="flex-grow px-3 space-y-1.5 overflow-y-auto overflow-x-hidden py-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <nav className="grow px-3 space-y-1.5 overflow-y-auto overflow-x-hidden py-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {navigation.map((item) => {
           const isActive = pathname === item.href;
           return (

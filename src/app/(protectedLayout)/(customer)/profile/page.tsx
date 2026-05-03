@@ -29,14 +29,14 @@ export default async function ProfilePage() {
   if (!user) return null;
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl">
+    <div className="container mx-auto px-4 py-12 max-w-4xl text-slate-900 dark:text-slate-100">
       <div className="flex flex-col md:flex-row gap-8 items-start animate-in fade-in slide-in-from-bottom-4 duration-700">
 
         {/* Left Column - Avatar & Basic Info */}
-        <Card className="w-full md:w-1/3 border-none shadow-xl shadow-slate-200/50 rounded-[2.5rem] overflow-hidden bg-gradient-to-b from-white to-slate-50/50">
+        <Card className="w-full md:w-1/3 border-none shadow-xl shadow-slate-200/50 rounded-[2.5rem] overflow-hidden bg-linear-to-b from-white to-slate-50/50 dark:from-slate-900 dark:to-slate-950/80 dark:shadow-black/40">
           <CardContent className="pt-12 pb-8 flex flex-col items-center">
             <div className="relative">
-              <div className="w-40 h-40 rounded-[2rem] overflow-hidden bg-[#00bc8c]/10 flex items-center justify-center border-4 border-white shadow-2xl transition-transform hover:scale-[1.02] duration-500">
+              <div className="w-40 h-40 rounded-[2rem] overflow-hidden bg-[#00bc8c]/10 flex items-center justify-center border-4 border-white shadow-2xl transition-transform hover:scale-[1.02] duration-500 dark:border-slate-700">
                 {user.image ? (
                   <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
                 ) : (
@@ -45,7 +45,7 @@ export default async function ProfilePage() {
               </div>
             </div>
 
-            <h2 className="mt-8 text-2xl font-black text-slate-800">{user.name}</h2>
+            <h2 className="mt-8 text-2xl font-black text-slate-800 dark:text-white">{user.name}</h2>
 
             <div className="w-full mt-10 space-y-3">
               <Link href="/profile/update" className="block w-full">
@@ -61,10 +61,10 @@ export default async function ProfilePage() {
 
         {/* Right Column - Detailed Info */}
         <div className="flex-1 space-y-6">
-          <Card className="border-none shadow-xl shadow-slate-200/50 rounded-[2.5rem] bg-white">
+          <Card className="border-none shadow-xl shadow-slate-200/50 rounded-[2.5rem] bg-white dark:bg-slate-900/80 dark:shadow-black/40">
             <CardHeader className="pt-8 px-8">
-              <CardTitle className="text-xl font-black text-slate-800">Account Information</CardTitle>
-              <CardDescription>Verified details of your MediStore account</CardDescription>
+              <CardTitle className="text-xl font-black text-slate-800 dark:text-slate-100">Account Information</CardTitle>
+              <CardDescription className="dark:text-slate-400">Verified details of your MediStore account</CardDescription>
             </CardHeader>
             <CardContent className="px-8 pb-8 space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
@@ -76,11 +76,11 @@ export default async function ProfilePage() {
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-xl shadow-slate-200/50 rounded-[2.5rem] bg-[#00bc8c]/5 overflow-hidden">
+          <Card className="border-none shadow-xl shadow-slate-200/50 rounded-[2.5rem] bg-[#00bc8c]/5 overflow-hidden dark:bg-[#0c2f24]/40 dark:shadow-black/30">
             <CardContent className="p-8 flex items-center justify-between">
               <div className="space-y-1">
-                <h3 className="font-black text-slate-800">Secure Account</h3>
-                <p className="text-sm text-slate-500 font-medium">Your email is {user.emailVerified ? "verified" : "not verified"}</p>
+                <h3 className="font-black text-slate-800 dark:text-slate-100">Secure Account</h3>
+                <p className="text-sm text-slate-500 font-medium dark:text-slate-300">Your email is {user.emailVerified ? "verified" : "not verified"}</p>
               </div>
               {!user.emailVerified && (
                 <Link href={`/verify-email?email=${user.email}`}>
@@ -97,8 +97,8 @@ export default async function ProfilePage() {
 
 function InfoItem({ icon: Icon, label, value, color = "text-slate-600" }: { icon: any, label: string, value: string, color?: string }) {
   return (
-    <div className="space-y-1.5 p-4 bg-slate-50 rounded-2xl border border-slate-100/50">
-      <div className="flex items-center gap-2 text-slate-400">
+    <div className="space-y-1.5 p-4 bg-slate-50 rounded-2xl border border-slate-100/50 dark:bg-slate-950/80 dark:border-slate-800">
+      <div className="flex items-center gap-2 text-slate-400 dark:text-slate-400">
         <Icon className="w-4 h-4" />
         <span className="text-[10px] font-black uppercase tracking-widest">{label}</span>
       </div>

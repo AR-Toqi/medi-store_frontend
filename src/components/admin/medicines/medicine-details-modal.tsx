@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
@@ -49,7 +51,7 @@ export function MedicineDetailsModal({ medicine, isOpen, onClose }: MedicineDeta
             className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
             onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-slate-900 via-slate-900/40 to-transparent" />
           
           <div className="absolute bottom-0 left-0 p-10 w-full">
              <div className="flex items-center gap-3 mb-4">
@@ -75,18 +77,18 @@ export function MedicineDetailsModal({ medicine, isOpen, onClose }: MedicineDeta
           </div>
         </div>
 
-        <div className="p-10 bg-slate-50/50 space-y-10">
+        <div className="p-10 bg-slate-50/50 dark:bg-slate-950/80 space-y-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Info */}
             <div className="lg:col-span-2 space-y-8">
-               <section className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+               <section className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
                   <div className="flex items-center gap-3 mb-6">
                      <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl">
                         <Info className="w-6 h-6" />
                      </div>
-                     <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest">Product Description</h3>
+                     <h3 className="text-sm font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">Product Description</h3>
                   </div>
-                  <p className="text-slate-600 font-medium leading-relaxed text-lg">
+                  <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed text-lg">
                     {medicine.description || "No description provided for this medicine."}
                   </p>
                </section>
@@ -121,32 +123,32 @@ export function MedicineDetailsModal({ medicine, isOpen, onClose }: MedicineDeta
 
             {/* Seller Sidebar */}
             <div className="space-y-6">
-                <section className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm sticky top-4">
+                <section className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 sticky top-4">
                   <div className="flex items-center gap-3 mb-8">
                      <div className="p-3 bg-[#00bc8c]/10 text-[#00bc8c] rounded-2xl">
                         <Store className="w-6 h-6" />
                      </div>
-                     <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest">Seller Profile</h3>
+                     <h3 className="text-sm font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">Seller Profile</h3>
                   </div>
                   
                   <div className="space-y-6">
                      <div className="flex flex-col gap-1">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Shop Name</span>
-                        <span className="text-xl font-black text-slate-900">{medicine.seller?.shopName || "Platform Seller"}</span>
+                        <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Shop Name</span>
+                        <span className="text-xl font-black text-slate-900 dark:text-slate-100">{medicine.seller?.shopName || "Platform Seller"}</span>
                      </div>
 
-                     <div className="space-y-4 pt-4 border-t border-slate-50">
+                     <div className="space-y-4 pt-4 border-t border-slate-50 dark:border-slate-700">
                         <div className="flex items-center gap-3">
                            <User className="w-4 h-4 text-slate-400" />
-                           <span className="text-sm font-bold text-slate-600">{medicine.seller?.user?.name || "Verified Provider"}</span>
+                           <span className="text-sm font-bold text-slate-600 dark:text-slate-100">{medicine.seller?.user?.name || "Verified Provider"}</span>
                         </div>
                         <div className="flex items-center gap-3">
                            <Mail className="w-4 h-4 text-slate-400" />
-                           <span className="text-sm font-bold text-slate-600 truncate">{medicine.seller?.user?.email || "N/A"}</span>
+                           <span className="text-sm font-bold text-slate-600 dark:text-slate-100 truncate">{medicine.seller?.user?.email || "N/A"}</span>
                         </div>
                      </div>
 
-                     <Badge variant="outline" className="w-full justify-center py-3 rounded-xl border-dashed border-slate-200 text-slate-400 font-bold uppercase text-[10px] tracking-widest bg-slate-50">
+                     <Badge variant="outline" className="w-full justify-center py-3 rounded-xl border-dashed border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-300 font-bold uppercase text-[10px] tracking-widest bg-slate-50 dark:bg-slate-900">
                         Admin Monitored Listing
                      </Badge>
                   </div>
@@ -161,19 +163,19 @@ export function MedicineDetailsModal({ medicine, isOpen, onClose }: MedicineDeta
 
 function InfoCard({ icon, title, value, color }: any) {
   const colors: any = {
-    purple: "bg-purple-50 text-purple-600",
-    amber: "bg-amber-50 text-amber-600",
-    emerald: "bg-emerald-50 text-emerald-600",
-    slate: "bg-slate-50 text-slate-600"
+    purple: "bg-purple-50 text-purple-600 dark:bg-purple-950 dark:text-purple-300",
+    amber: "bg-amber-50 text-amber-600 dark:bg-amber-950 dark:text-amber-300",
+    emerald: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-300",
+    slate: "bg-slate-50 text-slate-600 dark:bg-slate-950 dark:text-slate-300"
   };
 
   return (
-    <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+    <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 hover:shadow-md transition-shadow group">
        <div className={`p-3 w-fit rounded-2xl mb-4 group-hover:scale-110 transition-transform ${colors[color]}`}>
           {icon}
        </div>
-       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{title}</p>
-       <p className="font-bold text-slate-900 truncate">{value}</p>
+       <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">{title}</p>
+       <p className="font-bold text-slate-900 dark:text-slate-100 truncate">{value}</p>
     </div>
   );
 }

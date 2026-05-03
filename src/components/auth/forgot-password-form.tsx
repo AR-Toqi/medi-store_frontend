@@ -73,7 +73,7 @@ export function ForgotPasswordForm() {
         </p>
       </div>
 
-      <Card className="w-full border-none shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] bg-card/90 backdrop-blur-xl rounded-[2.5rem] overflow-hidden">
+      <Card className="w-full border-none shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] bg-card/90 backdrop-blur-xl rounded-[2.5rem] overflow-hidden">
         <div className="p-8 md:p-12 lg:p-14">
           <CardHeader className="p-0 mb-10 space-y-2.5 text-left">
             <h2 className="text-2xl font-bold tracking-tight text-foreground/90">

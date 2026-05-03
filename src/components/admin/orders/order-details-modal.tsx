@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
@@ -9,7 +10,6 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { 
   Package, 
   User, 
@@ -48,7 +48,7 @@ const ORDER_STATUSES = [
 ];
 
 export function OrderDetailsModal({ order, isOpen, onClose }: OrderDetailsModalProps) {
-  const { mutate: updateStatus, isPending } = useUpdateAdminOrderStatus();
+  const { mutate: updateStatus } = useUpdateAdminOrderStatus();
 
   if (!order) return null;
 
@@ -92,10 +92,10 @@ export function OrderDetailsModal({ order, isOpen, onClose }: OrderDetailsModalP
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#00bc8c]/10 blur-[80px] -mr-20 -mt-20 rounded-full" />
         </div>
 
-        <div className="p-8 space-y-8 bg-slate-50/50">
+        <div className="p-8 space-y-8 bg-slate-50/50 dark:bg-slate-950/80">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Customer Info */}
-            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
               <div className="flex items-center gap-2 mb-6">
                 <div className="p-2 bg-blue-50 text-blue-500 rounded-xl">
                     <User className="w-5 h-5" />
@@ -119,7 +119,7 @@ export function OrderDetailsModal({ order, isOpen, onClose }: OrderDetailsModalP
             </div>
 
             {/* Admin Controls */}
-            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
               <div className="flex items-center gap-2 mb-6">
                 <div className="p-2 bg-[#00bc8c]/10 text-[#00bc8c] rounded-xl">
                     <RefreshCcw className="w-5 h-5" />
@@ -150,16 +150,16 @@ export function OrderDetailsModal({ order, isOpen, onClose }: OrderDetailsModalP
           </div>
 
           {/* Items Table */}
-          <div className="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden">
-            <div className="p-6 border-b border-slate-50 flex items-center gap-2">
+          <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
+            <div className="p-6 border-b border-slate-50 dark:border-slate-800 flex items-center gap-2">
                 <ShoppingCart className="w-5 h-5 text-slate-400" />
                 <h3 className="font-black text-slate-900 uppercase tracking-widest text-xs">Order Items</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-slate-50/50">
+                <thead className="bg-slate-50/50 dark:bg-slate-800/50">
                   <tr>
-                    <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Medicine</th>
+                    <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">Medicine</th>
                     <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Seller</th>
                     <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Price</th>
                     <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400 text-center">Qty</th>
@@ -168,9 +168,9 @@ export function OrderDetailsModal({ order, isOpen, onClose }: OrderDetailsModalP
                 </thead>
                 <tbody className="divide-y divide-slate-50">
                   {order.items.map((item: any) => (
-                    <tr key={item.id} className="group hover:bg-slate-50/30 transition-colors">
+                    <tr key={item.id} className="group hover:bg-slate-50/30 dark:hover:bg-slate-800/30 transition-colors">
                       <td className="p-6">
-                        <p className="font-black text-slate-900">{item.medicine.name}</p>
+                        <p className="font-black text-slate-900 dark:text-slate-100">{item.medicine.name}</p>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">ID: {item.medicineId.slice(0, 8)}</p>
                       </td>
                       <td className="p-6">
@@ -179,9 +179,9 @@ export function OrderDetailsModal({ order, isOpen, onClose }: OrderDetailsModalP
                            <span className="font-bold text-sm text-slate-600">{item.medicine.seller?.shopName || "Platform Seller"}</span>
                         </div>
                       </td>
-                      <td className="p-6 font-bold text-slate-600">{formatCurrency(item.medicine.price)}</td>
-                      <td className="p-6 text-center font-black text-slate-900">{item.quantity}</td>
-                      <td className="p-6 text-right font-black text-slate-900">{formatCurrency(item.price)}</td>
+                      <td className="p-6 font-bold text-slate-600 dark:text-slate-400">{formatCurrency(item.medicine.price)}</td>
+                      <td className="p-6 text-center font-black text-slate-900 dark:text-slate-100">{item.quantity}</td>
+                      <td className="p-6 text-right font-black text-slate-900 dark:text-slate-100">{formatCurrency(item.price)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -191,7 +191,7 @@ export function OrderDetailsModal({ order, isOpen, onClose }: OrderDetailsModalP
 
           {/* Payment Summary */}
           <div className="flex justify-end">
-             <div className="w-full md:w-80 bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm space-y-4">
+             <div className="w-full md:w-80 bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 space-y-4">
                 <div className="flex items-center justify-between text-slate-500 font-bold">
                    <p className="text-sm">Subtotal</p>
                    <p className="text-sm font-black">{formatCurrency(order.totalAmount)}</p>

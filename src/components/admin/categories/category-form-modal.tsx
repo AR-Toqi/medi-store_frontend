@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -12,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ImagePlus, Loader2, X } from "lucide-react";
+import { ImagePlus, Loader2 } from "lucide-react";
 
 interface CategoryFormModalProps {
   category?: any; // null for create, object for edit
@@ -97,7 +100,7 @@ export function CategoryFormModal({
               Category Image
             </Label>
             <div
-              className="relative w-full h-44 rounded-2xl border-2 border-dashed border-slate-200 hover:border-[#00bc8c] transition-colors flex items-center justify-center cursor-pointer overflow-hidden group bg-slate-50"
+              className="relative w-full h-44 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-[#00bc8c] transition-colors flex items-center justify-center cursor-pointer overflow-hidden group bg-slate-50 dark:bg-slate-800/50"
               onClick={() => fileInputRef.current?.click()}
             >
               {imagePreview ? (
@@ -145,7 +148,7 @@ export function CategoryFormModal({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Pain Relief, Vitamins..."
-              className="h-14 rounded-xl border-slate-200 bg-slate-50 focus:bg-white font-medium text-slate-900"
+              className="h-14 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 font-medium text-slate-900 dark:text-slate-100"
               required
             />
           </div>
@@ -163,7 +166,7 @@ export function CategoryFormModal({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="A brief description of this category..."
-              className="rounded-xl border-slate-200 bg-slate-50 focus:bg-white font-medium text-slate-900 min-h-[100px] resize-none"
+              className="rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 font-medium text-slate-900 dark:text-slate-100 min-h-25 resize-none"
             />
           </div>
 

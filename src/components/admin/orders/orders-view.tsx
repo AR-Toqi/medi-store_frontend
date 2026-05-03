@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
 import { 
-  Search, 
-  Filter, 
-  ArrowRight, 
+  Search,  
   ShoppingBag, 
   Clock, 
   TrendingUp, 
@@ -13,9 +12,7 @@ import {
   AlertCircle,
   ChevronLeft,
   ChevronRight,
-  MoreVertical,
   Eye,
-  FileText
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -70,15 +67,15 @@ export function AdminOrdersView() {
   };
 
   return (
-    <div className="space-y-6 max-w-[1600px] mx-auto pb-20">
+    <div className="space-y-6 max-w-400 mx-auto pb-20">
       {/* Header & Controls */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white dark:bg-slate-800 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
         <div>
-           <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-1 flex items-center gap-3">
+           <h1 className="text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight mb-1 flex items-center gap-3">
               <ShoppingBag className="w-8 h-8 text-[#00bc8c]" />
               Global Orders
            </h1>
-           <p className="text-slate-500 font-medium">Manage and monitor all transactions on the platform</p>
+           <p className="text-slate-500 dark:text-slate-400 font-medium">Manage and monitor all transactions on the platform</p>
         </div>
         
         <div className="flex flex-wrap items-center gap-3">
@@ -86,13 +83,13 @@ export function AdminOrdersView() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <Input 
               placeholder="Search by ID, name or email..." 
-              className="pl-11 h-12 rounded-2xl border-slate-100 bg-slate-50/50 focus:bg-white transition-all font-medium"
+              className="pl-11 h-12 rounded-2xl border-slate-100 dark:border-slate-600 bg-slate-50/50 dark:bg-slate-700/50 focus:bg-white dark:focus:bg-slate-600 transition-all font-medium"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
           <Select value={status} onValueChange={setStatus}>
-            <SelectTrigger className="w-full sm:w-48 h-12 rounded-2xl border-slate-100 bg-slate-50/50 font-bold">
+            <SelectTrigger className="w-full sm:w-48 h-12 rounded-2xl border-slate-100 dark:border-slate-600 bg-slate-50/50 dark:bg-slate-700/50 font-bold">
               <SelectValue placeholder="Filter Status" />
             </SelectTrigger>
             <SelectContent className="rounded-2xl border-none shadow-2xl">
@@ -107,12 +104,12 @@ export function AdminOrdersView() {
       </div>
 
       {/* Orders Table */}
-      <Card className="border-none shadow-xl shadow-slate-200/60 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-sm">
+      <Card className="border-none shadow-xl shadow-slate-200/60 dark:shadow-slate-900/60 rounded-[2rem] overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-50/50">
+                <tr className="bg-slate-50/50 dark:bg-slate-800/50">
                   <th className="p-6 text-[11px] font-black uppercase tracking-widest text-slate-400">Order & Customer</th>
                   <th className="p-6 text-[11px] font-black uppercase tracking-widest text-slate-400">Shops</th>
                   <th className="p-6 text-[11px] font-black uppercase tracking-widest text-slate-400">Amount</th>
@@ -130,24 +127,24 @@ export function AdminOrdersView() {
                   ))
                 ) : data?.data?.length > 0 ? (
                   data.data.map((order: any) => (
-                    <tr key={order.id} className="group hover:bg-slate-50/50 transition-colors">
+                    <tr key={order.id} className="group hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                       <td className="p-6">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center font-black text-slate-500 text-sm shadow-inner group-hover:from-[#00bc8c]/10 group-hover:to-[#00bc8c]/5 group-hover:text-[#00bc8c] transition-all">
+                          <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center font-black text-slate-500 text-sm shadow-inner group-hover:from-[#00bc8c]/10 group-hover:to-[#00bc8c]/5 group-hover:text-[#00bc8c] transition-all">
                             {order.customer.name.charAt(0).toUpperCase()}
                           </div>
                           <div>
                             <p className="font-black text-slate-900 leading-none mb-1">{order.customer.name}</p>
-                            <p className="text-xs font-bold text-slate-400 truncate max-w-[150px]">{order.customer.email}</p>
+                            <p className="text-xs font-bold text-slate-400 truncate max-w-37.5">{order.customer.email}</p>
                             <p className="text-[10px] font-black text-slate-300 mt-1 uppercase tracking-tighter">ID: {order.id.slice(0, 12)}...</p>
                           </div>
                         </div>
                       </td>
                       <td className="p-6">
-                        <div className="flex flex-wrap items-center gap-1.5 max-w-[150px]">
+                        <div className="flex flex-wrap items-center gap-1.5 max-w-37.5">
                            {Array.from(new Set(order.items.map((item: any) => item.medicine.seller?.shopName || "Platform Seller"))).map(
                              (shopName: any, idx: number) => (
-                                <Badge key={idx} variant="outline" className="bg-slate-50 text-[9px] text-slate-500 font-bold border-slate-200 truncate max-w-[100px]" title={shopName}>
+                                <Badge key={idx} variant="outline" className="bg-slate-50 text-[9px] text-slate-500 font-bold border-slate-200 truncate max-w-25" title={shopName}>
                                    {shopName}
                                 </Badge>
                              )

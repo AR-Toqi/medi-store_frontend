@@ -13,10 +13,9 @@ import {
   Package, 
   AlertCircle,
   TrendingUp,
-  RefreshCcw,
-  TrendingDown
+  RefreshCcw
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -171,13 +170,13 @@ export function DashboardView() {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-primary to-emerald-700 text-white border-none shadow-xl">
+          <Card className="bg-linear-to-br from-primary to-emerald-700 text-white border-none shadow-xl dark:bg-slate-900/95 dark:from-primary/80 dark:to-emerald-700/80">
             <CardContent className="p-6">
-              <h3 className="font-bold text-lg mb-2">Need Help?</h3>
-              <p className="text-white/80 text-sm mb-4">
-                Access our specialized seller documentation to maximize your pharmacy's online potential.
+              <h3 className="font-bold text-lg mb-2 text-white">Need Help?</h3>
+              <p className="text-white/80 text-sm mb-4 dark:text-slate-300">
+                Access our specialized seller documentation to maximize your pharmacy&apos;s online potential.
               </p>
-              <Button className="w-full bg-white text-primary hover:bg-white/90">
+              <Button className="w-full bg-white text-primary hover:bg-white/90 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700">
                 Read Center
               </Button>
             </CardContent>

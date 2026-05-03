@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
@@ -84,18 +86,18 @@ export function AdminUsersView() {
   };
 
   return (
-    <div className="container mx-auto p-4 md:p-8 max-w-7xl space-y-8">
+    <div className="container mx-auto p-4 md:p-8 max-w-7xl space-y-8 text-slate-900 dark:text-slate-100">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black tracking-tight text-slate-900 border-l-4 border-[#00bc8c] pl-4">
+          <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-slate-100 border-l-4 border-[#00bc8c] pl-4">
             User <span className="text-[#00bc8c]">Management</span>
           </h1>
           <p className="text-muted-foreground mt-1 font-medium">
             Monitor activity, manage roles, and enforce platform policies.
           </p>
         </div>
-        <div className="flex items-center gap-2 text-sm font-bold text-slate-400 bg-white px-4 py-2 rounded-xl border border-slate-100 shadow-sm">
+        <div className="flex items-center gap-2 text-sm font-bold text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-800 px-4 py-2 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
           Total Users: <span className="text-[#00bc8c]">{nonAdminUsers.length}</span>
         </div>
       </div>
@@ -106,13 +108,13 @@ export function AdminUsersView() {
       </div>
 
       {/* Main Table Card */}
-      <Card className="border-none shadow-2xl shadow-slate-200/50 overflow-hidden bg-white/80 backdrop-blur-sm">
-        <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row gap-4 items-center justify-between">
+      <Card className="border-none shadow-2xl shadow-slate-200/50 dark:shadow-slate-900/50 overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
+        <div className="p-6 border-b border-slate-100 bg-slate-50/50 dark:bg-slate-800/50 flex flex-col sm:flex-row gap-4 items-center justify-between">
           <div className="relative w-full sm:max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <Input 
               placeholder="Search by name or email..." 
-              className="pl-10 h-11 bg-white border-slate-200 rounded-xl focus:ring-2 focus:ring-[#00bc8c]/20"
+              className="pl-10 h-11 bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-[#00bc8c]/20"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -130,7 +132,7 @@ export function AdminUsersView() {
           ) : (
             <Table>
               <TableHeader>
-                <TableRow className="bg-slate-50/50 hover:bg-slate-50/50 border-slate-100">
+                <TableRow className="bg-slate-50/50 dark:bg-slate-800/50 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 border-slate-100 dark:border-slate-700">
                   <TableHead className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-400">User Details</TableHead>
                   <TableHead className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-400">Role</TableHead>
                   <TableHead className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-slate-400">Status</TableHead>
@@ -150,10 +152,10 @@ export function AdminUsersView() {
                   </TableRow>
                 ) : (
                   filteredUsers.map((user: any) => (
-                    <TableRow key={user.id} className="group border-slate-50 transition-colors hover:bg-slate-50/30">
+                    <TableRow key={user.id} className="group border-slate-50 dark:border-slate-700 transition-colors hover:bg-slate-50/30 dark:hover:bg-slate-800/30">
                       <TableCell className="px-6 py-4">
                         <div className="flex items-center gap-4">
-                          <div className="h-12 w-12 rounded-2xl bg-[#00bc8c]/10 border border-[#00bc8c]/10 flex items-center justify-center text-[#00bc8c] font-black text-lg overflow-hidden flex-shrink-0">
+                          <div className="h-12 w-12 rounded-2xl bg-[#00bc8c]/10 border border-[#00bc8c]/10 flex items-center justify-center text-[#00bc8c] font-black text-lg overflow-hidden shrink-0">
                             {user.image ? (
                               <img src={user.image} alt={user.name} className="h-full w-full object-cover" />
                             ) : (
@@ -161,8 +163,8 @@ export function AdminUsersView() {
                             )}
                           </div>
                           <div className="min-w-0">
-                            <p className="font-black text-slate-900 truncate">{user.name}</p>
-                            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400">
+                            <p className="font-black text-slate-900 dark:text-slate-100 truncate">{user.name}</p>
+                            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400 dark:text-slate-500">
                               <Mail className="w-3 h-3" />
                               <span className="truncate">{user.email}</span>
                             </div>
@@ -196,9 +198,9 @@ export function AdminUsersView() {
                               <MoreVertical className="h-5 w-5" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="w-48 rounded-xl p-1 border-slate-100 shadow-2xl">
+                          <DropdownMenuContent align="end" className="w-48 rounded-xl p-1 border-slate-100 dark:border-slate-700 shadow-2xl">
                             <DropdownMenuItem 
-                              className={`rounded-lg font-bold cursor-pointer gap-2 ${user.isBanned ? "text-[#00bc8c] focus:text-[#00bc8c] focus:bg-[#00bc8c]/10" : "text-amber-600 focus:text-amber-600 focus:bg-amber-50"}`}
+                              className={`rounded-lg font-bold cursor-pointer gap-2 ${user.isBanned ? "text-[#00bc8c] focus:text-[#00bc8c] focus:bg-[#00bc8c]/10" : "text-amber-600 focus:text-amber-600 focus:bg-amber-50 dark:focus:bg-amber-500/10"}`}
                               onClick={() => handleToggleStatus(user.id, user.isBanned)}
                               disabled={updateStatus.isPending}
                             >
@@ -206,7 +208,7 @@ export function AdminUsersView() {
                               {user.isBanned ? "Unban Account" : "Ban Account"}
                             </DropdownMenuItem>
                             
-                            <DropdownMenuSeparator className="bg-slate-50" />
+                            <DropdownMenuSeparator className="bg-slate-50 dark:bg-slate-700" />
                             
                             <TooltipProvider>
                               <Tooltip delayDuration={0}>
@@ -222,7 +224,7 @@ export function AdminUsersView() {
                                   </div>
                                 </TooltipTrigger>
                                 {!user.isBanned && (
-                                  <TooltipContent side="left" className="bg-slate-900 text-white border-none rounded-lg p-3 max-w-[200px]">
+                                  <TooltipContent side="left" className="bg-slate-900 text-white border-none rounded-lg p-3 max-w-50">
                                     <div className="flex gap-2 items-start">
                                       <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                                       <p className="text-[10px] font-bold leading-tight">For security, active users cannot be deleted. Ban the account first.</p>
@@ -244,15 +246,15 @@ export function AdminUsersView() {
       </Card>
 
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <AlertDialogContent className="rounded-3xl border-none shadow-2xl">
+        <AlertDialogContent className="rounded-3xl border-none shadow-2xl bg-white dark:bg-slate-900">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-2xl font-black text-slate-900 uppercase">Confirm Deletion</AlertDialogTitle>
-            <AlertDialogDescription className="text-slate-500 font-medium py-2">
+            <AlertDialogTitle className="text-2xl font-black text-slate-900 dark:text-slate-100 uppercase">Confirm Deletion</AlertDialogTitle>
+            <AlertDialogDescription className="text-slate-500 dark:text-slate-400 font-medium py-2">
               This action is permanent and cannot be undone. All data associated with this user will be removed from our systems.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-3">
-            <AlertDialogCancel className="rounded-xl font-bold border-slate-100 hover:bg-slate-50 cursor-pointer">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="rounded-xl font-bold border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">Cancel</AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleDelete}
               className="rounded-xl font-bold bg-red-500 hover:bg-red-600 shadow-lg shadow-red-500/20 cursor-pointer"

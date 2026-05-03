@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState } from "react";
@@ -101,18 +103,18 @@ export function AdminCategoriesView() {
   };
 
   return (
-    <div className="space-y-6 max-w-[1600px] mx-auto pb-20">
+    <div className="space-y-6 max-w-400 mx-auto pb-20 text-slate-900 dark:text-slate-100">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-slate-900/40">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600">
+          <div className="w-14 h-14 rounded-2xl bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center text-purple-600">
             <Layers className="w-8 h-8" />
           </div>
           <div>
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-1">
+            <h1 className="text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight mb-1">
               Category Management
             </h1>
-            <p className="text-slate-500 font-medium tracking-tight">
+            <p className="text-slate-500 dark:text-slate-400 font-medium tracking-tight">
               Organize your platform&apos;s medicine taxonomy
             </p>
           </div>
@@ -120,10 +122,10 @@ export function AdminCategoriesView() {
 
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative w-full sm:w-72">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500" />
             <Input
               placeholder="Search categories..."
-              className="pl-11 h-14 rounded-2xl border-slate-100 bg-slate-50/50 focus:bg-white transition-all font-medium text-slate-900"
+              className="pl-11 h-14 rounded-2xl border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 focus:bg-white dark:focus:bg-slate-900 transition-all font-medium text-slate-900 dark:text-slate-100"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -150,10 +152,10 @@ export function AdminCategoriesView() {
           filteredCategories.map((category: any) => (
             <Card
               key={category.id}
-              className="group border-none shadow-lg shadow-slate-200/60 rounded-[2rem] overflow-hidden bg-white hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+              className="group border-none shadow-lg shadow-slate-200/60 dark:shadow-slate-900/50 rounded-[2rem] overflow-hidden bg-white dark:bg-slate-900 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
             >
               {/* Image */}
-              <div className="relative h-44 w-full overflow-hidden bg-slate-100">
+              <div className="relative h-44 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
                 {category.image ? (
                   <img
                     src={category.image}
@@ -168,7 +170,7 @@ export function AdminCategoriesView() {
                 <div className={`flex items-center justify-center h-full text-slate-300 ${category.image ? "hidden" : ""}`}>
                   <ImageOff className="w-10 h-10" />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                 {/* Status Badge */}
                 <Badge
@@ -184,10 +186,10 @@ export function AdminCategoriesView() {
 
               <CardContent className="p-6">
                 <div className="mb-4">
-                  <h3 className="text-lg font-black text-slate-900 group-hover:text-[#00bc8c] transition-colors mb-1 line-clamp-1">
+                  <h3 className="text-lg font-black text-slate-900 dark:text-slate-100 group-hover:text-[#00bc8c] transition-colors mb-1 line-clamp-1">
                     {category.name}
                   </h3>
-                  <p className="text-sm text-slate-400 font-medium line-clamp-2 min-h-[40px]">
+                  <p className="text-sm text-slate-400 dark:text-slate-500 font-medium line-clamp-2 min-h-40px">
                     {category.description || "No description provided."}
                   </p>
                 </div>
@@ -215,9 +217,9 @@ export function AdminCategoriesView() {
             </Card>
           ))
         ) : (
-          <div className="col-span-full py-32 text-center bg-white rounded-[2.5rem] border border-dashed border-slate-200">
+          <div className="col-span-full py-32 text-center bg-white dark:bg-slate-900 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-700">
             <div className="flex flex-col items-center gap-4">
-              <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-slate-200">
+              <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center text-slate-200 dark:text-slate-500">
                 <FolderOpen className="w-10 h-10" />
               </div>
               <div>

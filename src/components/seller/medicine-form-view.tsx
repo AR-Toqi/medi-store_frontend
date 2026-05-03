@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -134,18 +137,18 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
   };
 
   return (
-    <div className="container mx-auto p-4 md:p-8 max-w-4xl">
+    <div className="container mx-auto p-4 md:p-8 max-w-4xl text-slate-100">
       <div className="flex items-center gap-4 mb-8">
         <Link href="/seller/manage-medicines">
-          <Button variant="ghost" size="icon" className="h-12 w-12 cursor-pointer rounded-xl hover:bg-slate-100">
+          <Button variant="ghost" size="icon" className="h-12 w-12 cursor-pointer rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/70">
             <ChevronLeft className="h-6 w-6" />
           </Button>
         </Link>
         <div>
-          <h1 className="text-3xl font-black leading-none tracking-tight text-slate-900">
+          <h1 className="text-3xl font-black leading-none tracking-tight text-slate-900 dark:text-white">
             {isEdit ? "Edit" : "Add New"} <span className="text-[#00bc8c]">Medicine</span>
           </h1>
-          <p className="mt-2 font-medium text-muted-foreground">
+          <p className="mt-2 font-medium text-muted-foreground dark:text-slate-400">
             {isEdit ? "Update your medicine details and stock." : "List a new product to your pharmacy inventory."}
           </p>
         </div>
@@ -156,11 +159,11 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Left Column - Image & Meta */}
             <div className="space-y-6 lg:col-span-1">
-              <Card className="overflow-hidden border-none bg-white/80 shadow-xl shadow-slate-200/50 backdrop-blur-sm">
+              <Card className="overflow-hidden border-none bg-white/80 shadow-xl shadow-slate-200/50 backdrop-blur-sm dark:bg-slate-900/80 dark:shadow-black/40 dark:border-slate-800">
                 <CardContent className="p-6">
-                  <Label className="mb-4 block text-sm font-black uppercase tracking-widest text-slate-900">Product Image</Label>
+                  <Label className="mb-4 block text-sm font-black uppercase tracking-widest text-slate-900 dark:text-slate-100">Product Image</Label>
                   <div className={cn(
-                    "group relative flex aspect-square flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 transition-all hover:border-[#00bc8c]/50",
+                    "group relative flex aspect-square flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 transition-all hover:border-[#00bc8c]/50 dark:border-slate-700 dark:bg-slate-950/70 dark:hover:border-[#00bc8c]/70",
                     preview ? "border-solid" : ""
                   )}>
                     {preview ? (
@@ -176,28 +179,28 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
                       </>
                     ) : (
                       <label htmlFor={imageUploadId} className="flex h-full w-full cursor-pointer flex-col items-center justify-center">
-                        <Upload className="mb-2 h-10 w-10 text-slate-300 transition-colors group-hover:text-[#00bc8c]" />
-                        <span className="text-xs font-bold text-slate-400 group-hover:text-slate-600">Click to upload</span>
+                        <Upload className="mb-2 h-10 w-10 text-slate-300 transition-colors group-hover:text-[#00bc8c] dark:text-slate-400" />
+                        <span className="text-xs font-bold text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300">Click to upload</span>
                         <input id={imageUploadId} type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
                       </label>
                     )}
                   </div>
-                  <p className="mt-4 text-center font-medium leading-relaxed text-[10px] text-slate-400">
+                  <p className="mt-4 text-center font-medium leading-relaxed text-[10px] text-slate-400 dark:text-slate-500">
                     Recommended: 800x800px or higher. PNG, JPG supported. Max 5MB.
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="border-none bg-white/80 shadow-xl shadow-slate-200/50 backdrop-blur-sm">
+              <Card className="border-none bg-white/80 shadow-xl shadow-slate-200/50 backdrop-blur-sm dark:bg-slate-900/80 dark:shadow-black/40 dark:border-slate-800">
                 <CardContent className="p-6 space-y-4">
                   <FormField
                     control={form.control}
                     name="isFeatured"
                     render={({ field }) => (
-                      <FormItem className="flex items-center justify-between rounded-xl border border-slate-100 p-4 transition-colors hover:bg-amber-50/30">
+                      <FormItem className="flex items-center justify-between rounded-xl border border-slate-100 p-4 transition-colors hover:bg-amber-50/30 dark:border-slate-700 dark:hover:bg-slate-800/60">
                         <div className="space-y-0.5">
-                          <FormLabel className="text-sm font-bold text-slate-900">Feature Product</FormLabel>
-                          <FormDescription className="font-medium uppercase tracking-tighter text-[10px] text-slate-400">Promote on homepage</FormDescription>
+                          <FormLabel className="text-sm font-bold text-slate-900 dark:text-slate-100">Feature Product</FormLabel>
+                          <FormDescription className="font-medium uppercase tracking-tighter text-[10px] text-slate-400 dark:text-slate-400">Promote on homepage</FormDescription>
                         </div>
                         <FormControl>
                           <Switch
@@ -208,9 +211,9 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
                       </FormItem>
                     )}
                   />
-                  <div className="flex items-start gap-2.5 rounded-xl border border-blue-50 bg-blue-50/50 p-3">
-                    <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-500" />
-                    <p className="font-medium leading-normal text-[11px] text-blue-600">
+                  <div className="flex items-start gap-2.5 rounded-xl border border-blue-50 bg-blue-50/50 p-3 dark:border-blue-500/30 dark:bg-blue-500/10">
+                    <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-500 dark:text-blue-300" />
+                    <p className="font-medium leading-normal text-[11px] text-blue-600 dark:text-blue-200">
                       Featured products are prioritized in search results and shown on the specialized discovery section.
                     </p>
                   </div>
@@ -220,7 +223,7 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
 
             {/* Right Column - Main Details */}
             <div className="space-y-6 lg:col-span-2">
-              <Card className="border-none bg-white/80 shadow-xl shadow-slate-200/50 backdrop-blur-sm">
+              <Card className="border-none bg-white/80 shadow-xl shadow-slate-200/50 backdrop-blur-sm dark:bg-slate-900/80 dark:shadow-black/40 dark:border-slate-800">
                 <CardContent className="space-y-6 p-8">
                   <div className="grid gap-6 sm:grid-cols-2">
                     <FormField
@@ -232,7 +235,7 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
                           <FormControl>
                             <div className="relative">
                               <Package className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
-                              <Input placeholder="Paracetamol 500mg" {...field} className="h-12 rounded-xl border-transparent bg-slate-50 pl-11 font-bold transition-all focus:bg-white focus:ring-2 focus:ring-[#00bc8c]/20" />
+                              <Input placeholder="Paracetamol 500mg" {...field} className="h-12 rounded-xl border-transparent bg-slate-50 pl-11 font-bold transition-all focus:bg-white dark:bg-slate-900/70 dark:focus:bg-slate-800" />
                             </div>
                           </FormControl>
                           <FormMessage className="font-bold text-[11px]" />
@@ -248,16 +251,16 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
                           <FormLabel className="text-xs font-black uppercase tracking-widest text-[#00bc8c]">Category</FormLabel>
                           <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
-                              <SelectTrigger className="h-12 rounded-xl border-transparent bg-slate-50 font-bold focus:bg-white">
+                              <SelectTrigger className="h-12 rounded-xl border-transparent bg-slate-50 font-bold focus:bg-white dark:bg-slate-900/70 dark:focus:bg-slate-800">
                                 <div className="flex items-center gap-2">
                                   <Layers className="h-4 w-4 text-slate-300" />
                                   <SelectValue placeholder="Select category" />
                                 </div>
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent className="rounded-xl border-slate-100 shadow-2xl">
+                            <SelectContent className="rounded-xl border-slate-100 shadow-2xl dark:border-slate-700 dark:bg-slate-950">
                               {categories.map((cat) => (
-                                <SelectItem key={cat.id} value={cat.id} className="cursor-pointer rounded-lg font-bold text-slate-600">
+                                <SelectItem key={cat.id} value={cat.id} className="cursor-pointer rounded-lg font-bold text-slate-600 dark:text-slate-200">
                                   {cat.name}
                                 </SelectItem>
                               ))}
@@ -277,7 +280,7 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
                           <FormControl>
                             <div className="relative">
                               <Factory className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
-                              <Input placeholder="Square Pharmaceuticals" {...field} className="h-12 rounded-xl border-transparent bg-slate-50 pl-11 font-bold transition-all focus:bg-white" />
+                              <Input placeholder="Square Pharmaceuticals" {...field} className="h-12 rounded-xl border-transparent bg-slate-50 pl-11 font-bold transition-all focus:bg-white dark:bg-slate-900/70 dark:focus:bg-slate-800" />
                             </div>
                           </FormControl>
                           <FormMessage className="font-bold text-[11px]" />
@@ -298,7 +301,7 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
                                 type="number" 
                                 step="0.01" 
                                 {...field} 
-                                className="h-12 rounded-xl border-transparent bg-slate-50 pl-11 font-bold transition-all focus:bg-white" 
+                                className="h-12 rounded-xl border-transparent bg-slate-50 pl-11 font-bold transition-all focus:bg-white dark:bg-slate-900/70 dark:focus:bg-slate-800" 
                                 onChange={(e) => field.onChange(e.target.valueAsNumber || 0)}
                               />
                             </div>
@@ -320,7 +323,7 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
                               <Input 
                                 type="number" 
                                 {...field} 
-                                className="h-12 rounded-xl border-transparent bg-slate-50 pl-11 font-bold transition-all focus:bg-white" 
+                                className="h-12 rounded-xl border-transparent bg-slate-50 pl-11 font-bold transition-all focus:bg-white dark:bg-slate-900/70 dark:focus:bg-slate-800" 
                                 onChange={(e) => field.onChange(e.target.valueAsNumber || 0)}
                               />
                             </div>
@@ -339,7 +342,7 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
                           <FormControl>
                              <div className="relative">
                               <Pill className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
-                              <Input placeholder="Tablet, Syrup, Injection, etc." {...field} className="h-12 rounded-xl border-transparent bg-slate-50 pl-11 font-bold transition-all focus:bg-white" />
+                              <Input placeholder="Tablet, Syrup, Injection, etc." {...field} className="h-12 rounded-xl border-transparent bg-slate-50 pl-11 font-bold transition-all focus:bg-white dark:bg-slate-900/70 dark:focus:bg-slate-800" />
                             </div>
                           </FormControl>
                           <FormMessage className="font-bold text-[11px]" />
@@ -357,7 +360,7 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
                             <Textarea 
                               placeholder="Describe the medicine and usage instructions..." 
                               {...field} 
-                              className="min-h-[120px] rounded-xl border-transparent bg-slate-50 px-5 py-4 font-medium transition-all focus:bg-white"
+                              className="min-h-30 rounded-xl border-transparent bg-slate-50 px-5 py-4 font-medium transition-all focus:bg-white dark:bg-slate-900/70 dark:focus:bg-slate-800"
                             />
                           </FormControl>
                           <FormMessage className="font-bold text-[11px]" />
@@ -370,7 +373,7 @@ export function MedicineFormView({ initialData }: MedicineFormViewProps) {
 
               <div className="flex items-center justify-end gap-4 pt-4">
                 <Link href="/seller/manage-medicines">
-                  <Button variant="ghost" type="button" className="h-12 cursor-pointer rounded-xl px-8 font-bold text-slate-500">
+                  <Button variant="ghost" type="button" className="h-12 cursor-pointer rounded-xl px-8 font-bold text-slate-500 dark:text-slate-200 hover:bg-slate-800/60">
                     Discard
                   </Button>
                 </Link>
