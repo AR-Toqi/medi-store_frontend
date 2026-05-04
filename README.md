@@ -49,6 +49,11 @@ MediStore is a full-stack online medicine e-commerce platform that enables custo
 
 ## ✨ Features
 
+### 🤖 AI-Powered Capabilities
+
+- **Intelligent Support Agent** — Integrated a Gemini 3 Flash-powered floating customer support agent capable of multi-turn conversations. It uses function calling to query real-time product, stock, and category information directly from the database.
+- **Semantic Medicine Search** — Enhanced search functionality using vector embeddings and a vector database. This allows the system to understand user intent and find relevant medicines through natural language queries, moving beyond simple keyword matching.
+
 ### 🏠 Public Pages
 
 - **Home Page** — Hero section, value propositions, featured products by category, and newsletter signup
@@ -331,6 +336,8 @@ Building MediStore was a deeply rewarding experience, but it came with its fair 
 - **Authentication Across SSR & Client** — Synchronizing JWT-based authentication between server-side rendering, middleware route protection, and client-side state was complex. Cookies needed to be forwarded manually during SSR fetches, and the automatic token refresh cycle had to work seamlessly on both sides without causing redirect loops.
 
 - **Image Uploads with Cloudinary** — Handling `FormData` with `multer` on the backend and ensuring proper content-type headers were set (or deliberately *not* set) on the frontend required careful debugging, especially for medicine and profile image uploads.
+
+- **AI Integration & Vector Database** — Integrating the AI Support Agent and implementing semantic search presented significant hurdles. The biggest challenge was transitioning from simple keyword matching to a vector-based semantic search. This required figuring out how to generate and manage vector embeddings for the entire medicine catalog, as well as choosing and configuring a vector database to handle similarity searches efficiently. Furthermore, orchestrating the Gemini SDK for reliable function calling while managing API quotas and model-specific constraints added a new layer of architectural complexity.
 
 ---
 
