@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { fetcher } from "@/lib/api-client";
 import { AuthResponse, SignUpData } from "@/types/auth";
 
@@ -12,12 +13,16 @@ export const authService = {
   },
 
   login: async (data: any): Promise<AuthResponse> => {
-    return fetcher<AuthResponse>("/api/auth/login", {
+    const response = await fetcher<AuthResponse>("/api/auth/login", {
       method: "POST",
       body: JSON.stringify(data),
       skipRedirect: true,
       skipRefresh: true,
     });
+
+
+
+    return response;
   },
 
   logout: async (): Promise<AuthResponse> => {

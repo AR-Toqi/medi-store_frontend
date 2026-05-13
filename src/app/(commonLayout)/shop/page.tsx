@@ -18,18 +18,23 @@ interface ShopPageProps {
     manufacturer?: string;
     sort?: string;
     featured?: string;
+    page?: string;
   }>;
 }
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
   const params = await searchParams;
-  const [initialMedicines, categories] = await Promise.all([
-    medicineService.getAllMedicines({
+  const currentPage = parseInt(params.page || "1");
+  
+  const [initialMedicinesResponse, categories] = await Promise.all([
+    medicineService.getMedicinesWithPagination({
        search: params.search,
        category: params.category,
        manufacturer: params.manufacturer,
        sort: params.sort,
-       isFeatured: params.featured === "true" ? true : undefined
+       isFeatured: params.featured === "true" ? true : undefined,
+       page: currentPage,
+       limit: 6
     }),
     categoryService.getAllCategories(),
   ]);
@@ -76,7 +81,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           </Suspense>
 
           {/* Product Grid (Instant updates via TanStack Query) */}
-          <MedicineGrid initialData={initialMedicines} />
+          <MedicineGrid initialData={initialMedicinesResponse.data} initialMeta={initialMedicinesResponse.meta} />
         </div>
       </section>
     </div>

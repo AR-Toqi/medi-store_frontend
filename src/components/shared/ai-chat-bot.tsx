@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -72,17 +73,17 @@ export function AIChatBot() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end">
+    <div className="fixed bottom-6 right-6 z-9999 flex flex-col items-end">
       {/* Chat Window */}
       {isOpen && (
         <div 
           className={cn(
             "bg-white dark:bg-slate-900 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] border border-slate-100 dark:border-slate-800 flex flex-col transition-all duration-500 ease-in-out mb-4 overflow-hidden",
-            isMinimized ? "h-[70px] w-[300px]" : "h-[600px] w-[400px] max-w-[calc(100vw-48px)]"
+            isMinimized ? "h-17.5 w-75" : "h-150 w-100 max-w-[calc(100vw-48px)]"
           )}
         >
           {/* Header */}
-          <div className="p-4 bg-gradient-to-r from-[#00bc8c] to-[#00d4a1] text-white flex items-center justify-between shadow-lg">
+          <div className="p-4 bg-linear-to-r from-[#00bc8c] to-[#00d4a1] text-white flex items-center justify-between shadow-lg">
             <div className="flex items-center gap-3">
               <div className="bg-white/20 p-2 rounded-xl backdrop-blur-md">
                 <Bot className="w-5 h-5 text-white" />
@@ -128,7 +129,7 @@ export function AIChatBot() {
                     )}
                   >
                     <div className={cn(
-                      "w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm",
+                      "w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-sm",
                       msg.role === "user" ? "bg-slate-200 dark:bg-slate-700" : "bg-[#00bc8c] text-white"
                     )}>
                       {msg.role === "user" ? <User className="w-4 h-4 text-slate-500 dark:text-slate-300" /> : <Bot className="w-4 h-4" />}
@@ -140,7 +141,7 @@ export function AIChatBot() {
                         ? "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tr-none shadow-sm border border-slate-100 dark:border-slate-700" 
                         : "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-none shadow-sm border border-slate-100 dark:border-slate-700"
                     )}>
-                      <div className="prose prose-sm prose-slate dark:prose-invert break-words max-w-none">
+                      <div className="prose prose-sm prose-slate dark:prose-invert wrap-break-word max-w-none">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                           {msg.content}
                         </ReactMarkdown>

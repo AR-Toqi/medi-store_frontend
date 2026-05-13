@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const API_BASE_URL = typeof window !== "undefined" 
   ? "" // Use local proxy in the browser for same-origin cookies
   : (process.env.NEXT_PUBLIC_API_URL || "https://medi-store-backend-u9ux.onrender.com"); // Fallback for server-side/build
 
 if (!API_BASE_URL && typeof window === "undefined") {
-  console.warn("NEXT_PUBLIC_API_URL is not defined, using fallback");
 }
 
 export type ApiResponse<T> = {
@@ -83,6 +83,37 @@ async function redirectToLogin() {
   }
 }
 
+async function fetchWithRetry<T>(
+  url: string,
+  options: RequestInit,
+  retries: number = 3,
+  retryDelay: number = 1000
+): Promise<Response> {
+  const abortController = new AbortController();
+  const timeoutId = setTimeout(() => abortController.abort(), 30000); // 30 second timeout
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: abortController.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error: any) {
+    clearTimeout(timeoutId);
+    
+    // Check if it's a network error that should be retried
+    const isNetworkError = error.name === "AbortError" || error.code === "ECONNRESET" || error.code === "ECONNREFUSED";
+    
+    if (isNetworkError && retries > 0) {
+      await new Promise(resolve => setTimeout(resolve, retryDelay));
+      return fetchWithRetry(url, options, retries - 1, retryDelay * 1.5);
+    }
+    
+    throw error;
+  }
+}
+
 export async function fetcher<T>(
   endpoint: string,
   options?: ExtendedRequestInit
@@ -94,9 +125,16 @@ export async function fetcher<T>(
     fetchHeaders.set("Content-Type", "application/json");
   }
 
-  // Workaround for Next.js proxy ECONNRESET with Render/Cloudflare
+  // For client-side requests, also try to attach cookies manually if available
+  if (typeof window !== "undefined" && !fetchHeaders.get("Cookie")) {
+    const cookieString = document.cookie;
+    if (cookieString) {
+      fetchHeaders.set("Cookie", cookieString);
+    }
+  }
+
   if (typeof window !== "undefined") {
-    fetchHeaders.set("Connection", "close");
+    // Session token check
   }
 
   // Automatically attach cookies if on server
@@ -113,11 +151,24 @@ export async function fetcher<T>(
     }
   }
 
-  const response = await fetch(url, {
-    ...options,
-    headers: fetchHeaders,
-    credentials: "include",
-  });
+  let response: Response;
+  try {
+    response = await fetchWithRetry(url, {
+      ...options,
+      headers: fetchHeaders,
+      credentials: "include",
+    });
+  } catch (error: any) {
+    const errorMessage = error.name === "AbortError" 
+      ? "Request timeout - backend server is taking too long to respond"
+      : error.code === "ECONNRESET"
+      ? "Connection reset - backend server closed the connection"
+      : error.code === "ECONNREFUSED"
+      ? "Connection refused - backend server is unreachable"
+      : error.message || "Network error connecting to backend";
+    
+    throw new Error(errorMessage);
+  }
 
   // Handle cookies for the current request
   await handleServerCookies(response);

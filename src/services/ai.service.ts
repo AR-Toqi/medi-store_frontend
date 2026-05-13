@@ -14,6 +14,7 @@ export interface SemanticSearchResponse {
   imageUrl: string;
   slug: string;
   similarity: number;
+  categoryName?: string;
 }
 
 export const aiService = {
@@ -21,17 +22,29 @@ export const aiService = {
    * Send a message to the AI Chat Agent
    */
   chat: async (message: string, history: any[] = []): Promise<string> => {
-    const response = await fetcher<AIChatResponse>("/api/ai/chat", {
-      method: "POST",
-      body: JSON.stringify({ message, history }),
-    });
-    return response.message;
+    try {
+      const response = await fetcher<AIChatResponse>("/api/ai/chat", {
+        method: "POST",
+        body: JSON.stringify({ message, history }),
+      });
+      return response.message;
+    } catch (error: any) {
+      const errorMessage = error.message || "Failed to get AI response";
+      console.error("AI chat error:", errorMessage);
+      throw new Error(`AI service unavailable: ${errorMessage}`);
+    }
   },
 
   /**
    * Perform a semantic search for medicines
    */
   semanticSearch: async (query: string, limit: number = 5): Promise<SemanticSearchResponse[]> => {
-    return fetcher<SemanticSearchResponse[]>(`/api/ai/search?query=${encodeURIComponent(query)}&limit=${limit}`);
+    try {
+      return fetcher<SemanticSearchResponse[]>(`/api/ai/search?query=${encodeURIComponent(query)}&limit=${limit}`);
+    } catch (error: any) {
+      const errorMessage = error.message || "Failed to perform search";
+      console.error("Semantic search error:", errorMessage);
+      throw new Error(`Search service unavailable: ${errorMessage}`);
+    }
   },
 };

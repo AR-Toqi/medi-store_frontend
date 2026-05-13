@@ -1,13 +1,20 @@
-import { fetcher } from "@/lib/api-client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { authClient } from "@/lib/auth-client";
 import { User } from "@/types/auth";
+import { fetcher } from "@/lib/api-client";
 
 export const userService = {
   getCurrentUser: async () => {
     try {
-      return await fetcher<User>("/api/me", {
-        skipRedirect: true, 
-        skipRefresh: true, // Prevents noisy 401 refresh token attempts for guests
-      });
+      // We use our custom endpoint because it returns the full user object with the role
+      // directly from the database, which is more reliable than Better Auth's getSession.
+      const userData = await fetcher<any>("/api/me");
+      
+      if (userData && (userData.id || userData._id)) {
+        return userData as User;
+      }
+      
+      return null;
     } catch (error) {
       return null;
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal, X, ChevronDown, Star } from "lucide-react";
 import { Category } from "@/types/category";
@@ -24,6 +24,20 @@ export function MedicineFilters({ categories, manufacturers }: MedicineFiltersPr
   const [searchValue, setSearchValue] = useState(currentSearch);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const updateParams = useCallback((key: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+    // Reset to page 1 when filters change
+    if (key !== "page") {
+      params.delete("page");
+    }
+    router.push(`/shop?${params.toString()}`, { scroll: false });
+  }, [searchParams, router]);
+
   React.useEffect(() => {
     setSearchValue(currentSearch);
   }, [currentSearch]);
@@ -35,17 +49,7 @@ export function MedicineFilters({ categories, manufacturers }: MedicineFiltersPr
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [searchValue, currentSearch]);
-
-  function updateParams(key: string, value: string) {
-    const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set(key, value);
-    } else {
-      params.delete(key);
-    }
-    router.push(`/shop?${params.toString()}`, { scroll: false });
-  }
+  }, [searchValue, currentSearch, updateParams]);
 
   function handleSearch(e?: React.SyntheticEvent) {
     e?.preventDefault();
@@ -141,7 +145,7 @@ export function MedicineFilters({ categories, manufacturers }: MedicineFiltersPr
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
+          <div className="h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
 
           {/* Categories */}
           <div>
@@ -172,7 +176,7 @@ export function MedicineFilters({ categories, manufacturers }: MedicineFiltersPr
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
+          <div className="h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
 
           {/* Manufacturers */}
           <div>
@@ -203,7 +207,7 @@ export function MedicineFilters({ categories, manufacturers }: MedicineFiltersPr
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
+          <div className="h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
 
           {/* Sort */}
           <div>

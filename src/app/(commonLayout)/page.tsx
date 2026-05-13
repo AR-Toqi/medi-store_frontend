@@ -11,9 +11,9 @@ export const revalidate = 3600; // ISR Revalidate every 1 hour (3600 seconds)
 
 export default async function Home() {
   // Server-side data fetching for better SEO and performance
-  const [categories, medicines] = await Promise.all([
+  const [categories, medicinesResponse] = await Promise.all([
     categoryService.getAllCategories(),
-    medicineService.getAllMedicines(),
+    medicineService.getMedicinesWithPagination({ limit: 8, sort: "newest" }),
   ]);
 
   return (
@@ -28,7 +28,7 @@ export default async function Home() {
       {/* Interactive Display Component (Client) */}
       <ProductDisplay 
         initialCategories={categories} 
-        initialMedicines={medicines} 
+        initialMedicines={medicinesResponse.data} 
       />
 
       <Newsletter />

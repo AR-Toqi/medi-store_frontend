@@ -52,7 +52,7 @@ export function SemanticSearchBar() {
         setResults(searchResults);
         setIsOpen(true);
       } catch (error) {
-        console.error("Semantic search failed:", error);
+        // Silently handle error
       } finally {
         setIsLoading(false);
       }
@@ -165,6 +165,11 @@ export function SemanticSearchBar() {
                       )}>
                         {medicine.stock > 0 ? "In Stock" : "Out of Stock"}
                       </span>
+                      {medicine.categoryName && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                          {medicine.categoryName}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </Link>

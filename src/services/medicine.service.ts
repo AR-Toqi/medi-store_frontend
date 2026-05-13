@@ -22,7 +22,7 @@ export interface MedicineResponse {
 }
 
 export const medicineService = {
-  getAllMedicines: async (params?: GetMedicinesParams) => {
+  getAllMedicines: async (params?: GetMedicinesParams): Promise<Medicine[]> => {
     const queryParams = new URLSearchParams();
     if (params) {
       if (params.search) queryParams.set("search", params.search);
@@ -39,6 +39,28 @@ export const medicineService = {
     
     // Default behavior returns data.data as Medicine[]
     return fetcher<Medicine[]>(endpoint).catch(() => []);
+  },
+
+  getMedicinesWithPagination: async (params?: GetMedicinesParams): Promise<MedicineResponse> => {
+    const queryParams = new URLSearchParams();
+    if (params) {
+      if (params.search) queryParams.set("search", params.search);
+      if (params.category) queryParams.set("categoryId", params.category);
+      if (params.manufacturer) queryParams.set("manufacturer", params.manufacturer);
+      if (params.sort) queryParams.set("sort", params.sort);
+      if (params.page) queryParams.set("page", params.page.toString());
+      if (params.limit) queryParams.set("limit", params.limit.toString());
+      if (params.isFeatured !== undefined) queryParams.set("isFeatured", params.isFeatured.toString());
+    }
+    
+    const queryString = queryParams.toString();
+    const endpoint = `/api/medicines${queryString ? `?${queryString}` : ""}`;
+    
+    // Return full response with pagination metadata
+    return fetcher<MedicineResponse>(endpoint, { returnFullResponse: true }).catch(() => ({
+      meta: { total: 0, page: 1, limit: 12, totalPages: 0 },
+      data: []
+    }));
   },
   
   getMedicineBySlug: async (slug: string) => {
