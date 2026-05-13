@@ -38,12 +38,52 @@ export function MedicineGrid({ initialData }: MedicineGridProps) {
     staleTime: 60 * 1000,
   });
 
-  const displayMedicines = medicines || [];
+  // Map sort values to display labels
+  const sortLabels: { [key: string]: string } = {
+    "price-asc": "Price: Low to High",
+    "price-desc": "Price: High to Low",
+    "name-asc": "Name: A-Z",
+    "newest": "Newest First",
+  };
+
+  const getSortLabel = (sortValue: string) => sortLabels[sortValue] || sortValue;
+
+  // Apply client-side sorting to ensure it works correctly
+  const displayMedicines = React.useMemo(() => {
+    let sorted = medicines ? [...medicines] : [];
+
+    if (!sort) return sorted;
+
+    switch (sort) {
+      case "price-asc":
+        return sorted.sort((a, b) => {
+          const priceA = typeof a.price === 'string' ? parseFloat(a.price) : (a.price || 0);
+          const priceB = typeof b.price === 'string' ? parseFloat(b.price) : (b.price || 0);
+          return priceA - priceB;
+        });
+      case "price-desc":
+        return sorted.sort((a, b) => {
+          const priceA = typeof a.price === 'string' ? parseFloat(a.price) : (a.price || 0);
+          const priceB = typeof b.price === 'string' ? parseFloat(b.price) : (b.price || 0);
+          return priceB - priceA;
+        });
+      case "name-asc":
+        return sorted.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+      case "newest":
+        return sorted.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateB - dateA;
+        });
+      default:
+        return sorted;
+    }
+  }, [medicines, sort]);
 
   return (
     <div className="flex-1 min-w-0">
       {/* Active filter tags */}
-      {(search || category || manufacturer || isFeatured) && (
+      {(search || category || manufacturer || isFeatured || sort) && (
         <div className="flex flex-wrap items-center gap-2 mb-6">
           <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Active:</span>
           {isFeatured && (
@@ -65,6 +105,11 @@ export function MedicineGrid({ initialData }: MedicineGridProps) {
           {manufacturer && (
             <span className="inline-flex items-center gap-1.5 bg-[#00bc8c]/10 text-[#00bc8c] text-xs font-bold px-3 py-1.5 rounded-full">
               {manufacturer}
+            </span>
+          )}
+          {sort && (
+            <span className="inline-flex items-center gap-1.5 bg-[#00bc8c]/10 text-[#00bc8c] text-xs font-bold px-3 py-1.5 rounded-full">
+              Sort: {getSortLabel(sort)}
             </span>
           )}
           {isFetching && !isLoading && (

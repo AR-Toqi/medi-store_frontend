@@ -42,9 +42,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const activeCategory = categories.find((c) => c.id === params.category);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50/80 dark:from-slate-900 via-white dark:via-slate-900 to-slate-50/50 dark:to-slate-900">
+    <div className="min-h-screen bg-linear-to-b from-slate-50/80 dark:from-slate-900 via-white dark:via-slate-900 to-slate-50/50 dark:to-slate-900">
       {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#00bc8c]/5 via-emerald-50/50 dark:via-slate-900 to-teal-50/30 dark:to-slate-900 border-b border-slate-100 dark:border-slate-800">
+      <section className="relative overflow-hidden bg-linear-to-br from-[#00bc8c]/5 via-emerald-50/50 dark:via-slate-900 to-teal-50/30 dark:to-slate-900 border-b border-slate-100 dark:border-slate-800">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#00bc8c]/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-emerald-100/30 rounded-full blur-3xl" />
