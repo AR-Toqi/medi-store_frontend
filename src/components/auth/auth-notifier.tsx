@@ -35,7 +35,7 @@ export function AuthNotifier() {
       });
       clearMessage();
     }
-  }, [searchParams, pathname, router, user]);
+  }, [searchParams, pathname, user]);
 
   return null;
 }

@@ -36,7 +36,7 @@ export function MedicineFilters({ categories, manufacturers }: MedicineFiltersPr
       params.delete("page");
     }
     router.push(`/shop?${params.toString()}`, { scroll: false });
-  }, [searchParams, router]);
+  }, [searchParams]);
 
   React.useEffect(() => {
     setSearchValue(currentSearch);

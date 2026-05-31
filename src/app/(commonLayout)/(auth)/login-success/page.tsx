@@ -11,48 +11,60 @@ import { useUser } from "@/hooks/use-user";
 export default function LoginSuccessPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { setUser, refreshUser } = useUser();
+  const { user, setUser, refreshUser, isLoading } = useUser();
   const [status, setStatus] = useState("authenticating");
-  const [isMounted, setIsMounted] = useState(false);
-  const hasAttempted = React.useRef(false);
+  const hasRefreshed = React.useRef(false);
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    // If user is already authenticated, redirect to home immediately
+    if (user) {
+      setStatus("success");
+      toast.success("Successfully logged in!");
+      setTimeout(() => {
+        router.replace("/");
+      }, 1500);
+      return;
+    }
 
-  useEffect(() => {
-    const handleSuccess = async () => {
-      if (hasAttempted.current) return;
-      hasAttempted.current = true;
+    // If still loading, wait for the initial query to complete
+    if (isLoading) {
+      return;
+    }
 
-      try {
-        // Refresh the user data from the backend (which now has the cookies set)
-        const { data: user } = await refreshUser();
-        
-        if (user) {
-          setUser(user);
-          setStatus("success");
-          toast.success("Successfully logged in with Google!");
-          
-          // Social login is restricted to customers, so we always redirect to the home page
-          setTimeout(() => {
-            router.push("/");
-          }, 1500);
-        } else {
-          throw new Error("Failed to fetch user data");
-        }
-      } catch (err) {
-        console.error("Login success error:", err);
+    // Prevent multiple refresh attempts
+    if (hasRefreshed.current) {
+      return;
+    }
+
+    hasRefreshed.current = true;
+
+    // Try to refresh user data (for OAuth callback case)
+    refreshUser().then(({ data: refreshedUser }) => {
+      if (refreshedUser) {
+        setUser(refreshedUser);
+        setStatus("success");
+        toast.success("Successfully logged in!");
+        setTimeout(() => {
+          router.replace("/");
+        }, 1500);
+      } else {
+        // No user data after refresh - this page was accessed directly
         setStatus("error");
         toast.error("Authentication failed. Redirecting to login...");
-        setTimeout(() => router.push("/login"), 2000);
+        setTimeout(() => {
+          router.replace("/login");
+        }, 2000);
       }
-    };
-
-    handleSuccess();
-  }, [refreshUser, setUser, router]);
-
-  if (!isMounted) return null;
+    }).catch((err) => {
+      console.error("Login success error:", err);
+      setStatus("error");
+      toast.error("Authentication failed. Redirecting to login...");
+      setTimeout(() => {
+        router.replace("/login");
+      }, 2000);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] p-6 text-center animate-in fade-in duration-700">

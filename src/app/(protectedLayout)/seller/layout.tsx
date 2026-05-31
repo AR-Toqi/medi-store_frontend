@@ -21,7 +21,7 @@ export default function SellerLayout({
         router.push("/?message=unauthorized");
       }
     }
-  }, [user, isLoading, router]);
+  }, [user, isLoading]);
 
   if (isLoading) {
     return (

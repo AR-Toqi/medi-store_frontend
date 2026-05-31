@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
@@ -189,6 +190,57 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
                       "Sign In"
                     )}
                   </Button>
+
+                  <div className="relative my-8">
+                    <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t border-muted/30" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                      <span className="bg-card px-4 text-muted-foreground font-black tracking-widest">Demo Credentials</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-3 mb-6">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        form.setValue("email", "clientwork1245@gmail.com");
+                        form.setValue("password", "reashed61990");
+                        form.handleSubmit(onSubmit)();
+                      }}
+                      disabled={isSubmitting}
+                      className="h-12 text-xs font-bold border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 dark:border-blue-900 dark:hover:border-blue-700 dark:hover:bg-blue-950/20 rounded-xl transition-all active:scale-[0.98]"
+                    >
+                      Customer
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        form.setValue("email", "abdullahragib1245@gmail.com");
+                        form.setValue("password", "medi61990");
+                        form.handleSubmit(onSubmit)();
+                      }}
+                      disabled={isSubmitting}
+                      className="h-12 text-xs font-bold border-2 border-green-200 hover:border-green-400 hover:bg-green-50 dark:border-green-900 dark:hover:border-green-700 dark:hover:bg-green-950/20 rounded-xl transition-all active:scale-[0.98]"
+                    >
+                      Seller
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        form.setValue("email", "toqiabdullah61990@gmail.com");
+                        form.setValue("password", "admin61990");
+                        form.handleSubmit(onSubmit)();
+                      }}
+                      disabled={isSubmitting}
+                      className="h-12 text-xs font-bold border-2 border-purple-200 hover:border-purple-400 hover:bg-purple-50 dark:border-purple-900 dark:hover:border-purple-700 dark:hover:bg-purple-950/20 rounded-xl transition-all active:scale-[0.98]"
+                    >
+                      Admin
+                    </Button>
+                  </div>
 
                   <div className="relative my-8">
                     <div className="absolute inset-0 flex items-center">

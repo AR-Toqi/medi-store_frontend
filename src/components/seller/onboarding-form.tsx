@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
@@ -161,14 +162,14 @@ export function OnboardingForm() {
             <FormField
               control={form.control}
               name="shopLogo"
-              render={({ field: { value, onChange, ...fieldProps } }) => (
+              render={() => (
                 <FormItem>
                   <FormLabel>Shop Logo</FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-6 p-5 border-2 border-dashed border-slate-200 rounded-2xl hover:border-[#00bc8c]/50 transition-colors bg-slate-50/50">
                       <div className="relative w-20 h-20 bg-white rounded-xl border border-slate-100 overflow-hidden flex-shrink-0 shadow-sm">
                         {logoPreview ? (
-                          <img src={logoPreview} alt="Logo preview" className="w-full h-full object-cover" />
+                          <img src={logoPreview} alt="Logo preview" className="w-full h-full object-cover" /> // eslint-disable-line @next/next/no-img-element
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
                             <Store className="w-8 h-8 text-slate-300" />

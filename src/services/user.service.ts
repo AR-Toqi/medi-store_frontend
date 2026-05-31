@@ -8,7 +8,7 @@ export const userService = {
     try {
       // We use our custom endpoint because it returns the full user object with the role
       // directly from the database, which is more reliable than Better Auth's getSession.
-      const userData = await fetcher<any>("/api/me");
+      const userData = await fetcher<any>("/api/me", { skipRedirect: true });
       
       if (userData && (userData.id || userData._id)) {
         return userData as User;

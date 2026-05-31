@@ -17,7 +17,7 @@ export default function CustomerLayout({
     if (!isLoading && !user) {
       router.push("/login?message=unauthorized");
     }
-  }, [user, isLoading, router]);
+  }, [user, isLoading]);
 
   if (isLoading) {
     return (

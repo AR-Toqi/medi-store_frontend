@@ -22,7 +22,7 @@ export default function AdminLayout({
         router.push("/?message=unauthorized");
       }
     }
-  }, [user, isLoading, router]);
+  }, [user, isLoading]);
 
   if (isLoading) {
     return (

@@ -18,7 +18,7 @@ export default function ProtectedLayout({
     if (!isLoading && !user) {
       router.push(`/login?message=unauthorized&redirect=${pathname}`);
     }
-  }, [user, isLoading, router, pathname]);
+  }, [user, isLoading, pathname]);
 
   if (isLoading) {
     return (
