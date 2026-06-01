@@ -36,7 +36,7 @@ export function AdminSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
-  const { user } = useUser();
+  const { user, logout } = useUser();
   const router = useRouter();
 
   React.useEffect(() => {
@@ -44,8 +44,7 @@ export function AdminSidebar() {
   }, []);
 
   const handleLogout = async () => {
-    await userService.logout();
-    router.push("/login");
+    await logout();
   };
 
   if (!mounted) return null;

@@ -29,6 +29,8 @@ export const logoutAction = async () => {
     const cookieStore = await cookies();
     cookieStore.delete("accessToken");
     cookieStore.delete("refreshToken");
+    cookieStore.delete("better-auth.session_token");
+    cookieStore.delete("__Secure-better-auth.session_token");
   } catch (error: any) {
     unstable_rethrow(error);
     return {
