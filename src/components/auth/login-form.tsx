@@ -206,7 +206,7 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
                       variant="outline"
                       onClick={() => {
                         form.setValue("email", "clientwork1245@gmail.com");
-                        form.setValue("password", "reashed61990");
+                        form.setValue("password", "rashed61990");
                         form.handleSubmit(onSubmit)();
                       }}
                       disabled={isSubmitting}
