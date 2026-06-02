@@ -124,4 +124,35 @@
     @apply bg-background text-foreground;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
+
+  /* Ensure all interactive/clickable elements default to cursor: pointer */
+  button,
+  a,
+  select,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="checkbox"],
+  input[type="radio"],
+  [role="button"],
+  [role="link"],
+  [role="checkbox"],
+  [role="radio"],
+  [role="switch"],
+  [role="tab"],
+  [role="menuitem"],
+  [role="option"] {
+    cursor: pointer;
+  }
+
+  /* Exclude disabled elements and force not-allowed cursor */
+  button:disabled,
+  a:disabled,
+  select:disabled,
+  input:disabled,
+  [disabled],
+  .disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed !important;
+  }
 }
